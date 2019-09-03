@@ -2,8 +2,7 @@
 import { Input } from '@rebass/forms';
 import {
   Field,
-  FieldConfig,
-  FieldProps,
+  ErrorMessage,
   Form,
   Formik,
   FormikActions,

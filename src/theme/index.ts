@@ -12,7 +12,7 @@ const pink = '#FF80EA';
 const white = '#fff';
 const transparentBlack = 'rgba(0,0,0,0.6)';
 
-const primaryForm =  {
+const primaryForm = {
   bg: 'white',
   border: '1px solid lightgray',
   borderRadius: '4px',
@@ -21,8 +21,13 @@ const primaryForm =  {
   fontSize: '16px',
   outline: 'none',
   padding: '18px 8px',
-}
-const primaryFormError =  {
+  
+  '&::placeholder': {
+    color: 'lightgray',
+    fontWeight: 'bold',
+  },
+};
+const primaryFormError = {
   ...primaryForm,
   border: '1px solid red',
 };
@@ -106,8 +111,6 @@ const theme = {
   forms: {
     primary: primaryForm,
     'primary-error': primaryFormError,
-    
-    
   },
 
   // fonts: {
