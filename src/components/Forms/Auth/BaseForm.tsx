@@ -30,7 +30,7 @@ const renderError = (errorMessage?: string) => {
   );
 };
 
-export const BaseForm: FunctionComponent<IProps> = (props: IProps) => {
+const BaseForm: FunctionComponent<IProps> = (props: IProps) => {
   const {
     heading,
     formProps,

@@ -14,3 +14,8 @@ export interface IAuthFormProps {
   errorMessage?: string;
   onNavigateClick: () => any;
 }
+
+export type IParticipant = {
+  username: string;
+  id: string;
+};
