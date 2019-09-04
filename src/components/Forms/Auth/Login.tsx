@@ -11,17 +11,11 @@ interface IFormValues {
   password: string;
 }
 
-interface IProps {
-  loading: boolean;
-  message?: string;
-  onLoginClick(arg?: any): void;
-}
-
 const render = (formikBag: FormikProps<IFormValues>) => {
   const { isSubmitting } = formikBag;
   return (
     <Form>
-      <Flex width={[400, 500, 500]} flexDirection="column" alignItems="center">
+      <Flex flexDirection="column" alignItems="center">
         <Field
           width="100%"
           name="emailOrUsername"
@@ -61,17 +55,15 @@ const initialValues = {
 export const ForgotPasswordForm: FunctionComponent<IAuthFormProps> = (
   props: IAuthFormProps
 ) => {
-  const { onSubmit, errorMessage, onNavigateClick } = props;
   const formProps: IFormProps = {
     validationSchema,
     render,
-    onSubmit,
     initialValues,
   };
   return (
     <BaseForm
+      {...props}
       navLinkTitle="Salasana unohtunut?"
-      onNavigateClick={onNavigateClick}
       heading="KIRJAUDU"
       formProps={formProps}
     />

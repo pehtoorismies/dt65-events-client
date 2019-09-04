@@ -21,7 +21,7 @@ const primaryForm = {
   fontSize: '16px',
   outline: 'none',
   padding: '18px 8px',
-  width: '100%',
+  width: "100%",
 
   '&::placeholder': {
     color: 'lightgray',
@@ -53,6 +53,7 @@ const theme = {
       color: pink,
     },
     primary: {
+      width: "100%",
       py: 3,
       backgroundColor: pink,
       color: white,

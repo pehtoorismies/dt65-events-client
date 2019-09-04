@@ -1,8 +1,7 @@
 // @ts-ignore
 import { Input } from '@rebass/forms';
 import { FieldConfig, FieldProps } from 'formik';
-import React, { FunctionComponent } from 'react';
-import { Box } from 'rebass';
+import React, { FunctionComponent, Fragment } from 'react';
 import { ErrorText } from '../Common';
 
 type CustomInput = FieldConfig & FieldProps & any;
@@ -15,10 +14,11 @@ const FormField: FunctionComponent<CustomInput> = (props: CustomInput) => {
   const style = hasError ? 'primary-error' : 'primary';
 
   return (
-    <Box width="100%" my={1}>
+    <Fragment>
       <Input
-        variant={style}
+        my={1}
         {...field}
+        variant={style}
         type={type}
         placeholder={placeholder}
         name={name}
@@ -26,7 +26,7 @@ const FormField: FunctionComponent<CustomInput> = (props: CustomInput) => {
       {touched[field.name] && errors[field.name] && (
         <ErrorText my={1}>{errors[field.name]}</ErrorText>
       )}
-    </Box>
+    </Fragment>
   );
 };
 

@@ -19,7 +19,7 @@ const render = (formikBag: FormikProps<IFormValues>) => {
   const { isSubmitting } = formikBag;
   return (
     <Form>
-      <Flex width={[400, 500, 500]} flexDirection="column" alignItems="center">
+      <Flex flexDirection="column" alignItems="center">
         <Field
           width="100%"
           name="email"
@@ -85,19 +85,16 @@ const initialValues = {
 export const Register: FunctionComponent<IAuthFormProps> = (
   props: IAuthFormProps
 ) => {
-  const { onSubmit, onNavigateClick, errorMessage } = props;
-
   const formProps: IFormProps = {
     validationSchema,
     render,
-    onSubmit,
     initialValues,
   };
 
   return (
     <BaseForm
+      {...props}
       navLinkTitle="Kirjatumiseen"
-      onNavigateClick={onNavigateClick}
       heading="REKISTERÖIDY"
       formProps={formProps}
     />

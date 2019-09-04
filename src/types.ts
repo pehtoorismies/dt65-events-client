@@ -5,7 +5,6 @@ export interface IEventType {
 };
 export interface IFormProps {
   initialValues: any;
-  onSubmit: (value: any, actions: any) => any;
   render: (formikBag: any) => any;
   validationSchema: any;
 };
