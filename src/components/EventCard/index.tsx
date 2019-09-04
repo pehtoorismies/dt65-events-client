@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Box, Card, Flex, Text } from 'rebass';
 import { map } from 'ramda';
+// import AnimateHeight from 'react-animate-height';
 import bgImage from '../../images/test_mini.jpg';
 import HeadCountButton from '../HeadCountButton';
 
@@ -93,6 +94,7 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
             />
           </Flex>
         </Flex>
+
         <Box px={2} pt={1}>
           <Flex>
             <Text fontWeight="bold" color="lightBlack" width={60}>

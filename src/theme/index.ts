@@ -21,7 +21,7 @@ const primaryForm = {
   fontSize: '16px',
   outline: 'none',
   padding: '18px 8px',
-  width: "100%",
+  width: '100%',
 
   '&::placeholder': {
     color: 'lightgray',
@@ -32,6 +32,28 @@ const primaryFormError = {
   ...primaryForm,
   border: '1px solid red',
 };
+
+const primaryButton = {
+  // width: '100%',
+  py: 3,
+  backgroundColor: pink,
+  color: white,
+  textTransform: 'uppercase',
+  fontWeight: 'bold',
+  '&:disabled': {
+    backgroundColor: Color(pink)
+      .lighten(0.1)
+      .string(),
+    cursor: 'not-allowed',
+  },
+  '&:hover': {
+    cursor: 'pointer',
+    backgroundColor: Color(pink)
+      .darken(0.1)
+      .string(),
+  },
+};
+
 const theme = {
   breakpoints: ['40em', '52em', '64em'],
 
@@ -52,21 +74,14 @@ const theme = {
       boxShadow: 'inset 0 0 0 2px',
       color: pink,
     },
-    primary: {
-      width: "100%",
-      py: 3,
-      backgroundColor: pink,
-      color: white,
-      textTransform: 'uppercase',
-      fontWeight: 'bold',
-      '&:disabled': {
-        backgroundColor: Color(pink)
-          .lighten(0.1)
-          .string(),
-        cursor: 'not-allowed',
-      },
+    primary: primaryButton,
+    secondary: {
+      ...primaryButton,
+      backgroundColor: blue,
+      width: 'auto',
       '&:hover': {
-        backgroundColor: Color(pink)
+        cursor: 'pointer',
+        backgroundColor: Color(blue)
           .darken(0.1)
           .string(),
       },
