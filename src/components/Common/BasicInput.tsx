@@ -9,13 +9,13 @@ type CustomInput = FieldConfig & FieldProps & any;
 
 const FormField: FunctionComponent<CustomInput> = (props: CustomInput) => {
   const { field, form, type, placeholder, name } = props;
-  const { touched, errors, values } = form;
+  const { touched, errors } = form;
 
   const hasError = touched[field.name] && errors[field.name];
   const style = hasError ? 'primary-error' : 'primary';
-  
+
   return (
-    <Box>
+    <Box width="100%" my={1}>
       <Input
         variant={style}
         {...field}

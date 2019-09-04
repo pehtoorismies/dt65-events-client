@@ -2,18 +2,17 @@ import { Field, Form, FormikProps } from 'formik';
 import React, { FunctionComponent } from 'react';
 import { Button, Flex } from 'rebass';
 import * as Yup from 'yup';
+
 import { BasicInput } from '../../Common';
 import BaseForm from './BaseForm';
 import { IFormProps, IAuthFormProps } from '../../../types';
 
 interface IFormValues {
   email: string;
-}
-
-interface IProps {
-  loading: boolean;
-  message?: string;
-  onLoginClick(arg?: any): void;
+  username: string;
+  password: string;
+  name: string;
+  registerSecret: string;
 }
 
 const render = (formikBag: FormikProps<IFormValues>) => {
@@ -27,6 +26,31 @@ const render = (formikBag: FormikProps<IFormValues>) => {
           placeholder="Sähköpostiosoite*"
           component={BasicInput}
         />
+        <Field
+          width="100%"
+          name="username"
+          placeholder="Käyttäjätunnus*"
+          component={BasicInput}
+        />
+        <Field
+          width="100%"
+          name="password"
+          type="password"
+          placeholder="Salasana*"
+          component={BasicInput}
+        />
+        <Field
+          width="100%"
+          name="name"
+          placeholder="Etunimi Sukunimi*"
+          component={BasicInput}
+        />
+        <Field
+          width="100%"
+          name="registerSecret"
+          placeholder="Saamasi rekisteröintikoodi*"
+          component={BasicInput}
+        />
         <Button
           width="100%"
           variant="primary"
@@ -34,7 +58,7 @@ const render = (formikBag: FormikProps<IFormValues>) => {
           type="submit"
           disabled={isSubmitting}
         >
-          Lähetä linkki
+          Rekisteröidy
         </Button>
       </Flex>
     </Form>
@@ -43,32 +67,41 @@ const render = (formikBag: FormikProps<IFormValues>) => {
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
-    .email('Tarkista muoto')
+    .email('Tarkista sähköposti')
     .required('Pakollinen kenttä'),
+  username: Yup.string().required('Pakollinen kenttä'),
+  password: Yup.string().required('Pakollinen kenttä'),
+  name: Yup.string().required('Pakollinen kenttä'),
+  registerSecret: Yup.string().required('Pakollinen kenttä'),
 });
 const initialValues = {
   email: '',
+  username: '',
   password: '',
+  name: '',
+  registerSecret: '',
 };
 
-export const ForgotPasswordForm: FunctionComponent<IAuthFormProps> = (
+export const Register: FunctionComponent<IAuthFormProps> = (
   props: IAuthFormProps
 ) => {
-  const { onSubmit, errorMessage, onNavigateClick } = props;
+  const { onSubmit, onNavigateClick, errorMessage } = props;
+
   const formProps: IFormProps = {
     validationSchema,
     render,
     onSubmit,
     initialValues,
   };
+
   return (
     <BaseForm
-      navLinkTitle="Kirjautumiseen"
+      navLinkTitle="Kirjatumiseen"
       onNavigateClick={onNavigateClick}
-      heading="UNOHTUNUT SALASANA"
+      heading="REKISTERÖIDY"
       formProps={formProps}
     />
   );
 };
 
-export default ForgotPasswordForm;
+export default Register;

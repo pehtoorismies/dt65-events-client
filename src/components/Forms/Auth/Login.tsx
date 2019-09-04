@@ -7,7 +7,8 @@ import BaseForm from './BaseForm';
 import { IFormProps, IAuthFormProps } from '../../../types';
 
 interface IFormValues {
-  email: string;
+  emailOrUsername: string;
+  password: string;
 }
 
 interface IProps {
@@ -23,8 +24,15 @@ const render = (formikBag: FormikProps<IFormValues>) => {
       <Flex width={[400, 500, 500]} flexDirection="column" alignItems="center">
         <Field
           width="100%"
-          name="email"
-          placeholder="Sähköpostiosoite*"
+          name="emailOrUsername"
+          placeholder="Käyttäjätunnus tai sähköpostiosoite*"
+          component={BasicInput}
+        />
+        <Field
+          width="100%"
+          name="password"
+          type="password"
+          placeholder="Salasana*"
           component={BasicInput}
         />
         <Button
@@ -34,7 +42,7 @@ const render = (formikBag: FormikProps<IFormValues>) => {
           type="submit"
           disabled={isSubmitting}
         >
-          Lähetä linkki
+          Kirjaudu
         </Button>
       </Flex>
     </Form>
@@ -42,12 +50,11 @@ const render = (formikBag: FormikProps<IFormValues>) => {
 };
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('Tarkista muoto')
-    .required('Pakollinen kenttä'),
+  usernameOrEmail: Yup.string().required('Pakollinen kenttä'),
+  password: Yup.string().required('Pakollinen kenttä'),
 });
 const initialValues = {
-  email: '',
+  emailOrUsername: '',
   password: '',
 };
 
@@ -63,9 +70,9 @@ export const ForgotPasswordForm: FunctionComponent<IAuthFormProps> = (
   };
   return (
     <BaseForm
-      navLinkTitle="Kirjautumiseen"
+      navLinkTitle="Salasana unohtunut?"
       onNavigateClick={onNavigateClick}
-      heading="UNOHTUNUT SALASANA"
+      heading="KIRJAUDU"
       formProps={formProps}
     />
   );

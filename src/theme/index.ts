@@ -21,7 +21,8 @@ const primaryForm = {
   fontSize: '16px',
   outline: 'none',
   padding: '18px 8px',
-  
+  width: '100%',
+
   '&::placeholder': {
     color: 'lightgray',
     fontWeight: 'bold',
@@ -35,9 +36,6 @@ const theme = {
   breakpoints: ['40em', '52em', '64em'],
 
   buttons: {
-    aTest: {
-      bg: 'red',
-    },
     outline: {
       backgroundColor: 'transparent',
       boxShadow: 'inset 0 0 0 2px',
@@ -55,9 +53,11 @@ const theme = {
       color: pink,
     },
     primary: {
+      py: 3,
       backgroundColor: pink,
       color: white,
-
+      textTransform: 'uppercase',
+      fontWeight: 'bold',
       '&:disabled': {
         backgroundColor: Color(pink)
           .lighten(0.1)

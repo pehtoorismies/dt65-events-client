@@ -25,11 +25,7 @@ const App = () => (
           <Box>
             <Button variant="aTest">A TEST</Button>
             <Button variant="primary">PRIMARY</Button>
-            <ForgotPasswordForm
-              onLoginClick={() => {}}
-              loading={false}
-              message="moi"
-            />
+            
           </Box>
         </Router>
         <h1>Koira koira</h1>
