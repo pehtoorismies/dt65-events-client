@@ -2,12 +2,12 @@ import { Field, Form, FormikProps } from 'formik';
 import React, { FunctionComponent } from 'react';
 import { Button, Flex } from 'rebass';
 import * as Yup from 'yup';
+import { IAuthFormProps, IFormProps } from '../../../types';
 import { BasicInput } from '../../Common';
 import BaseForm from './BaseForm';
-import { IFormProps, IAuthFormProps } from '../../../types';
 
 interface IFormValues {
-  emailOrUsername: string;
+  usernameOrEmail: string;
   password: string;
 }
 
@@ -18,7 +18,7 @@ const render = (formikBag: FormikProps<IFormValues>) => {
       <Flex flexDirection="column" alignItems="center">
         <Field
           width="100%"
-          name="emailOrUsername"
+          name="usernameOrEmail"
           placeholder="Käyttäjätunnus tai sähköpostiosoite*"
           component={BasicInput}
         />
@@ -48,11 +48,11 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required('Pakollinen kenttä'),
 });
 const initialValues = {
-  emailOrUsername: '',
+  usernameOrEmail: '',
   password: '',
 };
 
-export const ForgotPasswordForm: FunctionComponent<IAuthFormProps> = (
+export const LoginForm: FunctionComponent<IAuthFormProps> = (
   props: IAuthFormProps
 ) => {
   const formProps: IFormProps = {
@@ -70,4 +70,4 @@ export const ForgotPasswordForm: FunctionComponent<IAuthFormProps> = (
   );
 };
 
-export default ForgotPasswordForm;
+export default LoginForm;

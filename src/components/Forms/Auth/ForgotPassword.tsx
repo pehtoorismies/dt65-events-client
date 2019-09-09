@@ -1,16 +1,18 @@
 import { Field, Form, FormikProps } from 'formik';
 import React, { FunctionComponent } from 'react';
-import { Box, Button, Flex } from 'rebass';
+import { Button, Flex } from 'rebass';
 import * as Yup from 'yup';
+import { IAuthFormProps, IFormProps } from '../../../types';
 import { BasicInput } from '../../Common';
 import BaseForm from './BaseForm';
-import { IFormProps, IAuthFormProps } from '../../../types';
+
 
 interface IFormValues {
   email: string;
 }
 
 const render = (formikBag: FormikProps<IFormValues>) => {
+  // console.log(formikBag);
   const { isSubmitting } = formikBag;
   return (
     <Form>

@@ -12,7 +12,7 @@ html {
 body {
   height: 100%;
   font-family: 'Titillium Web', sans-serif;
-  background-color: #F7F7F7;
+  background-color: #F7F7F7;  
 }
 `;
 

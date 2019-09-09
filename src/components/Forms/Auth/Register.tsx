@@ -3,9 +3,9 @@ import React, { FunctionComponent } from 'react';
 import { Button, Flex } from 'rebass';
 import * as Yup from 'yup';
 
+import { IAuthFormProps, IFormProps } from '../../../types';
 import { BasicInput } from '../../Common';
 import BaseForm from './BaseForm';
-import { IFormProps, IAuthFormProps } from '../../../types';
 
 interface IFormValues {
   email: string;

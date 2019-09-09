@@ -1,34 +1,57 @@
-import { ThemeProvider } from 'emotion-theming'
+import { ThemeProvider } from 'emotion-theming';
 import React, { Fragment } from 'react';
 import { ApolloProvider } from 'react-apollo';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Box, Button } from 'rebass';
+import { Box } from 'rebass';
 
+import EventsContainer from './containers/EventsContainer';
+import FooterMenuContainer from './containers/FooterMenuContainer';
+import HeaderMenuContainer from './containers/HeaderMenuContainer';
 
 import { ROUTES } from './constants';
-// import LoginContainer from './containers/LoginContainer';
+import LoginContainer from './containers/LoginContainer';
+import RegisterContainer from './containers/RegisterContainer';
+import ForgotPasswordContainer from './containers/ForgotPasswordContainer';
 import GlobalStyle from './GlobalStyle';
+import PrivateRoute from './PrivateRoute';
 import apolloClient from './util/apolloClient';
-// import { Button } from './components/Common';
 
 // <Route exact={true} path={ROUTES.login} component={LoginContainer} />
 
 import { theme } from './theme';
-import ForgotPasswordForm from './components/Forms/Auth/ForgotPassword';
 
 const App = () => (
   <Fragment>
     <GlobalStyle />
     <ThemeProvider theme={theme}>
       <ApolloProvider client={apolloClient}>
-        <Router>
-          <Box>
-            <Button variant="aTest">A TEST</Button>
-            <Button variant="primary">PRIMARY</Button>
-            
-          </Box>
-        </Router>
-        <h1>Koira koira</h1>
+        <Box py={40}>
+          <Router>
+            <HeaderMenuContainer />
+            <FooterMenuContainer />
+
+            <PrivateRoute
+              exact={true}
+              path={ROUTES.home}
+              component={EventsContainer}
+            />
+            <Route
+              exact={true}
+              path={ROUTES.login}
+              component={LoginContainer}
+            />
+            <Route
+              exact={true}
+              path={ROUTES.forgotPassword}
+              component={ForgotPasswordContainer}
+            />
+            <Route
+              exact={true}
+              path={ROUTES.register}
+              component={RegisterContainer}
+            />
+          </Router>
+        </Box>
       </ApolloProvider>
     </ThemeProvider>
   </Fragment>

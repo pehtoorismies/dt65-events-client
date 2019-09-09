@@ -1,8 +1,8 @@
 import { Formik } from 'formik';
 import React, { FunctionComponent } from 'react';
 import { Box, Flex, Heading, Text } from 'rebass';
-import { TextLink } from '../../Common';
 import { IFormProps } from '../../../types';
+import { TextLink } from '../../Common';
 
 interface IProps {
   onSubmit: (value: any, actions: any) => any;
@@ -39,9 +39,10 @@ const BaseForm: FunctionComponent<IProps> = (props: IProps) => {
     onNavigateClick,
     errorMessage,
   } = props;
+
   return (
     <Flex width="100%" alignItems="center" flexDirection="column">
-      <Box width={[400, 500, 500]}>
+      <Box width={["100%", 400, 400]}>
         <Heading py={3} color="black" textAlign="center" fontWeight={700}>
           {heading}
         </Heading>
