@@ -1,3 +1,7 @@
+import { FormikActions } from "formik";
+import { ReactNode } from "react";
+
+
 export interface IEventType {
   img: string;
   title: string;
@@ -12,7 +16,7 @@ export interface IFormProps {
 export interface IAuthFormProps {
   onSubmit: (value: any, actions: any) => any;
   errorMessage?: string;
-  onNavigateClick: () => any;
+  children?: ReactNode,
 }
 
 export type IParticipant = {

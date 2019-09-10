@@ -1,16 +1,14 @@
 import { Formik } from 'formik';
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 import { Box, Flex, Heading, Text } from 'rebass';
 import { IFormProps } from '../../../types';
-import { TextLink } from '../../Common';
 
 interface IProps {
   onSubmit: (value: any, actions: any) => any;
   errorMessage?: string;
-  navLinkTitle: string;
   heading: string;
   formProps: IFormProps;
-  onNavigateClick: () => any;
+  children: ReactNode;
 }
 
 const renderError = (errorMessage?: string) => {
@@ -18,39 +16,26 @@ const renderError = (errorMessage?: string) => {
     return null;
   }
   return (
-    <Box
-      p={2}
-      my={1}
-      width="100%"
-      alignSelf="center"
-     
-    >
-      <Text textAlign="center" color="red">{errorMessage}</Text>
+    <Box p={2} my={1} width="100%" alignSelf="center">
+      <Text textAlign="center" color="red">
+        {errorMessage}
+      </Text>
     </Box>
   );
 };
 
 const BaseForm: FunctionComponent<IProps> = (props: IProps) => {
-  const {
-    heading,
-    formProps,
-    navLinkTitle,
-    onSubmit,
-    onNavigateClick,
-    errorMessage,
-  } = props;
+  const { heading, formProps, onSubmit, errorMessage, children } = props;
 
   return (
     <Flex width="100%" alignItems="center" flexDirection="column">
-      <Box width={["100%", 400, 400]}>
+      <Box width={['100%', 400, 400]}>
         <Heading py={3} color="black" textAlign="center" fontWeight={700}>
           {heading}
         </Heading>
         {renderError(errorMessage)}
         <Formik {...formProps} onSubmit={onSubmit} />
-        <TextLink onClick={onNavigateClick} m={2} textAlign="center">
-          {navLinkTitle}
-        </TextLink>
+        {children}
       </Box>
     </Flex>
   );

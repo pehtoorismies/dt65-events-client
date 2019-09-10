@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from 'react';
-import { Flex } from 'rebass';
 import styled, { css } from 'styled-components';
 import { Home } from 'styled-icons/boxicons-solid/Home';
 import { PlusSquare } from 'styled-icons/boxicons-solid/PlusSquare';

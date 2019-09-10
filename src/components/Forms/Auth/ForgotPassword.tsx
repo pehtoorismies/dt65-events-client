@@ -6,7 +6,6 @@ import { IAuthFormProps, IFormProps } from '../../../types';
 import { BasicInput } from '../../Common';
 import BaseForm from './BaseForm';
 
-
 interface IFormValues {
   email: string;
 }
@@ -57,12 +56,9 @@ export const ForgotPasswordForm: FunctionComponent<IAuthFormProps> = (
     initialValues,
   };
   return (
-    <BaseForm
-      {...props}
-      navLinkTitle="Kirjautumiseen"
-      heading="UNOHTUNUT SALASANA"
-      formProps={formProps}
-    />
+    <BaseForm {...props} heading="UNOHTUNUT SALASANA" formProps={formProps}>
+      {props.children}
+    </BaseForm>
   );
 };
 

@@ -5,21 +5,14 @@ import { ForgotPassword, Login, Register } from './Auth';
 
 storiesOf('Forms/Auth', module)
   .add('forgot password', () => (
-    <ForgotPassword
-      onNavigateClick={action('Click')}
-      onSubmit={action('Submit')}
-    />
+    <ForgotPassword onSubmit={action('Submit')}>Content</ForgotPassword>
   ))
   .add('forgot password - error message', () => (
-    <ForgotPassword
-      errorMessage="moi"
-      onNavigateClick={action('Click')}
-      onSubmit={action('Submit')}
-    />
+    <ForgotPassword errorMessage="moi" onSubmit={action('Submit')}>
+      Content
+    </ForgotPassword>
   ))
-  .add('login', () => (
-    <Login onNavigateClick={action('Click')} onSubmit={action('Submit')} />
-  ))
+  .add('login', () => <Login onSubmit={action('Submit')}>Content</Login>)
   .add('register', () => (
-    <Register onNavigateClick={action('Click')} onSubmit={action('Submit')} />
+    <Register onSubmit={action('Submit')}>Content</Register>
   ));

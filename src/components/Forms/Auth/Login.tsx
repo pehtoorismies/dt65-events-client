@@ -60,13 +60,11 @@ export const LoginForm: FunctionComponent<IAuthFormProps> = (
     render,
     initialValues,
   };
+
   return (
-    <BaseForm
-      {...props}
-      navLinkTitle="Salasana unohtunut?"
-      heading="KIRJAUDU"
-      formProps={formProps}
-    />
+    <BaseForm {...props} heading="KIRJAUDU" formProps={formProps}>
+      {props.children}
+    </BaseForm>
   );
 };
 

@@ -2,7 +2,6 @@ import { Field, Form, FormikProps } from 'formik';
 import React, { FunctionComponent } from 'react';
 import { Button, Flex } from 'rebass';
 import * as Yup from 'yup';
-
 import { IAuthFormProps, IFormProps } from '../../../types';
 import { BasicInput } from '../../Common';
 import BaseForm from './BaseForm';
@@ -13,6 +12,10 @@ interface IFormValues {
   password: string;
   name: string;
   registerSecret: string;
+}
+
+interface ILoaderProps {
+  loading: boolean;
 }
 
 const render = (formikBag: FormikProps<IFormValues>) => {
@@ -92,12 +95,9 @@ export const Register: FunctionComponent<IAuthFormProps> = (
   };
 
   return (
-    <BaseForm
-      {...props}
-      navLinkTitle="Kirjatumiseen"
-      heading="REKISTERÖIDY"
-      formProps={formProps}
-    />
+    <BaseForm {...props} heading="REKISTERÖIDY" formProps={formProps}>
+      {props.children}
+    </BaseForm>
   );
 };
 

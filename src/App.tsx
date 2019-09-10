@@ -1,22 +1,19 @@
 import { ThemeProvider } from 'emotion-theming';
 import React, { Fragment } from 'react';
 import { ApolloProvider } from 'react-apollo';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Box } from 'rebass';
 
 import EventsContainer from './containers/EventsContainer';
-import FooterMenuContainer from './containers/FooterMenuContainer';
 import HeaderMenuContainer from './containers/HeaderMenuContainer';
 
 import { ROUTES } from './constants';
+import ForgotPasswordContainer from './containers/ForgotPasswordContainer';
 import LoginContainer from './containers/LoginContainer';
 import RegisterContainer from './containers/RegisterContainer';
-import ForgotPasswordContainer from './containers/ForgotPasswordContainer';
 import GlobalStyle from './GlobalStyle';
 import PrivateRoute from './PrivateRoute';
 import apolloClient from './util/apolloClient';
-
-// <Route exact={true} path={ROUTES.login} component={LoginContainer} />
 
 import { theme } from './theme';
 
@@ -25,11 +22,9 @@ const App = () => (
     <GlobalStyle />
     <ThemeProvider theme={theme}>
       <ApolloProvider client={apolloClient}>
-        <Box py={40}>
+        <Box py={40} px={2}>
           <Router>
             <HeaderMenuContainer />
-            <FooterMenuContainer />
-
             <PrivateRoute
               exact={true}
               path={ROUTES.home}
