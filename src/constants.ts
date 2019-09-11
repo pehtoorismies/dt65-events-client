@@ -83,6 +83,7 @@ const ROUTES = {
   notFound: '/404',
   profile: '/profile',
   register: '/register',
+  registerSuccess: '/registerSuccess',
 };
 
 export { EVENT_TYPES, WEEK_DAYS, ROUTES, GRAPHQL_TYPES };

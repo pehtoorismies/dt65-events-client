@@ -1,13 +1,11 @@
-import { useMutation } from '@apollo/react-hooks';
+import { useApolloClient, useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import React, { FunctionComponent, useState } from 'react';
 import { BallBeat } from 'react-pure-loaders';
-import { RouteComponentProps } from 'react-router';
+import { Redirect, RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
-import { Button } from 'rebass';
 import { TextLink } from '../components/Common';
 import { Register } from '../components/Forms/Auth';
-import InfoMessage from '../components/InfoMessage';
 import { ROUTES } from '../constants';
 import { setGraphQLErrors } from '../util/graphqlErrors';
 
@@ -31,25 +29,18 @@ const SIGNUP_MUTATION = gql`
   }
 `;
 
-const setFieldErrors = (setFieldError: any) => (error: any) => {
-  const { name, data } = error;
-  if (name === 'UserInputError') {
-    const { field, message } = data;
-    setFieldError(field, message);
-  }
-};
-
 const RegisterContainer: FunctionComponent<RouteComponentProps> = (
   props: RouteComponentProps
 ) => {
   const { history } = props;
   const toLogin = () => history.push(ROUTES.login);
+  const client = useApolloClient();
 
   const [signupAction, { loading }] = useMutation(
     SIGNUP_MUTATION
   );
   const [generalError, setGeneralError] = useState('');
-  const [successEmail, setSuccessEmail] = useState('');
+  const [registerSuccess, setRegisterSuccess] = useState(false);
 
   const onSubmit = async (values: any, actions: any) => {
     try {
@@ -58,7 +49,9 @@ const RegisterContainer: FunctionComponent<RouteComponentProps> = (
           signup: { email },
         },
       } = await signupAction({ variables: values });
-      setSuccessEmail(email);
+      
+      client.writeData({ data: { registerEmail: email } })
+      setRegisterSuccess(true);
     } catch (error) {
       const { graphQLErrors, networkError } = error;
 
@@ -72,14 +65,14 @@ const RegisterContainer: FunctionComponent<RouteComponentProps> = (
     }
   };
 
-  if (!successEmail) {
-    return (
-      <InfoMessage
-        message={`Rekisteröityminen onnistui. Olet saanut vahvistusviestin sähköpostiisi ${successEmail}. Klikkaa siellä olevaa linkkiä.`}
-      >
-        <Button onClick={toLogin} variant="secondary">Kirjautumiseen</Button>
-      </InfoMessage>
-    );
+  if (registerSuccess) {
+    return <Redirect
+    to={{
+      pathname: ROUTES.registerSuccess,
+      state: { from: props.location },
+    }}
+  />
+  
   }
   return (
     <Register onSubmit={onSubmit} errorMessage={generalError}>

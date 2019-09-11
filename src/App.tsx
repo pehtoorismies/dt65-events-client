@@ -11,6 +11,7 @@ import { ROUTES } from './constants';
 import ForgotPasswordContainer from './containers/ForgotPasswordContainer';
 import LoginContainer from './containers/LoginContainer';
 import RegisterContainer from './containers/RegisterContainer';
+import RegisterSuccessContainer from './containers/RegisterSuccessContainer';
 import GlobalStyle from './GlobalStyle';
 import PrivateRoute from './PrivateRoute';
 import apolloClient from './util/apolloClient';
@@ -44,6 +45,11 @@ const App = () => (
               exact={true}
               path={ROUTES.register}
               component={RegisterContainer}
+            />
+            <Route
+              exact={true}
+              path={ROUTES.registerSuccess}
+              component={RegisterSuccessContainer}
             />
           </Router>
         </Box>
