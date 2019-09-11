@@ -70,9 +70,16 @@ const theme : any = {
       },
     },
     outlinePrimary: {
+      ...primaryButton,
       backgroundColor: 'transparent',
       boxShadow: 'inset 0 0 0 2px',
       color: pink,
+      '&:hover': {
+        cursor: 'pointer',
+        backgroundColor: Color(pink)
+          .lighten(0.8)
+          .string(),
+      },
     },
     primary: primaryButton,
     secondary: {

@@ -11,7 +11,7 @@ const BaseStep: FunctionComponent<IProps> = (props: IProps) => {
 
   return (
     <Box>
-      <Text fontSize={[4, 5, 6]} textAlign="center" fontWeight="bold" m={4}>
+      <Text fontSize={[4, 5, 6]} textAlign="center" fontWeight="bold" my={2}>
         {title}
       </Text>
       {children}

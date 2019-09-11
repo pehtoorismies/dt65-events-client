@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Circle } from 'styled-icons/boxicons-regular/Circle';
 import { Dash } from 'styled-icons/octicons/Dash';
 import { CheckCircle } from 'styled-icons/boxicons-solid/CheckCircle';
-import { Box, Flex } from 'rebass';
+import { Box, Flex, Text } from 'rebass';
 import styled from '@emotion/styled';
 import { withTheme } from 'emotion-theming';
 import times from 'ramda/es/times';
@@ -12,7 +12,7 @@ import concat from 'ramda/es/concat';
 import intersperse from 'ramda/es/intersperse';
 
 // @ts-ignore - hack
-const getPink = (theme) => theme.colors.pink;
+const getPink = theme => theme.colors.pink;
 
 const EmptyCircle = styled(Circle)`
   color: ${props => getPink(props.theme)};
@@ -38,13 +38,27 @@ const StepCounter: FunctionComponent<IProps> = (props: IProps) => {
   const { total, completed } = props;
   const uncompleted = total - completed;
 
-  const completedElems = times((id) => <CheckedCircle key={`c-${id}`} />, completed);
-  const uncompletedElems = times((id) => <EmptyCircle key={`c-${id}`} />, uncompleted);
+  const completedElems = times(
+    id => <CheckedCircle key={`c-${id}`} />,
+    completed
+  );
+  const uncompletedElems = times(
+    id => <EmptyCircle key={`c-${id}`} />,
+    uncompleted
+  );
   const all = concat(completedElems, uncompletedElems);
-  const withDashes = intersperse(<Connector />, all)
+  const withDashes = intersperse(<Connector />, all);
   return (
     <Box>
       {map(identity, withDashes)}
+      <Text
+        textAlign="center"
+        fontSize={10}
+        fontFamily={`'Share Tech Mono', monospace`}
+      >
+        steps
+      </Text>
+      
     </Box>
   );
 };

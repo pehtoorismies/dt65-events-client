@@ -11,6 +11,7 @@ const sortByTitle= sortBy(prop('title'));
 interface IProps {
   preSelectedType?: string;
   types: IEventType[];
+  setSelectedType: OnSelectType;
 }
 
 type OnSelectType = (type: string) => void;
@@ -28,12 +29,12 @@ const renderTypeButton = (setSelected: OnSelectType, selectedType: any) => (
 };
 
 const TypeStep: FunctionComponent<IProps> = (props: IProps) => {
-  const { preSelectedType, types } = props;
-  const [selectedType, setSelected] = useState(preSelectedType);
+  const { preSelectedType, types, setSelectedType } = props;
+  
   const ordered = sortByTitle(types);
-  const typeRender = renderTypeButton(setSelected, selectedType);
+  const typeRender = renderTypeButton(setSelectedType, preSelectedType);
   return (
-    <BaseStep title="Valitse tapahtuman tyyppi">
+    <BaseStep title="Valitse tyyppi">
       <Flex flexWrap="wrap" justifyContent="center">
         {map(typeRender, ordered)}
       </Flex>

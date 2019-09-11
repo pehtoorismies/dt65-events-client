@@ -11,7 +11,11 @@ storiesOf('EventCreator', module).add('Wizard', () => <EventCreator />);
 
 storiesOf('EventCreator/steps', module)
   .add('Type', () => (
-    <StepType types={EVENT_TYPES} preSelectedType={EVENT_TYPES[1].type} />
+    <StepType
+      setSelectedType={action('Select')}
+      types={EVENT_TYPES}
+      preSelectedType={EVENT_TYPES[1].type}
+    />
   ))
   .add('Race', () => <RaceStep preSelectedRace={true} />)
   .add('Title', () => <TitleStep />);
