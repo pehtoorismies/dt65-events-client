@@ -1,6 +1,6 @@
 import React, { FunctionComponent, ReactNode } from 'react';
 import { Button, Flex, Text } from 'rebass';
-import styled from 'styled-components';
+import styled from '@emotion/styled'
 import { RightArrow } from 'styled-icons/boxicons-solid/RightArrow';
 
 interface IProps {

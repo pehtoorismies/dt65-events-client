@@ -32,11 +32,7 @@ const App = () => (
               path={ROUTES.home}
               component={EventsContainer}
             />
-            <PrivateRoute
-              exact={true}
-              path={ROUTES.profileSubscriptions}
-              component={ProfileSubscriptionContainer}
-            />
+            
             <PublicRoute
               exact={true}
               path={ROUTES.login}

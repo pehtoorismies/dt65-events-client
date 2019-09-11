@@ -3,6 +3,10 @@ import { Box, Button, Flex, Text } from 'rebass';
 import { IEventType } from '../../../types';
 import map from 'ramda/es/map';
 import BaseStep from './BaseStep';
+import sortBy from 'ramda/es/sortBy';
+import prop from 'ramda/es/prop';
+
+const sortByTitle= sortBy(prop('title'));
 
 interface IProps {
   preSelectedType?: string;
@@ -17,7 +21,7 @@ const renderTypeButton = (setSelected: OnSelectType, selectedType: any) => (
   const variant = selectedType === type.type ? 'primary' : 'secondary';
 
   return (
-    <Button onClick={() => setSelected(type.type)} variant={variant} m={1}>
+    <Button width={150} onClick={() => setSelected(type.type)} variant={variant} m={1}>
       {type.title}
     </Button>
   );
@@ -26,12 +30,12 @@ const renderTypeButton = (setSelected: OnSelectType, selectedType: any) => (
 const TypeStep: FunctionComponent<IProps> = (props: IProps) => {
   const { preSelectedType, types } = props;
   const [selectedType, setSelected] = useState(preSelectedType);
-
+  const ordered = sortByTitle(types);
   const typeRender = renderTypeButton(setSelected, selectedType);
   return (
     <BaseStep title="Valitse tapahtuman tyyppi">
       <Flex flexWrap="wrap" justifyContent="center">
-        {map(typeRender, types)}
+        {map(typeRender, ordered)}
       </Flex>
     </BaseStep>
   );

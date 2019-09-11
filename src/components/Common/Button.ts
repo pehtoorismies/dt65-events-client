@@ -1,6 +1,6 @@
 // @ts-ignore
 import { Button } from 'rebass/styled-components';
-import styled from 'styled-components';
+import styled from '@emotion/styled'
 
 // display: inline-flex;
 //   height: ${props => props.height}px;

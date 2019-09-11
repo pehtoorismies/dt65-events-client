@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 // import { colors } from '../../util/themeAx';
 const BigInput = styled.input`
   width: 100%;
@@ -13,16 +13,13 @@ const BigInput = styled.input`
   font-size: ${props => props.size}px;
   font-family: 'Titillium Web', 'sans serif';
   font-weight: bold;
-  text-align: center; 
+  text-align: center;
   &:focus {
-
   }
   ::placeholder {
     font-weight: bold;
-    
   }
 `;
-
 
 // const BigInput = styled.input`
 //   width: 100%;
@@ -37,7 +34,7 @@ const BigInput = styled.input`
 //   font-size: ${props => props.size}px;
 //   font-family: 'Titillium Web', 'sans serif';
 //   font-weight: bold;
-//   text-align: center; 
+//   text-align: center;
 //   &:focus {
 //     /* border-bottom: 2px solid ${colors('lightgray')}; */
 //   }
