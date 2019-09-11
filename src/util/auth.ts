@@ -5,11 +5,11 @@ const ID_TOKEN = 'dt65IdToken';
 const ACCESS_TOKEN = 'dt65AccessToken';
 const EXPIRES_IN = 'dt65ExpiresIn';
 
-const getLocalUser = (token: string) => {
-  if (!token) {
+const getLocalUser = (idToken: string) => {
+  if (!idToken) {
     return null;
   }
-  const decoded: any = jwtDecode(token);
+  const decoded: any = jwtDecode(idToken);
 
   return {
     __typename: GRAPHQL_TYPES.LOCAL_USER,
@@ -18,6 +18,7 @@ const getLocalUser = (token: string) => {
   };
 };
 
+// TODO: check expiration!
 const isAuthenticated = (): boolean => !!localStorage.getItem(ACCESS_TOKEN);
 
 const login = (idToken: string, accessToken: string, expiresIn: number) => {

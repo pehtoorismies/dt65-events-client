@@ -1,7 +1,7 @@
 import { ThemeProvider } from 'emotion-theming';
 import React, { Fragment } from 'react';
 import { ApolloProvider } from 'react-apollo';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { Box } from 'rebass';
 
 import EventsContainer from './containers/EventsContainer';
@@ -14,6 +14,7 @@ import RegisterContainer from './containers/RegisterContainer';
 import RegisterSuccessContainer from './containers/RegisterSuccessContainer';
 import GlobalStyle from './GlobalStyle';
 import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
 import apolloClient from './util/apolloClient';
 
 import { theme } from './theme';
@@ -31,22 +32,27 @@ const App = () => (
               path={ROUTES.home}
               component={EventsContainer}
             />
-            <Route
+            <PrivateRoute
+              exact={true}
+              path={ROUTES.profileSubscriptions}
+              component={ProfileSubscriptionContainer}
+            />
+            <PublicRoute
               exact={true}
               path={ROUTES.login}
               component={LoginContainer}
             />
-            <Route
+            <PublicRoute
               exact={true}
               path={ROUTES.forgotPassword}
               component={ForgotPasswordContainer}
             />
-            <Route
+            <PublicRoute
               exact={true}
               path={ROUTES.register}
               component={RegisterContainer}
             />
-            <Route
+            <PublicRoute
               exact={true}
               path={ROUTES.registerSuccess}
               component={RegisterSuccessContainer}

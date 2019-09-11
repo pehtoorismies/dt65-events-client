@@ -1,13 +1,8 @@
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 import React from 'react';
-
-// import { BigInput, Button, Input, ErrorText } from './';
-import { BigInput, Button, ErrorText } from './';
-
-// storiesOf('Common/BigInput', module).add('value', () => (
-//   <BigInput value="Moi"></BigInput>
-// ));
+import { User } from 'styled-icons/boxicons-regular/User';
+import { ArrowButton, Button, Checkbox, ErrorText } from './';
 
 storiesOf('Common/Button', module)
   .add('primary', () => (
@@ -28,10 +23,13 @@ storiesOf('Common/Button', module)
 storiesOf('Common/Text', module).add('ErrorText', () => (
   <ErrorText>This is error</ErrorText>
 ));
-// storiesOf('Common/Input', module).add('value', () => (
-//   <Input value="Moi"></Input>
-// )).add('placeholder', () => (
-//   <Input value="" placeholder="This is placeholder"></Input>
-// )).add('password', () => (
-//   <Input value="sadfasfd" type="password" ></Input>
-// ));
+storiesOf('Common/Misc', module)
+  .add('Arrow Button', () => (
+    <ArrowButton title="Arrow Button" icon={User} onClick={action('click')} />
+  ))
+  .add('Checkbox - on', () => (
+    <Checkbox title="Arrow Button" onChange={action('click')} checked={true} />
+  ))
+  .add('Checkbox - off', () => (
+    <Checkbox title="Arrow Button" onChange={action('click')} checked={false} />
+  ));

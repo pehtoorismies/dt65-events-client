@@ -1,10 +1,11 @@
 // @ts-ignore
 import * as React from 'react';
 import { Text } from 'rebass';
+import ArrowButton from './ArrowButton';
 import BasicInput from './BasicInput';
 import BigInput from './BigInput';
 import Button from './Button';
-
+import Checkbox from './Checkbox';
 
 const ErrorText = (props: any) => (
   <Text
@@ -31,4 +32,12 @@ const TextLink = (props: any) => (
   />
 );
 
-export { BasicInput, BigInput, Button, ErrorText, TextLink };
+export {
+  ArrowButton,
+  BasicInput,
+  BigInput,
+  Button,
+  Checkbox,
+  ErrorText,
+  TextLink,
+};

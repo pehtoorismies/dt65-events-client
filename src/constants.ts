@@ -66,6 +66,7 @@ const EVENT_TYPES: IEventType[] = [
 const WEEK_DAYS = ['Ma', 'Ti', 'Ke', 'To', 'Pe', 'La', 'Su'];
 
 const EVENTS_PATH = '/events';
+const PROFILE_PATH = '/profile';
 
 const GRAPHQL_TYPES = {
   LOCAL_USER: 'LocalUser',
@@ -81,7 +82,8 @@ const ROUTES = {
   login: '/login',
   logout: '/logout',
   notFound: '/404',
-  profile: '/profile',
+  profile: PROFILE_PATH,
+  profileSubscriptions: `${PROFILE_PATH}/subscriptions`  ,
   register: '/register',
   registerSuccess: '/registerSuccess',
 };

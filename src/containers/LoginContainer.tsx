@@ -1,12 +1,22 @@
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import React, { FunctionComponent, useState } from 'react';
-import { RouteComponentProps } from 'react-router';
+import { Redirect, RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { TextLink } from '../components/Common';
 import { Login } from '../components/Forms/Auth';
 import { ROUTES } from '../constants';
+import { getLocalUser, login as authLogin } from '../util/auth';
 import { setGraphQLErrors } from '../util/graphqlErrors';
+
+const GET_LOCALUSER = gql`
+  query LocalUser {
+    localUser @client {
+      id
+      username
+    }
+  }
+`;
 
 const LOGIN_MUTATION = gql`
   mutation Login($usernameOrEmail: String!, $password: String!) {
@@ -24,13 +34,32 @@ const LoginContainer: FunctionComponent<RouteComponentProps> = (
   const { history } = props;
   const toForgotPassword = () => history.push(ROUTES.forgotPassword);
   const toRegister = () => history.push(ROUTES.register);
-  const [loginAction, { data, loading, error }] = useMutation(LOGIN_MUTATION);
   const [generalError, setGeneralError] = useState('');
+  const [loginSuccess, setLoginSuccess] = useState(false);
+
+  const [loginAction, { data, loading, error }] = useMutation(LOGIN_MUTATION, {
+    update(
+      cache,
+      {
+        data: {
+          login: { idToken, accessToken, expiresIn },
+        },
+      }
+    ) {
+      authLogin(idToken, accessToken, expiresIn);
+
+      cache.writeQuery({
+        query: GET_LOCALUSER,
+        data: { localUser: getLocalUser(idToken) },
+      });
+    },
+  });
 
   // TODO: check correct formik type
   const onSubmit = async (values: any, actions: any) => {
     try {
       await loginAction({ variables: values });
+      setLoginSuccess(true);
     } catch (e) {
       const { graphQLErrors, networkError } = e;
       if (graphQLErrors) {
@@ -41,11 +70,18 @@ const LoginContainer: FunctionComponent<RouteComponentProps> = (
     } finally {
       actions.setSubmitting(false);
     }
-
-    console.log('data', data);
   };
 
-  console.log('loading', loading);
+  if (loginSuccess) {
+    return (
+      <Redirect
+        to={{
+          pathname: ROUTES.home,
+          state: { from: props.location },
+        }}
+      />
+    );
+  }
 
   return (
     <Login onSubmit={onSubmit} errorMessage={generalError}>
