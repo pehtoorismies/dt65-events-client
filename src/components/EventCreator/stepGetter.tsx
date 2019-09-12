@@ -4,6 +4,7 @@ import assoc from 'ramda/es/assoc';
 import TypeStep from './steps/TypeStep';
 import RaceStep from './steps/RaceStep';
 import TitleStep from './steps/TitleStep';
+import DateStep from './steps/DateStep';
 import { EVENT_TYPES } from '../../constants';
 import { isNullOrUndefined } from '../../util/general';
 
@@ -28,6 +29,13 @@ const getStep = (
   const setTitles = (title?: string, subtitle?: string) => {
     setEventState(assoc('title', title, eventState));
     setEventState(assoc('subtitle', subtitle, eventState));
+  };
+
+  const setDate = (date: Date): void => {
+    setEventState(assoc('date', date, eventState));
+  };
+  const setTime = (time: string): void => {
+    setEventState(assoc('time', time, eventState));
   };
 
   if (step === 0) {
@@ -63,7 +71,20 @@ const getStep = (
     );
   }
 
-  return <h1>moi</h1>;
+  if (step === 3) {
+    return (
+      <DateStep
+        toPrevStep={() => setStep(2)}
+        toNextStep={() => setStep(4)}
+        time={eventState.time}
+        date={eventState.date}
+        setDate={setDate}
+        setTime={setTime}
+      />
+    );
+  }
+
+  return <h1>END</h1>;
 };
 
 export default getStep;

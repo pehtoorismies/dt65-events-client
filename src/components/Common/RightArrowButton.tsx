@@ -29,23 +29,4 @@ const RightArrowButton = (props: any) => (
   </Button>
 );
 
-// const RightArrowButton: FunctionComponent<IProps> = (props: IProps) => {
-//   const { visible, onClick, type = 'button' } = props;
-//   return (
-//     <Button
-//       onClick={onClick}
-//       sx={{ visibility: visible ? 'visible' : 'hidden' }}
-//       variant="outlinePrimary"
-//       m={1}
-//       width={150}
-//       type={type}
-//     >
-//       <Flex alignItems="center" justifyContent="space-between">
-//         <Text>SEURAAVA</Text>
-//         <Arrow />
-//       </Flex>
-//     </Button>
-//   );
-// };
-
 export default RightArrowButton;

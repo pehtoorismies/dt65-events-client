@@ -28,4 +28,6 @@ export interface IEventState {
   race?: boolean;
   title?: string;
   subtitle?: string;
+  date?: Date;
+  time?: string;
 }
