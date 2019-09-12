@@ -6,6 +6,9 @@ import BasicInput from './BasicInput';
 import BigInput from './BigInput';
 import Button from './Button';
 import Checkbox from './Checkbox';
+import EventInput from './EventInput';
+import LeftArrowButton from './LeftArrowButton';
+import RightArrowButton from './RightArrowButton';
 
 const ErrorText = (props: any) => (
   <Text
@@ -39,5 +42,8 @@ export {
   Button,
   Checkbox,
   ErrorText,
+  EventInput,
   TextLink,
+  LeftArrowButton,
+  RightArrowButton,
 };

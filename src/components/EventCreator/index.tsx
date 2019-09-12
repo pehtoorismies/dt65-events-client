@@ -33,20 +33,20 @@ interface IProps {
 
 const MAX_STEP = 6;
 
-const getPrevVisibility = (step: number, eventState: any) => {
+const getPrevVisibility = (step: number, eventState: IEventState) => {
   if (step === 0) {
     return 'hidden';
   }
   return 'visible';
 };
-const getNextVisibility = (step: number, eventState: any) => {
-  const selectedType = path(['type', 'selected'], eventState);
-  const isRace = path(['race', 'isRace'], eventState);
-
-  if (!isTruthy(selectedType)) {
+const getNextVisibility = (step: number, eventState: IEventState) => {
+  if (!isTruthy(eventState.type)) {
     return 'hidden';
   }
-  if (step === 1 && isNullOrUndefined(isRace)) {
+  if (step === 1 && isNullOrUndefined(eventState.race)) {
+    return 'hidden';
+  }
+  if (step === 2 && isNullOrUndefined(eventState.title)) {
     return 'hidden';
   }
 
@@ -77,37 +77,7 @@ const EventCreator: FunctionComponent<IProps> = (props: IProps) => {
         <StepCounter completed={step} total={MAX_STEP} />
       </Flex>
       <Flex>{getStep(step, setStep, eventState, setEventState)}</Flex>
-      <Flex
-        my={4}
-        width="100%"
-        alignItems="center"
-        justifyContent="space-between"
-      >
-        <Button
-          onClick={gotoPrevStep}
-          sx={{ visibility: prevVisible }}
-          variant="outlinePrimary"
-          m={1}
-          width={150}
-        >
-          <Flex alignItems="center" justifyContent="space-between">
-            <LArrow />
-            <Text>EDELLINEN</Text>
-          </Flex>
-        </Button>
-        <Button
-          onClick={gotoNextStep}
-          sx={{ visibility: nextVisible }}
-          variant="outlinePrimary"
-          m={1}
-          width={150}
-        >
-          <Flex alignItems="center" justifyContent="space-between">
-            <Text>SEURAAVA</Text>
-            <RArrow />
-          </Flex>
-        </Button>
-      </Flex>
+      
     </Box>
   );
 };

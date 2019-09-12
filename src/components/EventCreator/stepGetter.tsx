@@ -25,12 +25,10 @@ const getStep = (
     }
     setEventState(assoc('race', isRace, eventState));
   };
-  const setTitles = (title: string, subtitle?: string) => {
+  const setTitles = (title?: string, subtitle?: string) => {
     setEventState(assoc('title', title, eventState));
     setEventState(assoc('subtitle', subtitle, eventState));
-    setStep(3);
   };
-  
 
   if (step === 0) {
     return (
@@ -38,16 +36,26 @@ const getStep = (
         setSelectedType={setType}
         selectedType={eventState.type}
         types={EVENT_TYPES}
+        toNextStep={() => setStep(1)}
       />
     );
   }
 
   if (step === 1) {
-    return <RaceStep isRace={eventState.race} setRace={setRace} />;
+    return (
+      <RaceStep
+        toPrevStep={() => setStep(0)}
+        toNextStep={() => setStep(2)}
+        isRace={eventState.race}
+        setRace={setRace}
+      />
+    );
   }
   if (step === 2) {
     return (
       <TitleStep
+        toPrevStep={() => setStep(1)}
+        toNextStep={() => setStep(3)}
         title={eventState.title}
         subtitle={eventState.subtitle}
         setTitles={setTitles}

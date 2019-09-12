@@ -33,6 +33,29 @@ const primaryFormError = {
   border: '1px solid red',
 };
 
+const eventForm = {
+  bg: 'transparent',
+  border: 0,
+  borderBottom: '1px solid gray',
+  boxSizing: 'border-box',
+  caretColor: 'pink',
+  fontSize: '24px',
+  outline: 'none',
+  padding: '2px 2px',
+  width: '100%',
+
+  '&::placeholder': {
+    color: 'lightgray',
+    fontWeight: 'bold',
+  },
+};
+
+const eventFormError = {
+  ...eventForm,
+  borderBottom: '1px solid red',
+};
+
+
 const primaryButton = {
   // width: '100%',
   py: 3,
@@ -134,6 +157,8 @@ const theme : any = {
   forms: {
     primary: primaryForm,
     'primary-error': primaryFormError,
+    event: eventForm,
+    'event-error': eventFormError,
   },
 
   // fonts: {

@@ -9,15 +9,36 @@ import { EVENT_TYPES } from '../../constants';
 
 storiesOf('EventCreator', module).add('Wizard', () => <EventCreator />);
 
+const commonActions = {
+  toNextStep: action('Next'),
+  toPrevStep: action('Prev'),
+};
+
 storiesOf('EventCreator/steps', module)
-  .add('Type', () => (
+  .add('Type - none', () => (
     <StepType
       setSelectedType={action('Select')}
       types={EVENT_TYPES}
       selectedType={EVENT_TYPES[1].type}
+      {...commonActions}
     />
   ))
-  .add('Race - off', () => <RaceStep setRace={action('set')} />)
-  .add('Race - yes', () => <RaceStep isRace={true} setRace={action('set')} />)
-  .add('Race - no', () => <RaceStep isRace={false} setRace={action('set')} />)
-  .add('Title', () => <TitleStep setTitles={action('Set titles')} />);
+  .add('Type - selected', () => (
+    <StepType
+      setSelectedType={action('Select')}
+      types={EVENT_TYPES}
+      {...commonActions}
+    />
+  ))
+  .add('Race - off', () => (
+    <RaceStep {...commonActions} setRace={action('set')} />
+  ))
+  .add('Race - yes', () => (
+    <RaceStep {...commonActions} isRace={true} setRace={action('set')} />
+  ))
+  .add('Race - no', () => (
+    <RaceStep {...commonActions} isRace={false} setRace={action('set')} />
+  ))
+  .add('Title', () => (
+    <TitleStep {...commonActions} setTitles={action('Set titles')} />
+  ));

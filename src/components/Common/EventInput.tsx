@@ -2,14 +2,14 @@
 import { Input } from '@rebass/forms';
 import { FieldConfig, FieldProps } from 'formik';
 import React, { Fragment, FunctionComponent } from 'react';
-import { ErrorText } from '../Common';
+import { ErrorText } from '.';
 
 type CustomInput = FieldConfig &
   FieldProps & {
     placeholder: string;
   };
 
-const BasicInput: FunctionComponent<CustomInput> = (props: CustomInput) => {
+const EventInput: FunctionComponent<CustomInput> = (props: CustomInput) => {
   const {
     field,
     form: { touched, errors },
@@ -18,7 +18,7 @@ const BasicInput: FunctionComponent<CustomInput> = (props: CustomInput) => {
   } = props;
 
   const hasError = touched[field.name] && errors[field.name];
-  const style = hasError ? 'primary-error' : 'primary';
+  const style = hasError ? 'event-error' : 'event';
   return (
     <Fragment>
       <Input
@@ -35,4 +35,4 @@ const BasicInput: FunctionComponent<CustomInput> = (props: CustomInput) => {
   );
 };
 
-export default BasicInput;
+export default EventInput;

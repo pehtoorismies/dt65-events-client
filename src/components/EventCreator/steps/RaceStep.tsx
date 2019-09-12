@@ -1,11 +1,14 @@
 import React, { FunctionComponent, useState } from 'react';
 import { Button, Flex } from 'rebass';
 import BaseStep from './BaseStep';
+import { RightArrowButton, LeftArrowButton } from '../../Common';
 import { isNullOrUndefined } from '../../../util/general';
 
 interface IProps {
   isRace?: boolean;
   setRace(v: boolean): void;
+  toPrevStep: any;
+  toNextStep: any;
 }
 
 const getVariant = (isYes: boolean) => (isRace?: boolean) => {
@@ -29,7 +32,7 @@ const getNoVariant = (isRace?: boolean) => {
 };
 
 const RaceStep: FunctionComponent<IProps> = (props: IProps) => {
-  const { isRace, setRace } = props;
+  const { isRace, setRace, toNextStep, toPrevStep } = props;
 
   return (
     <BaseStep title="Kilpailu?">
@@ -50,6 +53,13 @@ const RaceStep: FunctionComponent<IProps> = (props: IProps) => {
         >
           KYLLÄ
         </Button>
+      </Flex>
+      <Flex my={4} width="100%" alignItems="center" justifyContent="space-between">
+        <LeftArrowButton onClick={toPrevStep} visible={true} />
+        <RightArrowButton
+          onClick={toNextStep}
+          visible={!isNullOrUndefined(isRace)}
+        />
       </Flex>
     </BaseStep>
   );
