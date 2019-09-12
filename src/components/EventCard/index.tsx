@@ -88,7 +88,7 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
             <HeadCountButton
               count={12}
               onClick={() => {
-                console.log('click');
+                
               }}
               highlighted={false}
             />

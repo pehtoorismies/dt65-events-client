@@ -1,4 +1,3 @@
-import { FormikActions } from "formik";
 import { ReactNode } from "react";
 
 
@@ -23,3 +22,10 @@ export type IParticipant = {
   username: string;
   id: string;
 };
+
+export interface IEventState {
+  type?: string;
+  race?: boolean;
+  title?: string;
+  subtitle?: string;
+}

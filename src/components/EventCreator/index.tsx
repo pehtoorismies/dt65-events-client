@@ -6,11 +6,11 @@ import { css } from '@emotion/core';
 import { RightArrow } from 'styled-icons/boxicons-solid/RightArrow';
 import { LeftArrow } from 'styled-icons/boxicons-solid/LeftArrow';
 import StepCounter from '../StepCounter';
-import StepType from './steps/TypeStep';
-import { EVENT_TYPES } from '../../constants';
-import assocPath from 'ramda/es/assocPath';
+import { IEventState } from '../../types';
+import getStep from './stepGetter';
 import path from 'ramda/es/path';
 import { isTruthy } from 'ramda-adjunct';
+import { isNullOrUndefined } from '../../util/general';
 
 // @ts-ignore
 const getPink = theme => theme.colors.pink;
@@ -33,26 +33,6 @@ interface IProps {
 
 const MAX_STEP = 6;
 
-const getStep = (step: number, eventState: any, setEventState: any) => {
-  const setType = (eventType: string) => {
-    setEventState(assocPath(['type', 'selected'], eventType, eventState));
-  };
-
-  return (
-    <StepType
-      setSelectedType={setType}
-      preSelectedType={eventState.type.selected}
-      types={EVENT_TYPES}
-    />
-  );
-};
-
-const INIT_STATE = {
-  type: {
-    selected: '',
-  },
-};
-
 const getPrevVisibility = (step: number, eventState: any) => {
   if (step === 0) {
     return 'hidden';
@@ -60,22 +40,33 @@ const getPrevVisibility = (step: number, eventState: any) => {
   return 'visible';
 };
 const getNextVisibility = (step: number, eventState: any) => {
-  const selected = path(['type', 'selected'], eventState);
-  console.log('s', selected);
-  if (!isTruthy(selected)) {
-    
+  const selectedType = path(['type', 'selected'], eventState);
+  const isRace = path(['race', 'isRace'], eventState);
+
+  if (!isTruthy(selectedType)) {
     return 'hidden';
   }
+  if (step === 1 && isNullOrUndefined(isRace)) {
+    return 'hidden';
+  }
+
   return 'visible';
 };
 
 const EventCreator: FunctionComponent<IProps> = (props: IProps) => {
   const { prop } = props;
-  const [step, setStep] = useState(0);
-  const [eventState, setEventState] = useState(INIT_STATE);
+  const [step, setStep] = useState<number>(0);
+  const [eventState, setEventState] = useState<IEventState>({});
 
   const prevVisible = getPrevVisibility(step, eventState);
   const nextVisible = getNextVisibility(step, eventState);
+
+  const gotoNextStep = () => {
+    setStep(step + 1);
+  };
+  const gotoPrevStep = () => {
+    setStep(step - 1);
+  };
 
   return (
     <Box>
@@ -83,9 +74,9 @@ const EventCreator: FunctionComponent<IProps> = (props: IProps) => {
         Tapahtuman luonti
       </Text>
       <Flex p={1} justifyContent="center">
-        <StepCounter completed={step} total={6} />
+        <StepCounter completed={step} total={MAX_STEP} />
       </Flex>
-      <Flex>{getStep(step, eventState, setEventState)}</Flex>
+      <Flex>{getStep(step, setStep, eventState, setEventState)}</Flex>
       <Flex
         my={4}
         width="100%"
@@ -93,6 +84,7 @@ const EventCreator: FunctionComponent<IProps> = (props: IProps) => {
         justifyContent="space-between"
       >
         <Button
+          onClick={gotoPrevStep}
           sx={{ visibility: prevVisible }}
           variant="outlinePrimary"
           m={1}
@@ -104,6 +96,7 @@ const EventCreator: FunctionComponent<IProps> = (props: IProps) => {
           </Flex>
         </Button>
         <Button
+          onClick={gotoNextStep}
           sx={{ visibility: nextVisible }}
           variant="outlinePrimary"
           m={1}

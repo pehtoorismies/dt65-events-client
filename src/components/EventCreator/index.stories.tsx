@@ -14,8 +14,10 @@ storiesOf('EventCreator/steps', module)
     <StepType
       setSelectedType={action('Select')}
       types={EVENT_TYPES}
-      preSelectedType={EVENT_TYPES[1].type}
+      selectedType={EVENT_TYPES[1].type}
     />
   ))
-  .add('Race', () => <RaceStep preSelectedRace={true} />)
-  .add('Title', () => <TitleStep />);
+  .add('Race - off', () => <RaceStep setRace={action('set')} />)
+  .add('Race - yes', () => <RaceStep isRace={true} setRace={action('set')} />)
+  .add('Race - no', () => <RaceStep isRace={false} setRace={action('set')} />)
+  .add('Title', () => <TitleStep setTitles={action('Set titles')} />);

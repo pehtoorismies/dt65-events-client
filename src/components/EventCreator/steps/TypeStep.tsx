@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
-import { Box, Button, Flex, Text } from 'rebass';
+import { Button, Flex, Text } from 'rebass';
 import { IEventType } from '../../../types';
 import map from 'ramda/es/map';
 import BaseStep from './BaseStep';
@@ -9,7 +9,7 @@ import prop from 'ramda/es/prop';
 const sortByTitle= sortBy(prop('title'));
 
 interface IProps {
-  preSelectedType?: string;
+  selectedType?: string;
   types: IEventType[];
   setSelectedType: OnSelectType;
 }
@@ -29,10 +29,10 @@ const renderTypeButton = (setSelected: OnSelectType, selectedType: any) => (
 };
 
 const TypeStep: FunctionComponent<IProps> = (props: IProps) => {
-  const { preSelectedType, types, setSelectedType } = props;
+  const { selectedType, types, setSelectedType } = props;
   
   const ordered = sortByTitle(types);
-  const typeRender = renderTypeButton(setSelectedType, preSelectedType);
+  const typeRender = renderTypeButton(setSelectedType, selectedType);
   return (
     <BaseStep title="Valitse tyyppi">
       <Flex flexWrap="wrap" justifyContent="center">

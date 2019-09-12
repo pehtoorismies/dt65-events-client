@@ -11,7 +11,6 @@ interface IFormValues {
 }
 
 const render = (formikBag: FormikProps<IFormValues>) => {
-  // console.log(formikBag);
   const { isSubmitting } = formikBag;
   return (
     <Form>

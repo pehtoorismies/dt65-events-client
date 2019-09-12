@@ -2,14 +2,15 @@ import React, { FunctionComponent } from 'react';
 import { Circle } from 'styled-icons/boxicons-regular/Circle';
 import { Dash } from 'styled-icons/octicons/Dash';
 import { CheckCircle } from 'styled-icons/boxicons-solid/CheckCircle';
-import { Box, Flex, Text } from 'rebass';
+import { HelpCircle } from 'styled-icons/boxicons-regular/HelpCircle';
+import { Box, Text } from 'rebass';
 import styled from '@emotion/styled';
 import { withTheme } from 'emotion-theming';
-import times from 'ramda/es/times';
 import map from 'ramda/es/map';
-import identity from 'ramda/es/identity';
-import concat from 'ramda/es/concat';
+import repeat from 'ramda/es/repeat';
+import uuidv4 from 'uuid/v4';
 import intersperse from 'ramda/es/intersperse';
+import flatten from 'ramda/es/flatten';
 
 // @ts-ignore - hack
 const getPink = theme => theme.colors.pink;
@@ -18,7 +19,10 @@ const EmptyCircle = styled(Circle)`
   color: ${props => getPink(props.theme)};
   width: 20px;
 `;
-
+const CurrentCircle = styled(HelpCircle)`
+  color: ${props => getPink(props.theme)};
+  width: 20px;
+`;
 const CheckedCircle = styled(CheckCircle)`
   color: ${props => getPink(props.theme)};
   width: 20px;
@@ -34,23 +38,41 @@ interface IProps {
   theme?: any; //TODO: hack
 }
 
+enum Element {
+  Checked = 0,
+  Empty = 1,
+  Connector = 2,
+  Current = 3,
+}
+
+const getElement = (ele: Element) => {
+  switch (ele) {
+    case Element.Checked:
+      return <CheckedCircle key={uuidv4()} />;
+    case Element.Empty:
+      return <EmptyCircle key={uuidv4()} />;
+    case Element.Connector:
+      return <Connector key={uuidv4()} />;
+    case Element.Current:
+      return <CurrentCircle key={uuidv4()} />;
+    default:
+      return null;
+  }
+};
+
 const StepCounter: FunctionComponent<IProps> = (props: IProps) => {
   const { total, completed } = props;
-  const uncompleted = total - completed;
 
-  const completedElems = times(
-    id => <CheckedCircle key={`c-${id}`} />,
-    completed
-  );
-  const uncompletedElems = times(
-    id => <EmptyCircle key={`c-${id}`} />,
-    uncompleted
-  );
-  const all = concat(completedElems, uncompletedElems);
-  const withDashes = intersperse(<Connector />, all);
+  const uncompleted = total - completed - 1 >= 0 ? total - completed - 1 : 0;
+
+  const completedElems = repeat(Element.Checked, completed);
+  const uncompletedElems = repeat(Element.Empty, uncompleted);
+  const all = flatten([completedElems, [Element.Current], uncompletedElems]);
+  const withDashes = intersperse(Element.Connector, all);
+
   return (
     <Box>
-      {map(identity, withDashes)}
+      {map(getElement, withDashes)}
       <Text
         textAlign="center"
         fontSize={10}
@@ -58,7 +80,6 @@ const StepCounter: FunctionComponent<IProps> = (props: IProps) => {
       >
         steps
       </Text>
-      
     </Box>
   );
 };

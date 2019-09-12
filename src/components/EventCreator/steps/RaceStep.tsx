@@ -1,26 +1,55 @@
 import React, { FunctionComponent, useState } from 'react';
-import Switch from 'react-switch';
-import { Flex } from 'rebass';
+import { Button, Flex } from 'rebass';
 import BaseStep from './BaseStep';
+import { isNullOrUndefined } from '../../../util/general';
 
 interface IProps {
-  preSelectedRace?: boolean;
+  isRace?: boolean;
+  setRace(v: boolean): void;
 }
 
-const RaceStep: FunctionComponent<IProps> = (props: IProps) => {
-  const { preSelectedRace = false} = props;
+const getVariant = (isYes: boolean) => (isRace?: boolean) => {
+  if (isNullOrUndefined(isRace)) {
+    return 'secondary';
+  }
 
-  const [isRace, setIsRace] = useState(preSelectedRace);
+  if (isYes) {
+    return isRace ? 'primary' : 'secondary';
+  }
+  return isRace ? 'secondary' : 'primary';
+};
+
+const getYesVariant = (isRace?: boolean) => {
+  const chooser = getVariant(true);
+  return chooser(isRace);
+};
+const getNoVariant = (isRace?: boolean) => {
+  const chooser = getVariant(false);
+  return chooser(isRace);
+};
+
+const RaceStep: FunctionComponent<IProps> = (props: IProps) => {
+  const { isRace, setRace } = props;
 
   return (
-    <BaseStep title="Onko kilpailu?">
-      <Flex justifyContent="center">
-        <Switch
-          onChange={val => {
-            setIsRace(val);
-          }}
-          checked={isRace}
-        />
+    <BaseStep title="Kilpailu?">
+      <Flex justifyContent="center" alignSelf="center">
+        <Button
+          width={150}
+          onClick={() => setRace(false)}
+          variant={getNoVariant(isRace)}
+          m={1}
+        >
+          EI
+        </Button>
+        <Button
+          width={150}
+          onClick={() => setRace(true)}
+          variant={getYesVariant(isRace)}
+          m={1}
+        >
+          KYLLÄ
+        </Button>
       </Flex>
     </BaseStep>
   );
