@@ -31,7 +31,7 @@ const StepCreate: FunctionComponent<IProps> = (props: IProps) => {
       </Flex>
 
       <Text textAlign="center">Tarkista, että tiedot ovat oikein</Text>
-      <EventCard username={username} participants={participants} />
+      
       <Flex
         my={4}
         width="100%"

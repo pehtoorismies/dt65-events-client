@@ -5,11 +5,11 @@ import { map } from 'ramda';
 import bgImage from '../../images/test_mini.jpg';
 import HeadCountButton from '../HeadCountButton';
 
-import { IParticipant } from '../../types';
+import { IParticipant, IEvent } from '../../types';
+import dateFnsFormat from 'date-fns/format'
 
-interface IProps {
+interface IProps extends IEvent {
   username: string;
-  participants: IParticipant[];
 }
 
 const ImageBox = (props: any) => (
@@ -56,8 +56,9 @@ const renderPill = (username: string) => (participant: IParticipant) => {
 };
 
 const EventCard: FunctionComponent<IProps> = (props: IProps) => {
-  const { username, participants } = props;
-
+  const { username, participants, type, subtitle, title, time, date, description  } = props;
+  console.log('p', props);
+  
   return (
     <Flex p={2} bg="white" width="100%" sx={{ maxWidth: 400 }}>
       <Card width="100%" mx="auto" variant="shadow">
@@ -71,22 +72,22 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
               textShadow: '2px 2px 5px black',
             }}
           >
-            Event type
+            {type}
           </Text>
         </ImageBox>
         <Flex p={2} bg="darkWhite" justifyContent="space-between">
           <Flex justifyContent="space-around" flexDirection="column">
             <Text fontSize={20} fontWeight="bold">
-              Some title
+              {title}
             </Text>
             <Text fontSize={16} fontWeight="bold">
-              Subtitle
+              {subtitle}
             </Text>
-            <Text fontSize={16}>10.10.2021</Text>
+            <Text fontSize={16}>{dateFnsFormat(date, 'dd.MM.yyyy')}</Text>
           </Flex>
           <Flex alignItems="center" justifyContent="center">
             <HeadCountButton
-              count={12}
+              count={participants.length}
               onClick={() => {
                 
               }}
@@ -106,7 +107,7 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
             <Text fontWeight="bold" color="lightBlack" width={60}>
               Aika:
             </Text>
-            <Text ml={1}>10:00</Text>
+            <Text ml={1}>{time}</Text>
           </Flex>
           <Flex flexWrap="wrap" py={1}>
             {map(renderPill(username), participants)}
@@ -114,7 +115,7 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
           <Text fontWeight="bold" color="lightBlack" width={60}>
             Kuvaus:
           </Text>
-          <Text my={2}>lorem ipsum</Text>
+          <Text my={2}>{description}</Text>
         </Box>
       </Card>
     </Flex>

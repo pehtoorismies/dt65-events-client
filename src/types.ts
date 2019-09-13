@@ -41,3 +41,14 @@ export interface IEventStep {
   toPrevStep: any;
   toNextStep: any;
 }
+
+export interface IEvent {
+  type: string;
+  race: boolean;
+  title: string;
+  subtitle?: string;
+  date: Date;
+  time: string;
+  description?: string;
+  participants: IParticipant[];
+}
