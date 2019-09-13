@@ -152,7 +152,7 @@ const theme : any = {
   fonts: {
     body: 'system-ui, sans-serif',
     heading: 'Titillium Web',
-    monospace: 'Menlo, monospace',
+    monospace: `'Share Tech Mono', monospace`,
   },
   forms: {
     primary: primaryForm,
@@ -161,10 +161,6 @@ const theme : any = {
     'event-error': eventFormError,
   },
 
-  // fonts: {
-  //   sans: 'Mukta, sans-serif',
-  //   mono: 'Mukta, monospace',
-  // },
   shadows: {
     large: '0 0 24px rgba(0, 0, 0, .125)',
     small: '0 0 4px rgba(0, 0, 0, .125)',
@@ -172,4 +168,6 @@ const theme : any = {
   space: [0, 4, 8, 16, 32, 64, 128, 256],
 };
 
-export { theme };
+const colors = theme.colors;
+
+export { theme, colors };

@@ -1,5 +1,37 @@
 import { IEventType } from './types';
 
+const FI_LOCAL = {
+  months: [
+    'Tammikuu',
+    'Helmikuu',
+    'Maaliskuu',
+    'Huhtikuu',
+    'Toukokuu',
+    'Kesäkuu',
+    'Heinäkuu',
+    'Elokuu',
+    'Syyskuu',
+    'Lokakuu',
+    'Marraskuu',
+    'Joulukuu',
+  ],
+  weekdaysLong: [
+    'Sunnuntai',
+    'Maanantai',
+    'Tiistai',
+    'Keskiviikko',
+    'Torstai',
+    'Perjantai',
+    'Lauantai',
+  ],
+  weekdaysShort: ['Su', 'Ma', 'Ti', 'Ke', 'To', 'Pe', 'La'],
+  firstDayOfWeek: 1,
+  labels: {
+    nextMonth: 'Seuraava kuu',
+    previousMonth: 'Edellinen kuu',
+  },
+};
+
 const EVENT_TYPES: IEventType[] = [
   {
     img: 'cycling',
@@ -83,9 +115,9 @@ const ROUTES = {
   logout: '/logout',
   notFound: '/404',
   profile: PROFILE_PATH,
-  profileSubscriptions: `${PROFILE_PATH}/subscriptions`  ,
+  profileSubscriptions: `${PROFILE_PATH}/subscriptions`,
   register: '/register',
   registerSuccess: '/registerSuccess',
 };
 
-export { EVENT_TYPES, WEEK_DAYS, ROUTES, GRAPHQL_TYPES };
+export { FI_LOCAL, EVENT_TYPES, WEEK_DAYS, ROUTES, GRAPHQL_TYPES };

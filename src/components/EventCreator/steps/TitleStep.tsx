@@ -5,13 +5,12 @@ import * as Yup from 'yup';
 import { Box, Flex, Text } from 'rebass';
 import { Formik, Field, FormikProps, Form, FormikActions } from 'formik';
 import { RightArrowButton, LeftArrowButton, EventInput } from '../../Common';
+import { IEventStep } from '../../../types';
 
-interface IProps {
+interface IProps extends IEventStep {
   title?: string;
   subtitle?: string;
   setTitles: (title?: string, subtitle?: string) => void;
-  toPrevStep: any;
-  toNextStep: any;
 }
 
 interface TitleFormValues {
@@ -20,7 +19,7 @@ interface TitleFormValues {
 }
 
 const HintText = (props: any) => (
-  <Text {...props} mb={1} fontFamily={`'Share Tech Mono', monospace`} />
+  <Text {...props} mb={1} fontFamily="monospace" />
 );
 
 const validationSchema = Yup.object().shape({
@@ -49,7 +48,6 @@ const TitleStep: FunctionComponent<IProps> = (props: IProps) => {
             setTitles(values.title, values.subtitle);
             actions.setSubmitting(false);
             toNextStep();
-            
           }} // Do nothing
           render={(formikBag: FormikProps<TitleFormValues>) => {
             const { isValid } = formikBag;

@@ -5,6 +5,7 @@ import TypeStep from './steps/TypeStep';
 import RaceStep from './steps/RaceStep';
 import TitleStep from './steps/TitleStep';
 import DateStep from './steps/DateStep';
+import TimeStep from './steps/TimeStep';
 import { EVENT_TYPES } from '../../constants';
 import { isNullOrUndefined } from '../../util/general';
 
@@ -45,6 +46,7 @@ const getStep = (
         selectedType={eventState.type}
         types={EVENT_TYPES}
         toNextStep={() => setStep(1)}
+        toPrevStep={() => {}}
       />
     );
   }
@@ -76,9 +78,18 @@ const getStep = (
       <DateStep
         toPrevStep={() => setStep(2)}
         toNextStep={() => setStep(4)}
-        time={eventState.time}
         date={eventState.date}
         setDate={setDate}
+      />
+    );
+  }
+
+  if (step === 3) {
+    return (
+      <TimeStep
+        toPrevStep={() => setStep(3)}
+        toNextStep={() => setStep(5)}
+        time={eventState.time}
         setTime={setTime}
       />
     );

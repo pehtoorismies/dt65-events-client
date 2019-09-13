@@ -6,14 +6,14 @@ import sortBy from 'ramda/es/sortBy';
 import prop from 'ramda/es/prop';
 import { IEventType } from '../../../types';
 import { RightArrowButton } from '../../Common';
+import { IEventStep } from '../../../types';
 
 const sortByTitle = sortBy(prop('title'));
 
-interface IProps {
+interface IProps extends IEventStep {
   selectedType?: string;
   types: IEventType[];
   setSelectedType: OnSelectType;
-  toNextStep: any;
 }
 
 type OnSelectType = (type: string) => void;

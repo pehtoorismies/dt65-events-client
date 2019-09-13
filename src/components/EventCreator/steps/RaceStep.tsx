@@ -3,12 +3,10 @@ import { Button, Flex } from 'rebass';
 import BaseStep from './BaseStep';
 import { RightArrowButton, LeftArrowButton } from '../../Common';
 import { isNullOrUndefined } from '../../../util/general';
-
-interface IProps {
+import { IEventStep } from '../../../types';
+interface IProps extends IEventStep {
   isRace?: boolean;
   setRace(v: boolean): void;
-  toPrevStep: any;
-  toNextStep: any;
 }
 
 const getVariant = (isYes: boolean) => (isRace?: boolean) => {

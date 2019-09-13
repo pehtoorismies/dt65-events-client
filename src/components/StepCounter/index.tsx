@@ -76,7 +76,7 @@ const StepCounter: FunctionComponent<IProps> = (props: IProps) => {
       <Text
         textAlign="center"
         fontSize={10}
-        sx={{ fontFamily: `'Share Tech Mono', monospace` }}
+        fontFamily="monospace"
       >
         steps
       </Text>

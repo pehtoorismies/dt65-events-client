@@ -1,113 +1,86 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState, Fragment } from 'react';
 import { Flex, Text } from 'rebass';
-import DayPickerInput from 'react-day-picker/DayPickerInput';
+import DayPicker from 'react-day-picker';
+import Helmet from 'react-helmet';
 import 'react-day-picker/lib/style.css';
-// @ts-ignore
-import { Input } from '@rebass/forms';
 import dateFnsFormat from 'date-fns/format';
-import dateFnsParse from 'date-fns/parse';
-import { DateUtils } from 'react-day-picker';
 import BaseStep from './BaseStep';
 import { RightArrowButton, LeftArrowButton } from '../../Common';
 import { isNullOrUndefined } from '../../../util/general';
+import { FI_LOCAL } from '../../../constants';
+import { IEventStep } from '../../../types';
 
-interface IProps {
+interface IProps extends IEventStep {
   date?: Date;
-  time?: string;
   setDate: (date: Date) => void;
-  setTime: (time: string) => void;
-  toPrevStep: any;
-  toNextStep: any;
 }
 
-const parseDate = (str: any, format: any, locale: any) => {
-  // @ts-ignore
-  const parsed = dateFnsParse(str, format, { locale });
-  if (DateUtils.isDate(parsed)) {
-    return parsed;
+const formatDate = (date?: Date): string => {
+  if (!date) {
+    return 'ei valittu';
   }
-  return undefined;
-};
-
-const formatDate = (date: any, format: any, locale: any) => {
-  return dateFnsFormat(date, format, { locale });
-};
-
-const FORMAT = 'dd.MM.yyyy';
-
-const CustomInput = (props: any) => {
-  return <Input textAlign="center" variant="event" width={150} {...props} />;
+  return dateFnsFormat(date, 'dd.MM.yyyy');
 };
 
 const DateStep: FunctionComponent<IProps> = (props: IProps) => {
-  const { date, time, toNextStep, toPrevStep, setDate, setTime } = props;
+  const { date, toNextStep, toPrevStep, setDate } = props;
+
+  const handleDayClick = (selectedDay: any) => setDate(selectedDay);
 
   return (
-    <BaseStep title="Päivämäärä ja aika">
-      <Flex
-        width="100%"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Text p={3}>Päivämäärä valinta (klikkaa tai kirjoita)</Text>
-        <DayPickerInput
-          component={CustomInput}
-          formatDate={formatDate}
-          format={FORMAT}
-          parseDate={parseDate}
-          value={date}
-          placeholder="Anna pvm*"
-          onDayChange={day => setDate(day)}
-          dayPickerProps={{
-            todayButton: 'Tämä päivä',
+    <Fragment>
+      <Helmet>
+        <style>{`
+          
+          `}</style>
+      </Helmet>
+      <BaseStep title="Päivämäärä">
+        <Flex
+          width="100%"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Text p={3}>Klikkaa haluamasi päivämäärä</Text>
+          <Text
+            fontWeight="bold"
+            width={250}
+            textAlign="center"
+            p={2}
+            fontSize={3}
+            color="white"
+            bg="blue"
+            sx={{
+              visibility: date ? 'visible' : 'hidden',
 
-            months: [
-              'Tammikuu',
-              'Helmikuu',
-              'Maaliskuu',
-              'Huhtikuu',
-              'Toukokuu',
-              'Kesäkuu',
-              'Heinäkuu',
-              'Elokuu',
-              'Syyskuu',
-              'Lokakuu',
-              'Marraskuu',
-              'Joulukuu',
-            ],
-            weekdaysLong: [
-              'Sunnuntai',
-              'Maanantai',
-              'Tiistai',
-              'Keskiviikko',
-              'Torstai',
-              'Perjantai',
-              'Lauantai',
-            ],
-            weekdaysShort: ['Su', 'Ma', 'Ti', 'Ke', 'To', 'Pe', 'La'],
-            firstDayOfWeek: 1,
-            labels: {
-              nextMonth: 'Seuraava kuu',
-              previousMonth: 'Edellinen kuu',
-            },
-          }}
-        />
-        <Text p={3}>Valitse mahdollinen aika</Text>
-      </Flex>
-      <Flex
-        my={4}
-        width="100%"
-        alignItems="center"
-        justifyContent="space-between"
-      >
-        <LeftArrowButton onClick={toPrevStep} visible={true} />
-        <RightArrowButton
-          onClick={toNextStep}
-          visible={!isNullOrUndefined(date)}
-        />
-      </Flex>
-    </BaseStep>
+              borderRadius: '4px',
+            }}
+          >
+            valittu {formatDate(date)}
+          </Text>
+          <DayPicker
+            {...FI_LOCAL}
+            todayButton="Tämä päivä"
+            fromMonth={new Date(2019, 9)}
+            onDayClick={handleDayClick}
+            selectedDays={date}
+            onTodayButtonClick={day => setDate(day)}
+          />
+        </Flex>
+        <Flex
+          my={4}
+          width="100%"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <LeftArrowButton onClick={toPrevStep} visible={true} />
+          <RightArrowButton
+            onClick={toNextStep}
+            visible={!isNullOrUndefined(date)}
+          />
+        </Flex>
+      </BaseStep>
+    </Fragment>
   );
 };
 
