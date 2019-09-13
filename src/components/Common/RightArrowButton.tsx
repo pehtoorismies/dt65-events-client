@@ -23,7 +23,7 @@ const RightArrowButton = (props: any) => (
     sx={{ visibility: props.visible ? 'visible' : 'hidden' }}
   >
     <Flex alignItems="center" justifyContent="space-between">
-      <Text>SEURAAVA</Text>
+      <Text>{props.text || 'Seuraava'}</Text>
       <Arrow />
     </Flex>
   </Button>

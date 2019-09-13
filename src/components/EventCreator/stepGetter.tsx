@@ -6,6 +6,7 @@ import RaceStep from './steps/RaceStep';
 import TitleStep from './steps/TitleStep';
 import DateStep from './steps/DateStep';
 import TimeStep from './steps/TimeStep';
+import DescriptionStep from './steps/DescriptionStep';
 import { EVENT_TYPES } from '../../constants';
 import { isNullOrUndefined } from '../../util/general';
 import { ITime } from '../../types';
@@ -29,6 +30,8 @@ const getStep = (
     setEventState(assoc('race', isRace, eventState));
   };
   const setTitles = (title?: string, subtitle?: string) => {
+    console.log('update', title);
+    
     setEventState(assoc('title', title, eventState));
     setEventState(assoc('subtitle', subtitle, eventState));
   };
@@ -38,6 +41,13 @@ const getStep = (
   };
   const setTime = (time: ITime): void => {
     setEventState(assoc('time', time, eventState));
+  };
+  const setTimeEnabled = (timeEnabled: boolean): void => {
+    setEventState(assoc('timeEnabled', timeEnabled, eventState));
+  };
+
+  const setDescription = (description?: string) => {
+    setEventState(assoc('description', description, eventState));
   };
 
   if (step === 0) {
@@ -92,6 +102,19 @@ const getStep = (
         toNextStep={() => setStep(5)}
         time={eventState.time}
         setTime={setTime}
+        timeEnabled={eventState.timeEnabled}
+        setTimeEnabled={setTimeEnabled}
+      />
+    );
+  }
+
+  if (step === 5) {
+    return (
+      <DescriptionStep
+        toPrevStep={() => setStep(4)}
+        toNextStep={() => setStep(6)}
+        description={eventState.description}
+        setDescription={setDescription}
       />
     );
   }

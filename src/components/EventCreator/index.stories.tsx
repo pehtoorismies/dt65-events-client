@@ -7,6 +7,8 @@ import RaceStep from './steps/RaceStep';
 import TitleStep from './steps/TitleStep';
 import DateStep from './steps/DateStep';
 import TimeStep from './steps/TimeStep';
+import CreateStep from './steps/CreateStep';
+import DescriptionStep from './steps/DescriptionStep';
 import { EVENT_TYPES } from '../../constants';
 
 storiesOf('EventCreator', module).add('Wizard', () => <EventCreator />);
@@ -45,10 +47,7 @@ storiesOf('EventCreator/steps', module)
     <TitleStep {...commonActions} setTitles={action('Set titles')} />
   ))
   .add('Date', () => (
-    <DateStep
-      {...commonActions}
-      setDate={action('Set date')}
-    />
+    <DateStep {...commonActions} setDate={action('Set date')} />
   ))
   .add('Date - preset', () => (
     <DateStep
@@ -56,9 +55,19 @@ storiesOf('EventCreator/steps', module)
       date={new Date()}
       setDate={action('Set date')}
     />
-  )).add('Time - preset', () => (
+  ))
+  .add('Time - preset', () => (
     <TimeStep
+      timeEnabled={false}
+      setTimeEnabled={action('Enable')}
       {...commonActions}
       setTime={action('Set time')}
     />
-  ));
+  ))
+  .add('Description', () => (
+    <DescriptionStep
+      {...commonActions}
+      setDescription={action('Set description')}
+    />
+  ))
+  .add('Create', () => <CreateStep username="pertti" {...commonActions} />);

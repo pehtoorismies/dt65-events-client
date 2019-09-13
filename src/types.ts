@@ -19,7 +19,7 @@ export interface IAuthFormProps {
 
 export type IParticipant = {
   username: string;
-  id: string;
+  id: string | number;
 };
 
 export interface ITime {
@@ -33,6 +33,8 @@ export interface IEventState {
   subtitle?: string;
   date?: Date;
   time?: ITime;
+  timeEnabled: boolean;
+  description?: string;
 }
 
 export interface IEventStep {

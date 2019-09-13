@@ -9,12 +9,14 @@ interface IProps {
   prop?: string;
 }
 
-const MAX_STEP = 6;
+const MAX_STEP = 7;
 
 const EventCreator: FunctionComponent<IProps> = (props: IProps) => {
   const { prop } = props;
   const [step, setStep] = useState<number>(0);
-  const [eventState, setEventState] = useState<IEventState>({});
+  const [eventState, setEventState] = useState<IEventState>({
+    timeEnabled: false,
+  });
 
   return (
     <Box>

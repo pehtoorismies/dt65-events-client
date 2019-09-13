@@ -9,12 +9,32 @@ import TimeSet from '../../TimeSet';
 interface IProps extends IEventStep {
   time?: ITime;
   setTime: (time: ITime) => void;
+  timeEnabled: boolean;
+  setTimeEnabled: (timeEnable: boolean) => void;
 }
 
 const TimeStep: FunctionComponent<IProps> = (props: IProps) => {
-  const { time, setTime, toNextStep, toPrevStep } = props;
+  const {
+    timeEnabled,
+    setTimeEnabled,
+    time,
+    setTime,
+    toNextStep,
+    toPrevStep,
+  } = props;
 
-  const [useTime, setUseTime] = useState(false);
+  const [internalTime, setInternalTime] = useState<ITime>(
+    time || { hour: 0, minute: 0 }
+  );
+
+  const onNext = () => {
+    setTime(internalTime);
+    toNextStep();
+  };
+  const onPrev = () => {
+    setTime(internalTime);
+    toPrevStep();
+  };
 
   return (
     <BaseStep title="Kellonaika">
@@ -23,14 +43,18 @@ const TimeStep: FunctionComponent<IProps> = (props: IProps) => {
         <Box my={2}>
           <Switch
             onChange={(val: boolean) => {
-              setUseTime(val);
+              setTimeEnabled(val);
             }}
-            checked={useTime}
+            checked={timeEnabled}
           />
         </Box>
 
         <Flex justifyContent="center" alignSelf="center">
-          <TimeSet disabled={!useTime} time={time} setTime={setTime} />
+          <TimeSet
+            disabled={!timeEnabled}
+            time={internalTime}
+            setTime={setInternalTime}
+          />
         </Flex>
       </Flex>
 
@@ -40,8 +64,8 @@ const TimeStep: FunctionComponent<IProps> = (props: IProps) => {
         alignItems="center"
         justifyContent="space-between"
       >
-        <LeftArrowButton onClick={toPrevStep} visible={true} />
-        <RightArrowButton onClick={toNextStep} visible={true} />
+        <LeftArrowButton onClick={onPrev} visible={true} />
+        <RightArrowButton onClick={onNext} visible={true} />
       </Flex>
     </BaseStep>
   );

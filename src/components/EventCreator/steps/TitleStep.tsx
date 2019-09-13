@@ -34,7 +34,7 @@ const validationSchema = Yup.object().shape({
 
 const TitleStep: FunctionComponent<IProps> = (props: IProps) => {
   const { title, subtitle, setTitles, toPrevStep, toNextStep } = props;
-
+  console.log('coming', title);
   return (
     <BaseStep title="Anna tapahtumalle nimi">
       <Flex justifyContent="center" alignSelf="center">
@@ -45,12 +45,13 @@ const TitleStep: FunctionComponent<IProps> = (props: IProps) => {
             values: TitleFormValues,
             actions: FormikActions<TitleFormValues>
           ) => {
-            setTitles(values.title, values.subtitle);
-            actions.setSubmitting(false);
-            toNextStep();
+            
+            // actions.setSubmitting(false);
+            // actions.resetForm();
+            // toNextStep();
           }} // Do nothing
           render={(formikBag: FormikProps<TitleFormValues>) => {
-            const { isValid } = formikBag;
+            const { isValid, values } = formikBag;
 
             return (
               <Flex flexDirection="column" width="100%" p={2}>
@@ -96,7 +97,14 @@ const TitleStep: FunctionComponent<IProps> = (props: IProps) => {
                     justifyContent="space-between"
                   >
                     <LeftArrowButton onClick={toPrevStep} visible={true} />
-                    <RightArrowButton type="submit" visible={isValid} />
+                    <RightArrowButton
+                      type="button"
+                      onClick={() => {
+                        setTitles(values.title, values.subtitle);
+                        toNextStep();
+                      }}
+                      visible={isValid}
+                    />
                   </Flex>
                 </Form>
               </Flex>
