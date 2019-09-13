@@ -3,8 +3,8 @@ import Color from 'color';
 const blue = '#07c';
 const red = '#FF5471';
 const lightgray = '#9a9a9a';
-const lightergrey = '#E6E6E6';
-const lightestgrey = '#e9e9e9';
+const lightergray = '#E6E6E6';
+const lightestgray = '#e9e9e9';
 const darkWhite = '#f4f4f5';
 const black = '#140D33';
 const lightBlack = '#404035';
@@ -55,7 +55,6 @@ const eventFormError = {
   borderBottom: '1px solid red',
 };
 
-
 const primaryButton = {
   // width: '100%',
   py: 3,
@@ -63,9 +62,9 @@ const primaryButton = {
   color: white,
   textTransform: 'uppercase',
   fontWeight: 'bold',
-  '&:disabled': {
+  '&[disabled]': {
     backgroundColor: Color(pink)
-      .lighten(0.1)
+      .lighten(0.4)
       .string(),
     cursor: 'not-allowed',
   },
@@ -77,7 +76,7 @@ const primaryButton = {
   },
 };
 
-const theme : any = {
+const theme: any = {
   breakpoints: ['40em', '52em', '64em'],
 
   buttons: {
@@ -115,6 +114,14 @@ const theme : any = {
           .darken(0.1)
           .string(),
       },
+      '&[disabled]': {
+        cursor: 'not-allowed',
+        backgroundColor: lightergray,
+      },
+      '&[disabled]:hover': {
+        cursor: 'not-allowed',
+        backgroundColor: lightergray,
+      },
     },
     warn: {
       backgroundColor: red,
@@ -140,8 +147,8 @@ const theme : any = {
     blue,
     darkWhite,
     lightBlack,
-    lightergrey,
-    lightestgrey,
+    lightergray,
+    lightestgray,
     lightgray,
     pink,
     red,

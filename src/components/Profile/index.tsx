@@ -46,7 +46,7 @@ const Profile: FunctionComponent<IProps> = (props: IProps) => {
     <Fragment>
       <Flex
         p={3}
-        bg="lightestgrey"
+        bg="lightestgray"
         flexDirection="column"
         alignItems="center"
         justifyContent="center"

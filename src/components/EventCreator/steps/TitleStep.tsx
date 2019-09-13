@@ -19,7 +19,7 @@ interface TitleFormValues {
 }
 
 const HintText = (props: any) => (
-  <Text {...props} mb={1} fontFamily="monospace" />
+  <Text {...props} fontSize={1} mb={1} fontFamily="monospace" />
 );
 
 const validationSchema = Yup.object().shape({
@@ -53,16 +53,25 @@ const TitleStep: FunctionComponent<IProps> = (props: IProps) => {
             const { isValid } = formikBag;
 
             return (
-              <Box width="100%" p={2}>
-                <HintText fontSize={3}>Esimerkki</HintText>
-                <Flex>
-                  <HintText fontWeight="bold">Nimi: </HintText>
-                  <HintText>Tempoajo </HintText>
-                </Flex>
-                <Flex>
-                  <HintText fontWeight="bold">Tarkenne: </HintText>
-                  <HintText>Seuran mestaruus </HintText>
-                </Flex>
+              <Flex flexDirection="column" width="100%" p={2}>
+                <Box
+                  p={2}
+                  bg="lightestgrey"
+                  sx={{ border: '3px solid lightgrey', borderRadius: '4px' }}
+                  width="70%"
+                  alignSelf="center"
+                >
+                  <HintText>Esimerkki</HintText>
+                  <Flex>
+                    <HintText fontWeight="bold">Nimi:</HintText>
+                    <HintText>Tempoajo </HintText>
+                  </Flex>
+                  <Flex>
+                    <HintText fontWeight="bold">Tarkenne:</HintText>
+                    <HintText>Seuran mestaruus </HintText>
+                  </Flex>
+                </Box>
+
                 <Form>
                   <Box py={3}>
                     <Field
@@ -90,7 +99,7 @@ const TitleStep: FunctionComponent<IProps> = (props: IProps) => {
                     <RightArrowButton type="submit" visible={isValid} />
                   </Flex>
                 </Form>
-              </Box>
+              </Flex>
             );
           }}
         />

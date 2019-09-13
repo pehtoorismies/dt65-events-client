@@ -6,15 +6,12 @@ import styled from '@emotion/styled';
 import assoc from 'ramda/es/assoc';
 import add from 'ramda/es/add';
 import subtract from 'ramda/es/subtract';
+import { ITime } from '../../types';
 
 interface IProps {
-  hour?: number;
-  minute?: number;
-  setTime: (minute: number, hour: number) => void;
-}
-interface ITime {
-  hour: number;
-  minute: number;
+  time?: ITime;
+  setTime: (time: ITime) => void;
+  disabled: boolean;
 }
 
 const BOX_WIDTH = 70;
@@ -50,12 +47,12 @@ const Center = (props: any) => (
 
 const NumberDisplay = (props: any) => (
   <Text
+    {...props}
     fontSize={50}
     fontWeight="bold"
     fontFamily="monospace"
     width={BOX_WIDTH * 2}
     textAlign="center"
-    {...props}
     m={1}
   />
 );
@@ -63,52 +60,48 @@ const NumberDisplay = (props: any) => (
 const zeroPad = (time: number): string => (time < 10 ? `0${time}` : `${time}`);
 
 const TimeSet: FunctionComponent<IProps> = (props: IProps) => {
-  const { hour, minute, setTime } = props;
-  const [internalTime, setInternalTime] = useState<ITime>({
-    hour: 0,
-    minute: 0,
-  });
+  const { time = { minute: 0, hour: 0 }, setTime, disabled } = props;
 
   const adjustMinute = (isAdd: boolean) => {
     const f = isAdd ? add : subtract;
-    const newTime = f(internalTime.minute, 5);
+    const newTime = f(time.minute, 5);
 
     if (isAdd && newTime >= 60) {
-      setInternalTime(assoc('minute', 0, internalTime));
+      setTime(assoc('minute', 0, time));
     } else if (!isAdd && newTime <= 0) {
-      setInternalTime(assoc('minute', 55, internalTime));
+      setTime(assoc('minute', 55, time));
     } else {
-      setInternalTime(assoc('minute', newTime, internalTime));
+      setTime(assoc('minute', newTime, time));
     }
   };
 
   const adjustHour = (isAdd: boolean) => {
     const f = isAdd ? add : subtract;
-    const newTime = f(internalTime.hour, 1);
+    const newTime = f(time.hour, 1);
 
     if (isAdd && newTime >= 24) {
-      setInternalTime(assoc('hour', 0, internalTime));
+      setTime(assoc('hour', 0, time));
     } else if (!isAdd && newTime <= 0) {
-      setInternalTime(assoc('hour', 23, internalTime));
+      setTime(assoc('hour', 23, time));
     } else {
-      setInternalTime(assoc('hour', newTime, internalTime));
+      setTime(assoc('hour', newTime, time));
     }
   };
 
   return (
-    <Box>
+    <Box p={2}>
       <Center>
-        <UpButton onClick={() => adjustHour(true)} />
-        <UpButton onClick={() => adjustMinute(true)} />
+        <UpButton disabled={disabled} onClick={() => adjustHour(true)} />
+        <UpButton disabled={disabled} onClick={() => adjustMinute(true)} />
       </Center>
       <Center justifyContent="center" alignItems="center">
-        <NumberDisplay>{`${zeroPad(internalTime.hour)}:${zeroPad(
-          internalTime.minute
-        )}`}</NumberDisplay>
+        <NumberDisplay color={disabled ? 'lightestgray' : 'black'}>{`${zeroPad(
+          time.hour
+        )}:${zeroPad(time.minute)}`}</NumberDisplay>
       </Center>
       <Center>
-        <DownButton onClick={() => adjustHour(false)} />
-        <DownButton onClick={() => adjustMinute(false)} />
+        <DownButton disabled={disabled} onClick={() => adjustHour(false)} />
+        <DownButton disabled={disabled} onClick={() => adjustMinute(false)} />
       </Center>
     </Box>
   );

@@ -22,13 +22,17 @@ export type IParticipant = {
   id: string;
 };
 
+export interface ITime {
+  hour: number;
+  minute: number;
+}
 export interface IEventState {
   type?: string;
   race?: boolean;
   title?: string;
   subtitle?: string;
   date?: Date;
-  time?: string;
+  time?: ITime;
 }
 
 export interface IEventStep {

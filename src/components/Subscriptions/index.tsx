@@ -18,7 +18,7 @@ const Subscriptions: FunctionComponent<IProps> = (props: IProps) => {
 
   return (
     <Fragment>
-      <Box p={3} bg="lightestgrey">
+      <Box p={3} bg="lightestgray">
         <Text
           fontWeight="bold"
           color="black"

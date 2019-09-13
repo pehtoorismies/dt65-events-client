@@ -1,13 +1,14 @@
 import React, { FunctionComponent, useState } from 'react';
-import { Button, Flex, Text } from 'rebass';
+import { Box, Flex, Text } from 'rebass';
 import Switch from 'react-switch';
 import BaseStep from './BaseStep';
 import { RightArrowButton, LeftArrowButton } from '../../Common';
-import { IEventStep } from '../../../types';
+import { IEventStep, ITime } from '../../../types';
+import TimeSet from '../../TimeSet';
 
 interface IProps extends IEventStep {
-  time?: string;
-  setTime: (time: string) => void;
+  time?: ITime;
+  setTime: (time: ITime) => void;
 }
 
 const TimeStep: FunctionComponent<IProps> = (props: IProps) => {
@@ -19,19 +20,17 @@ const TimeStep: FunctionComponent<IProps> = (props: IProps) => {
     <BaseStep title="Kellonaika">
       <Flex flexDirection="column" alignItems="center">
         <Text p={2}>Tapahtumalla tietty alkamisaika</Text>
-        <Switch
-          onChange={(val: boolean) => {
-            setUseTime(val);
-          }}
-          checked={useTime}
-        />
+        <Box my={2}>
+          <Switch
+            onChange={(val: boolean) => {
+              setUseTime(val);
+            }}
+            checked={useTime}
+          />
+        </Box>
+
         <Flex justifyContent="center" alignSelf="center">
-          <Button width={150} m={1}>
-            EI
-          </Button>
-          <Button width={150} m={1}>
-            KYLLÄ
-          </Button>
+          <TimeSet disabled={!useTime} time={time} setTime={setTime} />
         </Flex>
       </Flex>
 
@@ -42,7 +41,7 @@ const TimeStep: FunctionComponent<IProps> = (props: IProps) => {
         justifyContent="space-between"
       >
         <LeftArrowButton onClick={toPrevStep} visible={true} />
-        <RightArrowButton onClick={toNextStep} />
+        <RightArrowButton onClick={toNextStep} visible={true} />
       </Flex>
     </BaseStep>
   );

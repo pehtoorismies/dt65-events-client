@@ -59,7 +59,6 @@ storiesOf('EventCreator/steps', module)
   )).add('Time - preset', () => (
     <TimeStep
       {...commonActions}
-      time="10:00"
       setTime={action('Set time')}
     />
   ));

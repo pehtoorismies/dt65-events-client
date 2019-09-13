@@ -8,6 +8,7 @@ import DateStep from './steps/DateStep';
 import TimeStep from './steps/TimeStep';
 import { EVENT_TYPES } from '../../constants';
 import { isNullOrUndefined } from '../../util/general';
+import { ITime } from '../../types';
 
 const getStep = (
   step: number,
@@ -35,7 +36,7 @@ const getStep = (
   const setDate = (date: Date): void => {
     setEventState(assoc('date', date, eventState));
   };
-  const setTime = (time: string): void => {
+  const setTime = (time: ITime): void => {
     setEventState(assoc('time', time, eventState));
   };
 
@@ -84,7 +85,7 @@ const getStep = (
     );
   }
 
-  if (step === 3) {
+  if (step === 4) {
     return (
       <TimeStep
         toPrevStep={() => setStep(3)}
