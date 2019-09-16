@@ -1,10 +1,7 @@
-import React, { FunctionComponent } from 'react';
-import { Button, Flex, Text } from 'rebass';
+import React from 'react';
+import { Text } from 'rebass';
 import gql from 'graphql-tag';
-import { RouteComponentProps } from 'react-router';
 import { useQuery } from '@apollo/react-hooks';
-import { withRouter } from 'react-router-dom';
-import { ROUTES } from '../constants';
 
 const EVENTS_QUERY = gql`
   query FindEvents($limit: Int) {
@@ -30,10 +27,7 @@ const EVENTS_QUERY = gql`
   }
 `;
 
-const EventsContainer: FunctionComponent<RouteComponentProps> = (
-  props: RouteComponentProps
-) => {
-  const { history } = props;
+const EventsContainer = () => {
   const { loading, error, data } = useQuery(EVENTS_QUERY);
 
   if (loading) {
@@ -42,21 +36,9 @@ const EventsContainer: FunctionComponent<RouteComponentProps> = (
   if (error) {
     return <h1>Error</h1>;
   }
-  const toCreateEvent = () => history.push(ROUTES.createEvent);
-  const events = data.findManyEvents;
-  if (events.length === 0) {
-    return (
-      <Flex flexDirection="column" alignItems="center">
-        <Text mt={4} textAlign="center">
-          Ei tapahtumia.{' '}
-        </Text>
-        <Button onClick={toCreateEvent} my={4}>
-          Luo uusi tapahtuma
-        </Button>
-      </Flex>
-    );
-  }
 
+  const events = data.findManyEvents;
+  console.log(events);
   return (
     <div>
       {events.map(
@@ -75,4 +57,4 @@ const EventsContainer: FunctionComponent<RouteComponentProps> = (
   );
 };
 
-export default withRouter(EventsContainer);
+export default EventsContainer;

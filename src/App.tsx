@@ -5,6 +5,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Box } from 'rebass';
 
 import EventsContainer from './containers/EventsContainer';
+import CreateEventContainer from './containers/CreateEventContainer';
 import HeaderMenuContainer from './containers/HeaderMenuContainer';
 
 import { ROUTES } from './constants';
@@ -32,7 +33,12 @@ const App = () => (
               component={EventsContainer}
               privateRoute={true}
             />
-            
+            <Dt65Route
+              exact={true}
+              path={ROUTES.createEvent}
+              component={CreateEventContainer}
+              privateRoute={true}
+            />
             <Dt65Route
               exact={true}
               path={ROUTES.login}
