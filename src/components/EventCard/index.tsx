@@ -1,16 +1,22 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { Box, Card, Flex, Text } from 'rebass';
+import styled from '@emotion/styled';
 import { map } from 'ramda';
-// import AnimateHeight from 'react-animate-height';
-import bgImage from '../../images/test_mini.jpg';
+import { Medal } from 'styled-icons/fa-solid/Medal';
+import AnimateHeight from 'react-animate-height';
 import HeadCountButton from '../HeadCountButton';
-
+import { isParticipating} from '../../util/general';
 import { IParticipant, IEvent } from '../../types';
-import dateFnsFormat from 'date-fns/format'
+import dateFnsFormat from 'date-fns/format';
 
 interface IProps extends IEvent {
   username: string;
+  eventImage?: string;
+  joinEvent: (join: boolean) => void;
+  stayOpened?: boolean
 }
+
+const ANIM_TIME = 500;
 
 const ImageBox = (props: any) => (
   <Flex
@@ -32,6 +38,12 @@ const ImageBox = (props: any) => (
   />
 );
 
+const Race = styled(Medal)`
+  color: white;
+  width: 30px;
+  padding: 4px;
+`;
+
 const Pill = (props: any) => (
   <Flex
     {...props}
@@ -48,7 +60,7 @@ const renderPill = (username: string) => (participant: IParticipant) => {
 
   return (
     <Pill bg={color} justifyContent="center" alignItems="center" p={2} key={id}>
-      <Text px={1} fontSize={14} color="white">
+      <Text px={1} fontSize={12} color="white">
         {usr}
       </Text>
     </Pill>
@@ -56,13 +68,39 @@ const renderPill = (username: string) => (participant: IParticipant) => {
 };
 
 const EventCard: FunctionComponent<IProps> = (props: IProps) => {
-  const { username, participants, type, subtitle, title, time, date, description  } = props;
-  console.log('p', props);
+  const {
+    date,
+    description,
+    eventImage,
+    joinEvent,
+    participants,
+    subtitle,
+    time,
+    title,
+    type,
+    username,
+    race,
+    stayOpened,
+  } = props;
+
+  const isParticipant = isParticipating(username, participants);
+  const onJoinClick = (e: any) => {
+    e.stopPropagation();
+    joinEvent(!isParticipant);
+  } 
+  const raceElem = race ? <Race /> : null;
   
+  const exposeDetails = () => {
+    if (!stayOpened) {
+      setShowDetails(!showDetails)
+    } 
+  }
+  const [ showDetails, setShowDetails] = useState(stayOpened);
+
   return (
-    <Flex p={2} bg="white" width="100%" sx={{ maxWidth: 400 }}>
+    <Flex p={2} bg="white" width="100%" sx={{ maxWidth: 400 }} onClick={exposeDetails}>
       <Card width="100%" mx="auto" variant="shadow">
-        <ImageBox bgImage={bgImage}>
+        <ImageBox bgImage={eventImage || type.defaultImage} >
           <Text
             letterSpacing={4}
             color="white"
@@ -72,8 +110,9 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
               textShadow: '2px 2px 5px black',
             }}
           >
-            {type}
+            {type.title}
           </Text>
+          {raceElem}
         </ImageBox>
         <Flex p={2} bg="darkWhite" justifyContent="space-between">
           <Flex justifyContent="space-around" flexDirection="column">
@@ -83,40 +122,39 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
             <Text fontSize={16} fontWeight="bold">
               {subtitle}
             </Text>
-            <Text fontSize={16}>{dateFnsFormat(date, 'dd.MM.yyyy')}</Text>
+            <Text mt={1} fontSize={16}>{dateFnsFormat(date, 'dd.MM.yyyy')}</Text>
           </Flex>
           <Flex alignItems="center" justifyContent="center">
             <HeadCountButton
               count={participants.length}
-              onClick={() => {
-                
-              }}
-              highlighted={false}
+              onClick={onJoinClick}
+              isParticipating={isParticipant}
             />
           </Flex>
         </Flex>
-
-        <Box px={2} pt={1}>
-          <Flex>
+        <AnimateHeight duration={ANIM_TIME} height={showDetails ? 'auto' : 0}>
+          <Box px={2} pt={1}>
+            <Flex>
+              <Text fontWeight="bold" color="lightBlack" width={60}>
+                Sijainti:
+              </Text>
+              <Text ml={1}>Address</Text>
+            </Flex>
+            <Flex my={1}>
+              <Text fontWeight="bold" color="lightBlack" width={60}>
+                Aika:
+              </Text>
+              <Text ml={1}>{time}</Text>
+            </Flex>
+            <Flex flexWrap="wrap" py={1}>
+              {map(renderPill(username), participants)}
+            </Flex>
             <Text fontWeight="bold" color="lightBlack" width={60}>
-              Sijainti:
+              Kuvaus:
             </Text>
-            <Text ml={1}>Address</Text>
-          </Flex>
-          <Flex my={1}>
-            <Text fontWeight="bold" color="lightBlack" width={60}>
-              Aika:
-            </Text>
-            <Text ml={1}>{time}</Text>
-          </Flex>
-          <Flex flexWrap="wrap" py={1}>
-            {map(renderPill(username), participants)}
-          </Flex>
-          <Text fontWeight="bold" color="lightBlack" width={60}>
-            Kuvaus:
-          </Text>
-          <Text my={2}>{description}</Text>
-        </Box>
+            <Text my={2}>{description}</Text>
+          </Box>
+        </AnimateHeight>
       </Card>
     </Flex>
   );

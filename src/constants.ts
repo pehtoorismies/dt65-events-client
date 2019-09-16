@@ -1,4 +1,16 @@
-import { IEventType } from './types';
+import { IEventType, EventType } from './types';
+import imgCycling from './images/events-cycling.jpg';
+import imgKaronkka from './images/events-karonkka.jpg';
+import imgMeeting from './images/events-meeting.jpg';
+import imgOrienteering from './images/events-orienteering.jpg';
+import imgOther from './images/events-other.jpg';
+import imgRunning from './images/events-running.jpg';
+import imgSkiing from './images/events-skiing.jpg';
+import imgSpinning from './images/events-spinning.jpg';
+import imgSwimming from './images/events-swimming.jpg';
+import imgTrackRunning from './images/events-track-running.jpg';
+import imgTriathlon from './images/events-triathlon.jpg';
+import imgUltras from './images/events-ultras.jpg';
 
 const FI_LOCAL = {
   months: [
@@ -35,63 +47,75 @@ const FI_LOCAL = {
 const EVENT_TYPES: IEventType[] = [
   {
     img: 'cycling',
+    defaultImage: imgCycling,
     title: 'Pyöräily',
-    type: 'Cycling',
+    type: EventType.Cycling,
   },
   {
     img: 'running',
+    defaultImage: imgRunning,
     title: 'Juoksu',
-    type: 'Running',
+    type: EventType.Running,
   },
   {
     img: 'orienteering',
+    defaultImage: imgOrienteering,
     title: 'Suunnistus',
-    type: 'Orienteering',
+    type: EventType.Orienteering,
   },
   {
     img: 'track-running',
+    defaultImage: imgTrackRunning,
     title: 'Ratajuoksu',
-    type: 'TrackRunning',
+    type: EventType.TrackRunning,
   },
   {
     img: 'spinning',
+    defaultImage: imgSpinning,
     title: 'Spinning',
-    type: 'Spinning',
+    type: EventType.Spinning,
   },
   {
     img: 'triathlon',
+    defaultImage: imgTriathlon,
     title: 'Triathlon',
-    type: 'Triathlon',
+    type: EventType.Triathlon,
   },
   {
     img: 'swimming',
+    defaultImage: imgSwimming,
     title: 'Uinti',
-    type: 'Swimming',
+    type: EventType.Swimming,
   },
   {
     img: 'ultras',
+    defaultImage: imgUltras,
     title: 'Ultras',
-    type: 'Ultras',
+    type: EventType.Ultras,
   },
   {
     img: 'other',
+    defaultImage: imgOther,
     title: 'Muu',
-    type: 'Other',
+    type: EventType.Other,
   },
   {
     img: 'skiing',
+    defaultImage: imgSkiing,
     title: 'Hiihto',
-    type: 'Skiing',
+    type: EventType.Skiing,
   },
   {
     img: 'karonkka',
+    defaultImage: imgKaronkka,
     title: 'Karonkka',
-    type: 'Karonkka',
+    type: EventType.Karonkka,
   },
   {
     img: 'meeting',
+    defaultImage: imgMeeting,
     title: 'Kokous',
-    type: 'Meeting',
+    type: EventType.Meeting,
   },
 ];
 

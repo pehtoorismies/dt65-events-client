@@ -8,7 +8,7 @@ import TimeStep from './steps/TimeStep';
 import DescriptionStep from './steps/DescriptionStep';
 import { EVENT_TYPES } from '../../constants';
 import { isNullOrUndefined } from '../../util/general';
-import { IEventState, ITime } from '../../types';
+import { IEventState, ITime, EventType } from '../../types';
 
 const STEPS = {
   TYPE: 0,
@@ -25,7 +25,7 @@ const getStep = (
   eventState: IEventState,
   setEventState: (eventState: IEventState) => void
 ) => {
-  const setType = (eventType: string) => {
+  const setType = (eventType: EventType) => {
     if (!eventState.type) {
       setStep(1);
     }

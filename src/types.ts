@@ -1,9 +1,25 @@
 import { ReactNode } from 'react';
 
+export enum EventType {
+  Cycling,
+  Karonkka,
+  Meeting,
+  Orienteering,
+  Other,
+  Running,
+  Skiing,
+  Spinning,
+  Swimming,
+  TrackRunning,
+  Triathlon,
+  Ultras,
+}
+
 export interface IEventType {
   img: string;
+  defaultImage: string;
   title: string;
-  type: string;
+  type: EventType;
 }
 export interface IFormProps {
   initialValues: any;
@@ -17,17 +33,17 @@ export interface IAuthFormProps {
   children?: ReactNode;
 }
 
-export type IParticipant = {
+export interface IParticipant {
   username: string;
-  id: string | number;
-};
+  id: string | number;
+}
 
 export interface ITime {
   hour: number;
   minute: number;
 }
 export interface IEventState {
-  type?: string;
+  type?: EventType;
   race?: boolean;
   title?: string;
   subtitle?: string;
@@ -43,12 +59,12 @@ export interface IEventStep {
 }
 
 export interface IEvent {
-  type: string;
+  type: IEventType;
   race: boolean;
   title: string;
   subtitle?: string;
   date: Date;
-  time: string;
+  time?: string;
   description?: string;
   participants: IParticipant[];
 }

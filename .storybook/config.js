@@ -1,5 +1,5 @@
 import { addDecorator, addParameters, configure } from '@storybook/react';
-
+import { withKnobs } from '@storybook/addon-knobs';
 import GlobalStyle from '../src/GlobalStyle';
 import React from 'react';
 import { ThemeProvider } from 'emotion-theming'
@@ -24,6 +24,7 @@ const withGlobalStyles = storyFn => (
 
 addParameters({ viewport: { defaultViewport: 'iphone6' }});
 addDecorator(withGlobalStyles);
+// addDecorator(withKnobs);
 
 
 // automatically import all files ending in *.stories.tsx

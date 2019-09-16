@@ -4,19 +4,18 @@ import map from 'ramda/es/map';
 import BaseStep from './BaseStep';
 import sortBy from 'ramda/es/sortBy';
 import prop from 'ramda/es/prop';
-import { IEventType } from '../../../types';
+import { EventType, IEventType, IEventStep } from '../../../types';
 import { RightArrowButton } from '../../Common';
-import { IEventStep } from '../../../types';
 
 const sortByTitle = sortBy(prop('title'));
 
 interface IProps extends IEventStep {
-  selectedType?: string;
+  selectedType?: EventType;
   types: IEventType[];
   setSelectedType: OnSelectType;
 }
 
-type OnSelectType = (type: string) => void;
+type OnSelectType = (type: EventType) => void;
 
 const renderTypeButton = (setSelected: OnSelectType, selectedType: any) => (
   type: IEventType

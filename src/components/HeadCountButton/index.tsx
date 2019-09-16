@@ -1,28 +1,46 @@
 import React, { Fragment, FunctionComponent } from 'react';
 import { Box, Text, Flex } from 'rebass';
-import { IParticipant} from '../../types';
+import { keyframes } from '@emotion/core';
+import styled from '@emotion/styled';
+import { User } from 'styled-icons/boxicons-regular/User';
+import { LoaderAlt } from 'styled-icons/boxicons-regular/LoaderAlt';
 
 interface IProps {
   count: number;
-  onClick: () => void;
-  highlighted: boolean;
-  disabled?: boolean;
+  onClick: any;
+  isParticipating: boolean;
+  loading?: boolean;
 }
 
-const LoaderIcon = (props: any) => (
-  <Box
-    width={26}
-    height={26}
-    bg="white"
-    // animation: ${rotate} 1s linear infinite;
-  />
-);
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+const UserIcon = styled(User)`
+  width: 20px;
+  height: 20px;
+  color: white;
+`;
+
+const LoaderIcon = styled(LoaderAlt)`
+  width: 26px;
+  height: 26px;
+  animation: ${rotate} 1s linear infinite;
+  color: white;
+`;
+
 
 const Count = (props: any) => (
   <Flex
+    {...props}
     width={55}
     height={55}
-    bg="white"
     sx={{
       borderRadius: 50,
       border: '2px solid white',
@@ -31,12 +49,8 @@ const Count = (props: any) => (
   />
 );
 
-
-
-const UserIcon = (props: any) => <Box width={20} height={20} bg="pink" />;
-
-const getContent = (count: number, disabled?: boolean) => {
-  if (disabled) {
+const getContent = (count: number, loading?: boolean) => {
+  if (loading) {
     return <LoaderIcon />;
   }
   return (
@@ -50,15 +64,15 @@ const getContent = (count: number, disabled?: boolean) => {
 };
 
 const HeadCountButton: FunctionComponent<IProps> = (props: IProps) => {
-  const { count, onClick, highlighted, disabled } = props;
+  const { count, onClick, isParticipating, loading } = props;
 
-  const content = getContent(count, disabled);
-  const clicked = disabled ? null : onClick;
+  const content = getContent(count, loading);
+  const clicked = loading ? null : onClick;
 
   return (
     <Count
       onClick={clicked}
-      bg={highlighted ? 'pink' : 'blue'}
+      bg={isParticipating ? 'pink' : 'blue'}
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
