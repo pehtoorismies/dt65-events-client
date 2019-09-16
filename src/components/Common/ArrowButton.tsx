@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { FunctionComponent } from 'react';
 import { Button, Flex, Text } from 'rebass';
 import styled from '@emotion/styled'
 import { RightArrow } from 'styled-icons/boxicons-solid/RightArrow';

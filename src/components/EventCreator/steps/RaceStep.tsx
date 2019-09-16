@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 import { Button, Flex } from 'rebass';
 import BaseStep from './BaseStep';
 import { RightArrowButton, LeftArrowButton } from '../../Common';
@@ -31,13 +31,15 @@ const getNoVariant = (isRace?: boolean) => {
 
 const RaceStep: FunctionComponent<IProps> = (props: IProps) => {
   const { isRace, setRace, toNextStep, toPrevStep } = props;
+  const setRaceFalse = () => setRace(false);
+  const setRaceTrue = () => setRace(true);
 
   return (
     <BaseStep title="Kilpailu?">
       <Flex justifyContent="center" alignSelf="center">
         <Button
           width={150}
-          onClick={() => setRace(false)}
+          onClick={setRaceFalse}
           variant={getNoVariant(isRace)}
           m={1}
         >
@@ -45,14 +47,19 @@ const RaceStep: FunctionComponent<IProps> = (props: IProps) => {
         </Button>
         <Button
           width={150}
-          onClick={() => setRace(true)}
+          onClick={setRaceTrue}
           variant={getYesVariant(isRace)}
           m={1}
         >
           KYLLÄ
         </Button>
       </Flex>
-      <Flex my={4} width="100%" alignItems="center" justifyContent="space-between">
+      <Flex
+        my={4}
+        width="100%"
+        alignItems="center"
+        justifyContent="space-between"
+      >
         <LeftArrowButton onClick={toPrevStep} visible={true} />
         <RightArrowButton
           onClick={toNextStep}

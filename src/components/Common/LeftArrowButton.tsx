@@ -16,9 +16,9 @@ const LeftArrowButton = (props: any) => (
     width={150}
     sx={{ visibility: props.visible ? 'visible' : 'hidden' }}
   >
-    <Flex alignItems="center" justifyContent="space-between">
+    <Flex alignItems="center" justifyContent="flex-start">
       <Arrow />
-      <Text>EDELLINEN</Text>
+      <Text mx={2}>{props.text || 'EDELLINEN'}</Text>
     </Flex>
   </Button>
 );

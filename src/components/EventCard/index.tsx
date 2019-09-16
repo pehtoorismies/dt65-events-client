@@ -5,15 +5,15 @@ import { map } from 'ramda';
 import { Medal } from 'styled-icons/fa-solid/Medal';
 import AnimateHeight from 'react-animate-height';
 import HeadCountButton from '../HeadCountButton';
-import { isParticipating} from '../../util/general';
+import { isParticipating } from '../../util/general';
 import { IParticipant, IEvent } from '../../types';
 import dateFnsFormat from 'date-fns/format';
 
 interface IProps extends IEvent {
   username: string;
   eventImage?: string;
-  joinEvent: (join: boolean) => void;
-  stayOpened?: boolean
+  joinEvent?: (join: boolean) => void;
+  stayOpened?: boolean;
 }
 
 const ANIM_TIME = 500;
@@ -59,8 +59,8 @@ const renderPill = (username: string) => (participant: IParticipant) => {
   const color = username === usr ? 'pink' : 'blue';
 
   return (
-    <Pill bg={color} justifyContent="center" alignItems="center" p={2} key={id}>
-      <Text px={1} fontSize={12} color="white">
+    <Pill bg={color} justifyContent="center" alignItems="center" p={1} key={id}>
+      <Text px={1} fontSize={10} color="white">
         {usr}
       </Text>
     </Pill>
@@ -84,23 +84,32 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
   } = props;
 
   const isParticipant = isParticipating(username, participants);
+
   const onJoinClick = (e: any) => {
     e.stopPropagation();
-    joinEvent(!isParticipant);
-  } 
+    if (joinEvent) {
+      joinEvent(!isParticipant);
+    }
+  };
   const raceElem = race ? <Race /> : null;
-  
+
   const exposeDetails = () => {
     if (!stayOpened) {
-      setShowDetails(!showDetails)
-    } 
-  }
-  const [ showDetails, setShowDetails] = useState(stayOpened);
+      setShowDetails(!showDetails);
+    }
+  };
+  const [showDetails, setShowDetails] = useState(stayOpened);
 
   return (
-    <Flex p={2} bg="white" width="100%" sx={{ maxWidth: 400 }} onClick={exposeDetails}>
+    <Flex
+      p={2}
+      bg="white"
+      width="100%"
+      sx={{ maxWidth: 400 }}
+      onClick={exposeDetails}
+    >
       <Card width="100%" mx="auto" variant="shadow">
-        <ImageBox bgImage={eventImage || type.defaultImage} >
+        <ImageBox bgImage={eventImage || type.defaultImage}>
           <Text
             letterSpacing={4}
             color="white"
@@ -122,7 +131,9 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
             <Text fontSize={16} fontWeight="bold">
               {subtitle}
             </Text>
-            <Text mt={1} fontSize={16}>{dateFnsFormat(date, 'dd.MM.yyyy')}</Text>
+            <Text mt={1} fontSize={16}>
+              {dateFnsFormat(date, 'dd.MM.yyyy')}
+            </Text>
           </Flex>
           <Flex alignItems="center" justifyContent="center">
             <HeadCountButton

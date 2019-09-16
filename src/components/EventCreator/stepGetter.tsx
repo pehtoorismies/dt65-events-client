@@ -5,6 +5,7 @@ import RaceStep from './steps/RaceStep';
 import TitleStep from './steps/TitleStep';
 import DateStep from './steps/DateStep';
 import TimeStep from './steps/TimeStep';
+import CreateStep from './steps/CreateStep';
 import DescriptionStep from './steps/DescriptionStep';
 import { EVENT_TYPES } from '../../constants';
 import { isNullOrUndefined } from '../../util/general';
@@ -17,6 +18,7 @@ const STEPS = {
   DATE: 2,
   TIME: 3,
   DESCRIPTION: 4,
+  PREVIEW: 5,
 };
 
 const getStep = (
@@ -129,6 +131,17 @@ const getStep = (
         setDescription={setDescription}
         toNextStep={toNext(STEPS.DESCRIPTION)}
         toPrevStep={toPrev(STEPS.DESCRIPTION)}
+      />
+    );
+  }
+
+  if (step === STEPS.PREVIEW) {
+    return (
+      <CreateStep
+        username="jioura"
+        eventState={eventState}
+        toNextStep={toNext(STEPS.PREVIEW)}
+        toPrevStep={toPrev(STEPS.PREVIEW)}
       />
     );
   }

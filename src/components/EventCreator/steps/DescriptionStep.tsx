@@ -5,7 +5,7 @@ import ReactQuill from 'react-quill';
 import Helmet from 'react-helmet';
 import BaseStep from './BaseStep';
 import { RightArrowButton, LeftArrowButton } from '../../Common';
-import { IEventStep, ITime } from '../../../types';
+import { IEventStep } from '../../../types';
 
 interface IProps extends IEventStep {
   description?: string;
@@ -62,7 +62,7 @@ const DescriptionStep: FunctionComponent<IProps> = (props: IProps) => {
       <Helmet>
         <style>{`
           .ql-editor {
-            min-height: 300px;
+            min-height: 250px;
           }
           .ql-editor strong {
             font-weight:bold;

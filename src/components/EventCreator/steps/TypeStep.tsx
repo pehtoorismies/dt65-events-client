@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 import { Button, Flex } from 'rebass';
 import map from 'ramda/es/map';
 import BaseStep from './BaseStep';
@@ -17,16 +17,23 @@ interface IProps extends IEventStep {
 
 type OnSelectType = (type: EventType) => void;
 
-const renderTypeButton = (setSelected: OnSelectType, selectedType: any) => (
-  type: IEventType
-) => {
-  const variant = selectedType === type.type ? 'primary' : 'secondary';
+const renderTypeButton = (
+  setSelected: OnSelectType,
+  selectedType?: EventType
+) => (type: IEventType) => {
+  const isSelected = selectedType === type.type;
 
+  const variant = isSelected ? 'primary' : 'secondary';
+  const selectedClick = () => {
+    if (!isSelected) {
+      setSelected(type.type);
+    }
+  };
   return (
     <Button
       key={type.type}
-      width={150}
-      onClick={() => setSelected(type.type)}
+      width={140}
+      onClick={selectedClick}
       variant={variant}
       m={1}
     >

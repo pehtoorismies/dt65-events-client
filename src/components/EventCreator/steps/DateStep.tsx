@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, Fragment } from 'react';
+import React, { FunctionComponent, Fragment } from 'react';
 import { Flex, Text } from 'rebass';
 import DayPicker from 'react-day-picker';
 import Helmet from 'react-helmet';
@@ -26,6 +26,7 @@ const DateStep: FunctionComponent<IProps> = (props: IProps) => {
   const { date, toNextStep, toPrevStep, setDate } = props;
 
   const handleDayClick = (selectedDay: any) => setDate(selectedDay);
+  const toDay = (day: Date) => setDate(day);
 
   return (
     <Fragment>
@@ -64,7 +65,7 @@ const DateStep: FunctionComponent<IProps> = (props: IProps) => {
             fromMonth={new Date(2019, 9)}
             onDayClick={handleDayClick}
             selectedDays={date}
-            onTodayButtonClick={day => setDate(day)}
+            onTodayButtonClick={toDay}
           />
         </Flex>
         <Flex

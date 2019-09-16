@@ -46,73 +46,61 @@ const FI_LOCAL = {
 
 const EVENT_TYPES: IEventType[] = [
   {
-    img: 'cycling',
     defaultImage: imgCycling,
     title: 'Pyöräily',
     type: EventType.Cycling,
   },
   {
-    img: 'running',
     defaultImage: imgRunning,
     title: 'Juoksu',
     type: EventType.Running,
   },
   {
-    img: 'orienteering',
     defaultImage: imgOrienteering,
     title: 'Suunnistus',
     type: EventType.Orienteering,
   },
   {
-    img: 'track-running',
     defaultImage: imgTrackRunning,
     title: 'Ratajuoksu',
     type: EventType.TrackRunning,
   },
   {
-    img: 'spinning',
     defaultImage: imgSpinning,
     title: 'Spinning',
     type: EventType.Spinning,
   },
   {
-    img: 'triathlon',
     defaultImage: imgTriathlon,
     title: 'Triathlon',
     type: EventType.Triathlon,
   },
   {
-    img: 'swimming',
     defaultImage: imgSwimming,
     title: 'Uinti',
     type: EventType.Swimming,
   },
   {
-    img: 'ultras',
     defaultImage: imgUltras,
     title: 'Ultras',
     type: EventType.Ultras,
   },
   {
-    img: 'other',
     defaultImage: imgOther,
     title: 'Muu',
     type: EventType.Other,
   },
   {
-    img: 'skiing',
     defaultImage: imgSkiing,
     title: 'Hiihto',
     type: EventType.Skiing,
   },
   {
-    img: 'karonkka',
     defaultImage: imgKaronkka,
     title: 'Karonkka',
     type: EventType.Karonkka,
   },
   {
-    img: 'meeting',
     defaultImage: imgMeeting,
     title: 'Kokous',
     type: EventType.Meeting,

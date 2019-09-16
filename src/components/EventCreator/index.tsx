@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useState } from 'react';
-import { Box, Button, Flex, Text } from 'rebass';
+import { Box, Flex, Text } from 'rebass';
 import { withTheme } from 'emotion-theming';
 import StepCounter from '../StepCounter';
-import { IEventState } from '../../types';
+import { IEventState, EventType } from '../../types';
 import getStep from './stepGetter';
 
 interface IProps {
@@ -12,9 +12,10 @@ interface IProps {
 const MAX_STEP = 7;
 
 const EventCreator: FunctionComponent<IProps> = (props: IProps) => {
-  const { prop } = props;
+  // const { prop } = props;
   const [step, setStep] = useState<number>(0);
   const [eventState, setEventState] = useState<IEventState>({
+    time: { hour: 0, minute: 0 },
     timeEnabled: false,
   });
 

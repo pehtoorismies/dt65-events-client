@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 export enum EventType {
-  Cycling,
+  Cycling = 100,
   Karonkka,
   Meeting,
   Orienteering,
@@ -16,7 +16,6 @@ export enum EventType {
 }
 
 export interface IEventType {
-  img: string;
   defaultImage: string;
   title: string;
   type: EventType;
@@ -43,14 +42,14 @@ export interface ITime {
   minute: number;
 }
 export interface IEventState {
-  type?: EventType;
-  race?: boolean;
-  title?: string;
-  subtitle?: string;
   date?: Date;
-  time?: ITime;
-  timeEnabled: boolean;
   description?: string;
+  race?: boolean;
+  subtitle?: string;
+  time: ITime;
+  timeEnabled: boolean;
+  title?: string;
+  type?: EventType;
 }
 
 export interface IEventStep {

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 import { Box, Button, Flex, Text } from 'rebass';
 import { UpArrow } from 'styled-icons/boxicons-solid/UpArrow';
 import { DownArrow } from 'styled-icons/boxicons-solid/DownArrow';
@@ -88,11 +88,16 @@ const TimeSet: FunctionComponent<IProps> = (props: IProps) => {
     }
   };
 
+  const upHour = () => adjustHour(true);
+  const upMinute = () => adjustMinute(true);
+  const downHour = () => adjustHour(true);
+  const downMinute = () => adjustMinute(true);
+
   return (
     <Box p={2}>
       <Center>
-        <UpButton disabled={disabled} onClick={() => adjustHour(true)} />
-        <UpButton disabled={disabled} onClick={() => adjustMinute(true)} />
+        <UpButton disabled={disabled} onClick={upHour} />
+        <UpButton disabled={disabled} onClick={upMinute} />
       </Center>
       <Center justifyContent="center" alignItems="center">
         <NumberDisplay color={disabled ? 'lightestgray' : 'black'}>{`${zeroPad(
@@ -100,8 +105,8 @@ const TimeSet: FunctionComponent<IProps> = (props: IProps) => {
         )}:${zeroPad(time.minute)}`}</NumberDisplay>
       </Center>
       <Center>
-        <DownButton disabled={disabled} onClick={() => adjustHour(false)} />
-        <DownButton disabled={disabled} onClick={() => adjustMinute(false)} />
+        <DownButton disabled={disabled} onClick={downHour} />
+        <DownButton disabled={disabled} onClick={downMinute} />
       </Center>
     </Box>
   );

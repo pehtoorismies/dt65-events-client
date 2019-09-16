@@ -1,13 +1,7 @@
-import React, { FunctionComponent, useState } from 'react';
+import React from 'react';
 import { RightArrow } from 'styled-icons/boxicons-solid/RightArrow';
 import { Button, Flex, Text } from 'rebass';
 import styled from '@emotion/styled';
-
-interface IProps {
-  visible: boolean;
-  onClick: any;
-  type?: string;
-}
 
 const Arrow = styled(RightArrow)`
   height: 15px;
@@ -22,8 +16,8 @@ const RightArrowButton = (props: any) => (
     width={150}
     sx={{ visibility: props.visible ? 'visible' : 'hidden' }}
   >
-    <Flex alignItems="center" justifyContent="space-between">
-      <Text>{props.text || 'Seuraava'}</Text>
+    <Flex alignItems="center" justifyContent="flex-end">
+      <Text mx={2}>{props.text || 'Seuraava'}</Text>
       <Arrow />
     </Flex>
   </Button>

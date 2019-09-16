@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import BaseStep from './BaseStep';
 import * as Yup from 'yup';
 import { Box, Flex, Text } from 'rebass';
-import { Formik, Field, FormikProps, Form, FormikActions } from 'formik';
+import { Formik, Field, FormikProps, Form } from 'formik';
 import { RightArrowButton, LeftArrowButton, EventInput } from '../../Common';
 import { IEventStep } from '../../../types';
 
@@ -49,24 +49,6 @@ const TitleStep: FunctionComponent<IProps> = (props: IProps) => {
 
     return (
       <Flex flexDirection="column" width="100%" p={2}>
-        <Box
-          p={2}
-          bg="lightestgrey"
-          sx={{ border: '3px solid lightgrey', borderRadius: '4px' }}
-          width="70%"
-          alignSelf="center"
-        >
-          <HintText>Esimerkki</HintText>
-          <Flex>
-            <HintText fontWeight="bold">Nimi:</HintText>
-            <HintText>Tempoajo </HintText>
-          </Flex>
-          <Flex>
-            <HintText fontWeight="bold">Tarkenne:</HintText>
-            <HintText>Seuran mestaruus </HintText>
-          </Flex>
-        </Box>
-
         <Form>
           <Box py={3}>
             <Field
@@ -83,6 +65,23 @@ const TitleStep: FunctionComponent<IProps> = (props: IProps) => {
               placeholder="Mahdollinen tarkenne"
               component={EventInput}
             />
+          </Box>
+          <Box
+            p={2}
+            bg="lightestgrey"
+            sx={{ border: '3px solid lightgrey', borderRadius: '4px' }}
+            width="70%"
+            alignSelf="center"
+          >
+            <HintText>Esimerkki</HintText>
+            <Flex>
+              <HintText fontWeight="bold">Nimi:</HintText>
+              <HintText>Tempoajo </HintText>
+            </Flex>
+            <Flex>
+              <HintText fontWeight="bold">Tarkenne:</HintText>
+              <HintText>Seuran mestaruus </HintText>
+            </Flex>
           </Box>
           <Flex
             my={4}

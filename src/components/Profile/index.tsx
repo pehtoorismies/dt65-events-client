@@ -38,7 +38,7 @@ const getProfileCmp = (profileUrl?: string) => {
 };
 
 const Profile: FunctionComponent<IProps> = (props: IProps) => {
-  const { buttons, profileUrl, username, children } = props;
+  const { buttons, profileUrl, username } = props;
 
   const Icon = getProfileCmp(profileUrl);
 

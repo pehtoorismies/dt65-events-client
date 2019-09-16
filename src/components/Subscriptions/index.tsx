@@ -1,5 +1,5 @@
 import React, { Fragment, FunctionComponent } from 'react';
-import { Box, Flex, Text } from 'rebass';
+import { Box, Text } from 'rebass';
 import { Checkbox } from '../Common';
 
 interface ICheckbox {

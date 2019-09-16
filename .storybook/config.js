@@ -22,7 +22,7 @@ const withGlobalStyles = storyFn => (
   </React.Fragment>
 );
 
-addParameters({ viewport: { defaultViewport: 'iphone6' }});
+addParameters({ viewport: { defaultViewport: 'iphone5' }});
 addDecorator(withGlobalStyles);
 // addDecorator(withKnobs);
 

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { FunctionComponent } from 'react';
 import Switch from 'react-switch';
 import { Flex, Text } from 'rebass';
 

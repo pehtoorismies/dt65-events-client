@@ -1,5 +1,5 @@
 import React, { Fragment, FunctionComponent } from 'react';
-import { Box, Text, Flex } from 'rebass';
+import { Text, Flex } from 'rebass';
 import { keyframes } from '@emotion/core';
 import styled from '@emotion/styled';
 import { User } from 'styled-icons/boxicons-regular/User';
