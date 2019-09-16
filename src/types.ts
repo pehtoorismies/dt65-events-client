@@ -15,6 +15,11 @@ export enum EventType {
   Ultras,
 }
 
+export interface IAuthResponse {
+  valid: boolean;
+  errorMessage?: string
+}
+
 export interface IEventType {
   defaultImage: string;
   title: string;

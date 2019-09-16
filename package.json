@@ -16,6 +16,7 @@
     "graphql-tag": "^2.10.1",
     "history": "^4.9.0",
     "jwt-decode": "^2.2.0",
+    "jwt-simple": "^0.5.6",
     "ramda": "^0.26.1",
     "ramda-adjunct": "^2.19.3",
     "react": "^16.9.0",

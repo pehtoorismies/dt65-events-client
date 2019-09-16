@@ -2,22 +2,31 @@ import React, { Fragment } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 import { ROUTES } from './constants';
 import FooterMenuContainer from './containers/FooterMenuContainer';
-import { isAuthenticated } from './util/auth';
+import { isAuthenticated, logout } from './util/auth';
 
 interface IPrivateRouteProps extends RouteProps {
   // tslint:disable-next-line:no-any
   component: any;
+  privateRoute?: boolean;
 }
 
-const PrivateRoute = (props: IPrivateRouteProps) => {
-  const { component: Component, ...rest } = props;
+const Dt65Route = (props: IPrivateRouteProps) => {
+  const { component: Component, privateRoute = false, ...rest } = props;
 
   return (
     <Route
       {...rest}
       // tslint:disable-next-line: jsx-no-lambda
       render={(props: any) => {
-        if (isAuthenticated()) {
+        if (!privateRoute) {
+          return <Fragment>
+            <Component {...props} />
+          </Fragment>;
+        }
+
+        const { valid, errorMessage } = isAuthenticated();
+
+        if (valid) {
           return (
             <Fragment>
               <FooterMenuContainer />
@@ -25,6 +34,8 @@ const PrivateRoute = (props: IPrivateRouteProps) => {
             </Fragment>
           );
         }
+
+        logout();
 
         return (
           <Redirect
@@ -39,4 +50,4 @@ const PrivateRoute = (props: IPrivateRouteProps) => {
   );
 };
 
-export default PrivateRoute;
+export default Dt65Route;

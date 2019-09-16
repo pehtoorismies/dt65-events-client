@@ -13,8 +13,7 @@ import LoginContainer from './containers/LoginContainer';
 import RegisterContainer from './containers/RegisterContainer';
 import RegisterSuccessContainer from './containers/RegisterSuccessContainer';
 import GlobalStyle from './GlobalStyle';
-import PrivateRoute from './PrivateRoute';
-import PublicRoute from './PublicRoute';
+import Dt65Route from './Dt65Route';
 import apolloClient from './util/apolloClient';
 
 import { theme } from './theme';
@@ -27,28 +26,29 @@ const App = () => (
         <Box py={40} px={2}>
           <Router>
             <HeaderMenuContainer />
-            <PrivateRoute
+            <Dt65Route
               exact={true}
               path={ROUTES.home}
               component={EventsContainer}
+              privateRoute={true}
             />
             
-            <PublicRoute
+            <Dt65Route
               exact={true}
               path={ROUTES.login}
               component={LoginContainer}
             />
-            <PublicRoute
+            <Dt65Route
               exact={true}
               path={ROUTES.forgotPassword}
               component={ForgotPasswordContainer}
             />
-            <PublicRoute
+            <Dt65Route
               exact={true}
               path={ROUTES.register}
               component={RegisterContainer}
             />
-            <PublicRoute
+            <Dt65Route
               exact={true}
               path={ROUTES.registerSuccess}
               component={RegisterSuccessContainer}
