@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from 'react';
-// @ts-ignore
 import BaseStep from './BaseStep';
 import * as Yup from 'yup';
 import { Box, Flex, Text } from 'rebass';
@@ -13,7 +12,7 @@ interface IProps extends IEventStep {
   setTitles: (title?: string, subtitle?: string) => void;
 }
 
-interface TitleFormValues {
+interface ITitleFormValues {
   title?: string;
   subtitle?: string;
 }
@@ -34,82 +33,87 @@ const validationSchema = Yup.object().shape({
 
 const TitleStep: FunctionComponent<IProps> = (props: IProps) => {
   const { title, subtitle, setTitles, toPrevStep, toNextStep } = props;
-  console.log('coming', title);
+
+  const onSubmit = (values: ITitleFormValues) => {
+    setTitles(values.title, values.subtitle);
+    toNextStep();
+  };
+
+  const renderForm = (formikBag: FormikProps<ITitleFormValues>) => {
+    const { isValid, values, submitForm } = formikBag;
+
+    const onLeftClick = () => {
+      setTitles(values.title, values.subtitle);
+      toPrevStep();
+    };
+
+    return (
+      <Flex flexDirection="column" width="100%" p={2}>
+        <Box
+          p={2}
+          bg="lightestgrey"
+          sx={{ border: '3px solid lightgrey', borderRadius: '4px' }}
+          width="70%"
+          alignSelf="center"
+        >
+          <HintText>Esimerkki</HintText>
+          <Flex>
+            <HintText fontWeight="bold">Nimi:</HintText>
+            <HintText>Tempoajo </HintText>
+          </Flex>
+          <Flex>
+            <HintText fontWeight="bold">Tarkenne:</HintText>
+            <HintText>Seuran mestaruus </HintText>
+          </Flex>
+        </Box>
+
+        <Form>
+          <Box py={3}>
+            <Field
+              width="100%"
+              name="title"
+              placeholder="Tapahtuman nimi*"
+              component={EventInput}
+            />
+          </Box>
+          <Box py={3}>
+            <Field
+              width="100%"
+              name="subtitle"
+              placeholder="Mahdollinen tarkenne"
+              component={EventInput}
+            />
+          </Box>
+          <Flex
+            my={4}
+            width="100%"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <LeftArrowButton
+              type="button"
+              onClick={onLeftClick}
+              visible={true}
+            />
+            <RightArrowButton
+              type="button"
+              onClick={submitForm}
+              visible={isValid}
+            />
+          </Flex>
+        </Form>
+      </Flex>
+    );
+  };
+
   return (
     <BaseStep title="Anna tapahtumalle nimi">
       <Flex justifyContent="center" alignSelf="center">
         <Formik
           validationSchema={validationSchema}
           initialValues={{ title: title || '', subtitle: subtitle || '' }}
-          onSubmit={(
-            values: TitleFormValues,
-            actions: FormikActions<TitleFormValues>
-          ) => {
-            
-            // actions.setSubmitting(false);
-            // actions.resetForm();
-            // toNextStep();
-          }} // Do nothing
-          render={(formikBag: FormikProps<TitleFormValues>) => {
-            const { isValid, values } = formikBag;
-
-            return (
-              <Flex flexDirection="column" width="100%" p={2}>
-                <Box
-                  p={2}
-                  bg="lightestgrey"
-                  sx={{ border: '3px solid lightgrey', borderRadius: '4px' }}
-                  width="70%"
-                  alignSelf="center"
-                >
-                  <HintText>Esimerkki</HintText>
-                  <Flex>
-                    <HintText fontWeight="bold">Nimi:</HintText>
-                    <HintText>Tempoajo </HintText>
-                  </Flex>
-                  <Flex>
-                    <HintText fontWeight="bold">Tarkenne:</HintText>
-                    <HintText>Seuran mestaruus </HintText>
-                  </Flex>
-                </Box>
-
-                <Form>
-                  <Box py={3}>
-                    <Field
-                      width="100%"
-                      name="title"
-                      placeholder="Tapahtuman nimi*"
-                      component={EventInput}
-                    />
-                  </Box>
-                  <Box py={3}>
-                    <Field
-                      width="100%"
-                      name="subtitle"
-                      placeholder="Mahdollinen tarkenne"
-                      component={EventInput}
-                    />
-                  </Box>
-                  <Flex
-                    my={4}
-                    width="100%"
-                    alignItems="center"
-                    justifyContent="space-between"
-                  >
-                    <LeftArrowButton onClick={toPrevStep} visible={true} />
-                    <RightArrowButton
-                      type="button"
-                      onClick={() => {
-                        setTitles(values.title, values.subtitle);
-                        toNextStep();
-                      }}
-                      visible={isValid}
-                    />
-                  </Flex>
-                </Form>
-              </Flex>
-            );
-          }}
+          onSubmit={onSubmit}
+          render={renderForm}
         />
       </Flex>
     </BaseStep>

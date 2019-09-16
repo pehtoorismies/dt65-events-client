@@ -1,5 +1,4 @@
 import React from 'react';
-import { IEventState } from '../../types';
 import assoc from 'ramda/es/assoc';
 import TypeStep from './steps/TypeStep';
 import RaceStep from './steps/RaceStep';
@@ -9,7 +8,16 @@ import TimeStep from './steps/TimeStep';
 import DescriptionStep from './steps/DescriptionStep';
 import { EVENT_TYPES } from '../../constants';
 import { isNullOrUndefined } from '../../util/general';
-import { ITime } from '../../types';
+import { IEventState, ITime } from '../../types';
+
+const STEPS = {
+  TYPE: 0,
+  RACE: 1,
+  TITLE: 2,
+  DATE: 2,
+  TIME: 3,
+  DESCRIPTION: 4,
+};
 
 const getStep = (
   step: number,
@@ -30,10 +38,9 @@ const getStep = (
     setEventState(assoc('race', isRace, eventState));
   };
   const setTitles = (title?: string, subtitle?: string) => {
-    console.log('update', title);
-    
-    setEventState(assoc('title', title, eventState));
-    setEventState(assoc('subtitle', subtitle, eventState));
+    setEventState(
+      assoc('subtitle', subtitle, { ...eventState, title, subtitle })
+    );
   };
 
   const setDate = (date: Date): void => {
@@ -50,71 +57,78 @@ const getStep = (
     setEventState(assoc('description', description, eventState));
   };
 
-  if (step === 0) {
+  const toNext = (currentStep: number) => () => {
+    setStep(currentStep + 1);
+  };
+  const toPrev = (currentStep: number) => () => {
+    setStep(currentStep - 1);
+  };
+
+  if (step === STEPS.TYPE) {
     return (
       <TypeStep
         setSelectedType={setType}
         selectedType={eventState.type}
         types={EVENT_TYPES}
-        toNextStep={() => setStep(1)}
-        toPrevStep={() => {}}
+        toNextStep={toNext(STEPS.TYPE)}
+        toPrevStep={toPrev(STEPS.TYPE)}
       />
     );
   }
 
-  if (step === 1) {
+  if (step === STEPS.RACE) {
     return (
       <RaceStep
-        toPrevStep={() => setStep(0)}
-        toNextStep={() => setStep(2)}
         isRace={eventState.race}
         setRace={setRace}
+        toNextStep={toNext(STEPS.RACE)}
+        toPrevStep={toPrev(STEPS.RACE)}
       />
     );
   }
-  if (step === 2) {
+  if (step === STEPS.TITLE) {
     return (
       <TitleStep
-        toPrevStep={() => setStep(1)}
-        toNextStep={() => setStep(3)}
         title={eventState.title}
         subtitle={eventState.subtitle}
         setTitles={setTitles}
+        toNextStep={toNext(STEPS.TITLE)}
+        toPrevStep={toPrev(STEPS.TITLE)}
       />
     );
   }
 
-  if (step === 3) {
+  if (step === STEPS.DATE) {
     return (
       <DateStep
-        toPrevStep={() => setStep(2)}
-        toNextStep={() => setStep(4)}
         date={eventState.date}
         setDate={setDate}
+        toNextStep={toNext(STEPS.DATE)}
+        toPrevStep={toPrev(STEPS.DATE)}
       />
     );
   }
 
-  if (step === 4) {
+  if (step === STEPS.TIME) {
     return (
       <TimeStep
-        toPrevStep={() => setStep(3)}
-        toNextStep={() => setStep(5)}
         time={eventState.time}
         setTime={setTime}
         timeEnabled={eventState.timeEnabled}
         setTimeEnabled={setTimeEnabled}
+        toNextStep={toNext(STEPS.TIME)}
+        toPrevStep={toPrev(STEPS.TIME)}
       />
     );
   }
 
-  if (step === 5) {
+  if (step === STEPS.DESCRIPTION) {
     return (
       <DescriptionStep
-        toPrevStep={() => setStep(4)}
-        toNextStep={() => setStep(6)}
         description={eventState.description}
         setDescription={setDescription}
+        toNextStep={toNext(STEPS.DESCRIPTION)}
+        toPrevStep={toPrev(STEPS.DESCRIPTION)}
       />
     );
   }
