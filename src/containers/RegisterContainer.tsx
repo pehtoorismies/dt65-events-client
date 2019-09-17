@@ -56,6 +56,8 @@ const RegisterContainer: FunctionComponent<RouteComponentProps> = (
       const { graphQLErrors, networkError } = error;
 
       if (graphQLErrors) {
+        console.error('ERRORS', graphQLErrors);
+        
         setGraphQLErrors(actions.setFieldError, setGeneralError, graphQLErrors);
       } else if (networkError) {
         setGeneralError('Network problems');

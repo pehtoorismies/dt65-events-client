@@ -67,13 +67,18 @@ const render = (formikBag: FormikProps<IFormValues>) => {
     </Form>
   );
 };
-
+// .min(4, `Minini pituus on 4 kirjainta`)
 const validationSchema = Yup.object().shape({
   email: Yup.string()
     .email('Tarkista sähköposti')
     .required('Pakollinen kenttä'),
-  username: Yup.string().required('Pakollinen kenttä'),
-  password: Yup.string().required('Pakollinen kenttä'),
+  username: Yup.string()
+    .min(3, 'Käyttäjätunnus on liian lyhyt')
+    .max(15, 'Käyttäjätunnus on liian pitkä')
+    .required('Pakollinen kenttä'),
+  password: Yup.string()
+    .min(8, 'Salasana on liian lyhyt')
+    .required('Pakollinen kenttä'),
   name: Yup.string().required('Pakollinen kenttä'),
   registerSecret: Yup.string().required('Pakollinen kenttä'),
 });

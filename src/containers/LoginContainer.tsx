@@ -63,8 +63,11 @@ const LoginContainer: FunctionComponent<RouteComponentProps> = (
     } catch (e) {
       const { graphQLErrors, networkError } = e;
       if (graphQLErrors) {
+        console.log('gQL', graphQLErrors);
+        
         setGraphQLErrors(actions.setFieldError, setGeneralError, graphQLErrors);
       } else if (networkError) {
+        console.log('networkError', networkError);
         setGeneralError('Network problems');
       }
     } finally {

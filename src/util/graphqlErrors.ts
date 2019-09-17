@@ -1,4 +1,5 @@
 import forEach from 'ramda/es/forEach';
+import path from 'ramda/es/path';
 
 const setGraphQLErrors = (
   setFieldError: any,
@@ -12,7 +13,11 @@ const setGraphQLErrors = (
       setFieldError(field, message);
     }
     if (name === 'Auth0Error') {
-      setGeneralError(data.message);
+      const internalMsg = path(
+        ['data', 'internalData', 'error', 'message'],
+        err
+      );
+      setGeneralError(internalMsg);
     }
   }, errors);
 };
