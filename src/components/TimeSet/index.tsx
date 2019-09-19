@@ -7,6 +7,7 @@ import assoc from 'ramda/es/assoc';
 import add from 'ramda/es/add';
 import subtract from 'ramda/es/subtract';
 import { ITime } from '../../types';
+import { timeToString } from '../../util/general';
 
 interface IProps {
   time?: ITime;
@@ -90,8 +91,8 @@ const TimeSet: FunctionComponent<IProps> = (props: IProps) => {
 
   const upHour = () => adjustHour(true);
   const upMinute = () => adjustMinute(true);
-  const downHour = () => adjustHour(true);
-  const downMinute = () => adjustMinute(true);
+  const downHour = () => adjustHour(false);
+  const downMinute = () => adjustMinute(false);
 
   return (
     <Box p={2}>
@@ -100,9 +101,9 @@ const TimeSet: FunctionComponent<IProps> = (props: IProps) => {
         <UpButton disabled={disabled} onClick={upMinute} />
       </Center>
       <Center justifyContent="center" alignItems="center">
-        <NumberDisplay color={disabled ? 'lightestgray' : 'black'}>{`${zeroPad(
-          time.hour
-        )}:${zeroPad(time.minute)}`}</NumberDisplay>
+        <NumberDisplay color={disabled ? 'lightestgray' : 'black'}>
+          {timeToString(time)}
+        </NumberDisplay>
       </Center>
       <Center>
         <DownButton disabled={disabled} onClick={downHour} />

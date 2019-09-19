@@ -20,11 +20,11 @@ const EVENTS_QUERY = gql`
       updatedAt
       participants {
         username
-        userId
+        _id
       }
       creator {
         username
-        userId
+        _id
       }
     }
   }
@@ -40,6 +40,7 @@ const EventsContainer: FunctionComponent<RouteComponentProps> = (
     return <h1>loading</h1>;
   }
   if (error) {
+    console.error(error);
     return <h1>Error</h1>;
   }
   const toCreateEvent = () => history.push(ROUTES.createEvent);

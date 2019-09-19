@@ -96,8 +96,8 @@ const EVENT_TYPES: IEventType[] = [
   {
     defaultImage: imgOther,
     title: 'Muu',
-    id: EventType.Ultras,
-    apiType: 'Ultras',
+    id: EventType.Other,
+    apiType: 'Other',
   },
   {
     defaultImage: imgSkiing,
@@ -115,7 +115,7 @@ const EVENT_TYPES: IEventType[] = [
     defaultImage: imgMeeting,
     title: 'Kokous',
     id: EventType.Meeting,
-    apiType: 'Meeting',
+    apiType: 'Kokous',
   },
 ];
 

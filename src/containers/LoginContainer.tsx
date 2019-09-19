@@ -8,15 +8,7 @@ import { Login } from '../components/Forms/Auth';
 import { ROUTES } from '../constants';
 import { getLocalUser, login as authLogin } from '../util/auth';
 import { setGraphQLErrors } from '../util/graphqlErrors';
-
-const GET_LOCALUSER = gql`
-  query LocalUser {
-    localUser @client {
-      id
-      username
-    }
-  }
-`;
+import { GET_LOCALUSER } from '../gql';
 
 const LOGIN_MUTATION = gql`
   mutation Login($usernameOrEmail: String!, $password: String!) {

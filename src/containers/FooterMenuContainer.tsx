@@ -1,14 +1,29 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
+import { withRouter } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router';
 import { MenuFooter } from '../components/Menu';
+import { ROUTES } from '../constants';
 
-const FooterMenuContainer = () => {
+const FooterMenuContainer: FunctionComponent<RouteComponentProps> = (
+  props: RouteComponentProps
+) => {
+  const { history } = props;
+
+  const go = (route: string) => () => {
+    history.push(route);
+  };
+
+  const goHome = go(ROUTES.home);
+  const goProfile = go(ROUTES.profile);
+  const goAddEvent = go(ROUTES.createEvent);
+
   return (
     <MenuFooter
-      onAddEventClick={() => console.log('Add event')}
-      onHomeClick={() => console.log('Go home')}
-      onProfileClick={() => console.log('Show profile')}
+      onAddEventClick={goAddEvent}
+      onHomeClick={goHome}
+      onProfileClick={goProfile}
     />
   );
 };
 
-export default FooterMenuContainer;
+export default withRouter(FooterMenuContainer);

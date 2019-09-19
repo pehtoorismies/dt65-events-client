@@ -21,7 +21,7 @@ const EventCreator: FunctionComponent<IProps> = (props: IProps) => {
   const { createEvent, username } = props;
   const [step, setStep] = useState<number>(0);
   const [eventState, setEventState] = useState<IEventState>({
-    time: { hour: 0, minute: 0 },
+    time: { hour: 12, minute: 0 },
     timeEnabled: false,
     creatorJoining: true,
   });
@@ -33,6 +33,7 @@ const EventCreator: FunctionComponent<IProps> = (props: IProps) => {
       !eventState.race ||
       !eventState.title
     ) {
+      
       console.error(eventState);
       throw new Error('Unpossible state'); // TODO: fix
     }
@@ -40,12 +41,12 @@ const EventCreator: FunctionComponent<IProps> = (props: IProps) => {
     const time = eventState.timeEnabled
       ? timeToString(eventState.time)
       : undefined;
+
+    const creatorJoining = eventState.creatorJoining;
     const description = eventState.description;
     const race = eventState.race;
-    const title = eventState.title;
     const subtitle = eventState.subtitle;
-    const creatorJoining = eventState.creatorJoining;
-
+    const title = eventState.title;
     const type: string = toApiType(eventState.type, EVENT_TYPES);
 
     const mandatory = {

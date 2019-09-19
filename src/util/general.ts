@@ -14,13 +14,20 @@ export const isParticipating = (
   return findIndex(propEq('username', username || ''))(participants || []) >= 0;
 };
 
+const zeroPad = (n: number) => {
+  const fill = n < 10 ? '0' : '';
+  return `${fill}${n}`;
+};
+
 export const timeToString = (time: ITime): string => {
-  return 'joku time';
+  const m: string = zeroPad(time.minute);
+  const h: string = zeroPad(time.hour);
+  return `${h}:${m}`;
 };
 
 export const toApiType = (evtType: EventType, events: IEventType[]): string => {
   const eType: IEventType = find(propEq('id', evtType))(events);
-  return eType.title;
+  return eType.apiType;
 };
 
 export const fromEventType = (

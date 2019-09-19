@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 export enum EventType {
-  Cycling = 100,
+  Cycling = 1,
   Karonkka,
   Meeting,
   Orienteering,
