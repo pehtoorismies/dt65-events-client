@@ -4,7 +4,7 @@ import { Text } from 'rebass';
 
 const EventsContainer = () => {
   return (
-    <EventCreator />
+    <EventCreator createEvent={(e) => console.log('moi', e)} username="koira" />
     
     
       

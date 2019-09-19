@@ -21,17 +21,17 @@ const renderTypeButton = (
   setSelected: OnSelectType,
   selectedType?: EventType
 ) => (type: IEventType) => {
-  const isSelected = selectedType === type.type;
+  const isSelected = selectedType === type.id;
 
   const variant = isSelected ? 'primary' : 'secondary';
   const selectedClick = () => {
     if (!isSelected) {
-      setSelected(type.type);
+      setSelected(type.id);
     }
   };
   return (
     <Button
-      key={type.type}
+      key={type.id}
       width={140}
       onClick={selectedClick}
       variant={variant}

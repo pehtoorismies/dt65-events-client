@@ -12,7 +12,9 @@ import DescriptionStep from './steps/DescriptionStep';
 import { EVENT_TYPES } from '../../constants';
 import { IEventState } from '../../types';
 
-storiesOf('EventCreator', module).add('Wizard', () => <EventCreator />);
+storiesOf('EventCreator', module).add('Wizard', () => (
+  <EventCreator createEvent={action('Create')} username="koira" />
+));
 
 const commonActions = {
   toNextStep: action('Next'),
@@ -29,8 +31,9 @@ const eventState: IEventState = {
     minute: 20,
     hour: 19,
   },
+  creatorJoining: false,
   date: new Date(),
-  type: EVENT_TYPES[0].type,
+  type: EVENT_TYPES[0].id,
 };
 
 storiesOf('EventCreator/steps', module)
@@ -38,8 +41,6 @@ storiesOf('EventCreator/steps', module)
     <StepType
       setSelectedType={action('Select')}
       types={EVENT_TYPES}
-      
-      
       {...commonActions}
     />
   ))
@@ -47,8 +48,7 @@ storiesOf('EventCreator/steps', module)
     <StepType
       setSelectedType={action('Select')}
       types={EVENT_TYPES}
-      selectedType={EVENT_TYPES[1].type}
-      
+      selectedType={EVENT_TYPES[1].id}
       {...commonActions}
     />
   ))
@@ -89,5 +89,10 @@ storiesOf('EventCreator/steps', module)
     />
   ))
   .add('Create', () => (
-    <CreateStep username="pertti" {...commonActions} eventState={eventState} />
+    <CreateStep
+      username="pertti"
+      {...commonActions}
+      eventState={eventState}
+      joinCreator={action('Toggle')}
+    />
   ));

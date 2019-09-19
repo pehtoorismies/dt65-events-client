@@ -19,6 +19,8 @@ import apolloClient from './util/apolloClient';
 
 import { theme } from './theme';
 
+// console.log(process.env.NODE_ENV)
+
 const App = () => (
   <Fragment>
     <GlobalStyle />

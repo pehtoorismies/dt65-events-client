@@ -11,21 +11,24 @@ import { EVENT_TYPES } from '../../constants';
 import { isNullOrUndefined } from '../../util/general';
 import { IEventState, ITime, EventType } from '../../types';
 
+
 const STEPS = {
   TYPE: 0,
   RACE: 1,
   TITLE: 2,
-  DATE: 2,
-  TIME: 3,
-  DESCRIPTION: 4,
-  PREVIEW: 5,
+  DATE: 3,
+  TIME: 4,
+  DESCRIPTION: 5,
+  PREVIEW: 6,
 };
 
 const getStep = (
   step: number,
   setStep: any,
   eventState: IEventState,
-  setEventState: (eventState: IEventState) => void
+  setEventState: (eventState: IEventState) => void,
+  create: () => void,
+  username: string,
 ) => {
   const setType = (eventType: EventType) => {
     if (!eventState.type) {
@@ -58,6 +61,9 @@ const getStep = (
   const setDescription = (description?: string) => {
     setEventState(assoc('description', description, eventState));
   };
+  const toggleCreatorJoining = () => {
+    setEventState(assoc('creatorJoining', !eventState.creatorJoining, eventState));
+  }
 
   const toNext = (currentStep: number) => () => {
     setStep(currentStep + 1);
@@ -138,9 +144,10 @@ const getStep = (
   if (step === STEPS.PREVIEW) {
     return (
       <CreateStep
-        username="jioura"
+        joinCreator={toggleCreatorJoining}
+        username={username}
         eventState={eventState}
-        toNextStep={toNext(STEPS.PREVIEW)}
+        toNextStep={create}
         toPrevStep={toPrev(STEPS.PREVIEW)}
       />
     );

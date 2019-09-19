@@ -42,18 +42,17 @@ const DateStep: FunctionComponent<IProps> = (props: IProps) => {
           justifyContent="center"
           alignItems="center"
         >
-          <Text p={3}>Klikkaa haluamasi päivämäärä</Text>
+          <Text p={2}>Klikkaa haluamasi päivämäärä</Text>
           <Text
             fontWeight="bold"
             width={250}
             textAlign="center"
             p={2}
-            fontSize={3}
+            fontSize={2}
             color="white"
             bg="blue"
             sx={{
               visibility: date ? 'visible' : 'hidden',
-
               borderRadius: '4px',
             }}
           >
@@ -69,7 +68,7 @@ const DateStep: FunctionComponent<IProps> = (props: IProps) => {
           />
         </Flex>
         <Flex
-          my={4}
+          pt={2}
           width="100%"
           alignItems="center"
           justifyContent="space-between"

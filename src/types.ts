@@ -17,13 +17,14 @@ export enum EventType {
 
 export interface IAuthResponse {
   valid: boolean;
-  errorMessage?: string
+  errorMessage?: string;
 }
 
 export interface IEventType {
   defaultImage: string;
   title: string;
-  type: EventType;
+  id: EventType;
+  apiType: string;
 }
 export interface IFormProps {
   initialValues: any;
@@ -49,6 +50,7 @@ export interface ITime {
 export interface IEventState {
   date?: Date;
   description?: string;
+  creatorJoining: boolean;
   race?: boolean;
   subtitle?: string;
   time: ITime;
@@ -62,13 +64,32 @@ export interface IEventStep {
   toNextStep: any;
 }
 
-export interface IEvent {
-  type: IEventType;
-  race: boolean;
-  title: string;
-  subtitle?: string;
+export interface IEventBase {
   date: Date;
-  time?: string;
   description?: string;
+  race: boolean;
+  subtitle?: string;
+  time?: string;
+  title: string;
+}
+
+export interface IEventReq extends IEventBase {
+  type: string;
+  creatorJoining: boolean;
+}
+
+export interface IEvent extends IEventBase {
   participants: IParticipant[];
+  type: IEventType;
+}
+
+interface IResponse {
+  error?: {
+    name: string;
+    message: string;
+  };
+}
+
+export interface ICreateEventResponse extends IResponse {
+  event?: IEvent;
 }
