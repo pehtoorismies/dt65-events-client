@@ -3,6 +3,7 @@ import { Box, Card, Flex, Heading, Text } from 'rebass';
 import styled from '@emotion/styled';
 import { map } from 'ramda';
 import { Medal } from 'styled-icons/fa-solid/Medal';
+import { Edit } from 'styled-icons/boxicons-regular/Edit';
 import AnimateHeight from 'react-animate-height';
 import HeadCountButton from '../HeadCountButton';
 import { isParticipating } from '../../util/general';
@@ -11,7 +12,7 @@ import parse, { DomElement, domToReact } from 'html-react-parser';
 
 interface IProps extends IEvent {
   id: ID;
-  isJoining?: boolean
+  isJoining?: boolean;
   username: string;
   eventImage?: string;
   joinEvent?: (eventId: ID) => void;
@@ -32,11 +33,11 @@ const ImageBox = styled.div<IBoxProps>`
   height: 150px;
   width: 100%;
   background-image: url(${(props: IBoxProps) => props.bgImage});
-  grid-template-rows: 20px auto 20px;
+  grid-template-rows: 30px auto 20px;
   justify-items: center;
   align-items: center;
   grid-template-areas:
-    'empty'
+    'header'
     'title'
     'creator';
 `;
@@ -45,6 +46,11 @@ const Race = styled(Medal)`
   color: white;
   width: 30px;
   padding: 4px;
+`;
+
+const EditBtn = styled(Edit)`
+  color: white;
+  height: 20px;
 `;
 
 const Pill = (props: any) => (
@@ -90,7 +96,7 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
   } = props;
 
   const isParticipant = isParticipating(username, participants);
- 
+
   const onJoinClick = (e: any) => {
     e.stopPropagation();
     if (joinEvent) {
@@ -116,6 +122,27 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
     >
       <Card width="100%" mx="auto" variant="shadow">
         <ImageBox bgImage={eventImage || type.defaultImage}>
+          <Flex
+            width="100%"
+            alignItems="center"
+            justifyContent="flex-end"
+            height={30}
+            pr={2}
+            sx={{
+              gridArea: 'header',
+              borderRadius: '15px 15px 0 0',
+              backgroundImage:
+                'linear-gradient(45deg, rgba(0,0,0,0.0) 80%, rgba(0,0,0,0.6))',
+            }}
+          >
+            <EditBtn
+              onClick={e => {
+                e.stopPropagation();
+                console.log('moi');
+              }}
+            />
+          </Flex>
+
           <Flex
             flexDirection="column"
             alignItems="center"
@@ -228,7 +255,7 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
                   }
                   if (name === 'ul') {
                     return (
-                      <Text p={1}  sx={{ listStyleType: 'circle' }}>
+                      <Text p={1} sx={{ listStyleType: 'circle' }}>
                         {domToReact(children)}
                       </Text>
                     );
@@ -240,7 +267,6 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
                       </Text>
                     );
                   }
-                  
                 },
               })}
             </Text>

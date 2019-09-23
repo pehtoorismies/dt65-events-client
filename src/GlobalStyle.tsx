@@ -12,6 +12,7 @@ body {
   height: 100%;
   font-family: 'Titillium Web', sans-serif;
   background-color: #F7F7F7;  
+  background-color: white;
 }
 p {
   line-height: 1.3;

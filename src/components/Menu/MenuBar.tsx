@@ -12,17 +12,20 @@ const getFixStyles = (isFixedTop: boolean) => {
     return {
       ...common,
       top: 0,
+      borderBottom: '1px solid lightgrey',
     };
   }
   return {
     ...common,
     bottom: 0,
+    borderTop: '1px solid lightgrey',
   };
 };
 
 const MenuBar = (props: any) => (
   <Flex
     {...props}
+    color="pink"
     bg="white"
     width="100%"
     justifyContent="space-around"
