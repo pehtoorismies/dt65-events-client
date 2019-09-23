@@ -15,6 +15,9 @@ export enum EventType {
   Ultras,
 }
 
+// tslint:disable-next-line: interface-over-type-literal
+export type ID = number | string;
+
 export interface IAuthResponse {
   valid: boolean;
   errorMessage?: string;
@@ -65,7 +68,7 @@ export interface IEventStep {
 }
 
 export interface IEventBase {
-  date: Date;
+  
   description?: string;
   race: boolean;
   subtitle?: string;
@@ -74,13 +77,16 @@ export interface IEventBase {
 }
 
 export interface IEventReq extends IEventBase {
+  date: Date;
   type: string;
   creatorJoining: boolean;
 }
 
 export interface IEvent extends IEventBase {
+  date: string;
   participants: IParticipant[];
   type: IEventType;
+  creator: string;
 }
 
 interface IResponse {

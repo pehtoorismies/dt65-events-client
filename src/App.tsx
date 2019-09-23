@@ -3,6 +3,8 @@ import React, { Fragment } from 'react';
 import { ApolloProvider } from 'react-apollo';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Box } from 'rebass';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import EventsContainer from './containers/EventsContainer';
 import CreateEventContainer from './containers/CreateEventContainer';
@@ -25,6 +27,7 @@ const App = () => (
   <Fragment>
     <GlobalStyle />
     <ThemeProvider theme={theme}>
+      <ToastContainer />
       <ApolloProvider client={apolloClient}>
         <Box py={40} px={2}>
           <Router>

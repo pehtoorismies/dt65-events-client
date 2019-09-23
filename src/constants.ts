@@ -115,7 +115,7 @@ const EVENT_TYPES: IEventType[] = [
     defaultImage: imgMeeting,
     title: 'Kokous',
     id: EventType.Meeting,
-    apiType: 'Kokous',
+    apiType: 'Meeting',
   },
 ];
 

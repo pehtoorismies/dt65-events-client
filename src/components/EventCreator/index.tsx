@@ -30,10 +30,8 @@ const EventCreator: FunctionComponent<IProps> = (props: IProps) => {
     if (
       !eventState.date ||
       !eventState.type ||
-      !eventState.race ||
       !eventState.title
     ) {
-      
       console.error(eventState);
       throw new Error('Unpossible state'); // TODO: fix
     }
@@ -44,7 +42,7 @@ const EventCreator: FunctionComponent<IProps> = (props: IProps) => {
 
     const creatorJoining = eventState.creatorJoining;
     const description = eventState.description;
-    const race = eventState.race;
+    const race = eventState.race || false;
     const subtitle = eventState.subtitle;
     const title = eventState.title;
     const type: string = toApiType(eventState.type, EVENT_TYPES);

@@ -5,7 +5,7 @@ import React from 'react';
 import faker from 'faker';
 import { times } from 'ramda';
 import EventCard from './';
-import { IParticipant, EventType } from '../../types';
+import { IParticipant, ID } from '../../types';
 import { EVENT_TYPES } from '../../constants';
 
 const rand = faker.random.number(EVENT_TYPES.length - 1);
@@ -20,12 +20,16 @@ const createParticipant = (id: number): IParticipant => {
 const stories = storiesOf('EventCard', module);
 const participants = times(createParticipant, faker.random.number(10) + 5);
 
+const evtId : ID = 1;
+
 const common = {
+  id: evtId,
   joinEvent: action('join event'),
-  date: new Date(),
+  date: '13.12.2021',
   title: faker.commerce.productName(),
   subtitle: faker.commerce.productName(),
   username: 'peelo',
+  creator: 'koira',
   time: '10:00',
   description: `
     <p>p: ${faker.lorem.sentence()} 

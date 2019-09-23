@@ -6,16 +6,15 @@ import { Medal } from 'styled-icons/fa-solid/Medal';
 import AnimateHeight from 'react-animate-height';
 import HeadCountButton from '../HeadCountButton';
 import { isParticipating } from '../../util/general';
-import { IParticipant, IEvent } from '../../types';
-import dateFnsFormat from 'date-fns/format';
+import { IParticipant, IEvent, ID } from '../../types';
 import parse, { DomElement, domToReact } from 'html-react-parser';
 
-type ReactElement = React.DetailedReactHTMLElement<{}, HTMLElement>;
-
 interface IProps extends IEvent {
+  id: ID;
+  isJoining?: boolean
   username: string;
   eventImage?: string;
-  joinEvent?: (join: boolean) => void;
+  joinEvent?: (eventId: ID) => void;
   stayOpened?: boolean;
 }
 
@@ -42,28 +41,6 @@ const ImageBox = styled.div<IBoxProps>`
     'creator';
 `;
 
-/*
-const ImageBox = (props: any) => (
-  <Flex
-    flexDirection="column"
-    justifyContent="space-between"
-    alignItems="center"
-    width="100%"
-    height={150}
-    position="relative"
-    {...props}
-    sx={{
-      backgroundSize: 'cover',
-      borderRadius: '15px 15px 0 0',
-      fontWeight: 'bold',
-      height: '15px',
-      width: '100%',
-      backgroundImage: `url(${props.bgImage})`,
-      position: 'relative',
-    }}
-  />
-);
-*/
 const Race = styled(Medal)`
   color: white;
   width: 30px;
@@ -95,9 +72,12 @@ const renderPill = (username: string) => (participant: IParticipant) => {
 
 const EventCard: FunctionComponent<IProps> = (props: IProps) => {
   const {
+    id,
+    creator,
     date,
     description,
     eventImage,
+    isJoining,
     joinEvent,
     participants,
     subtitle,
@@ -110,11 +90,11 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
   } = props;
 
   const isParticipant = isParticipating(username, participants);
-
+ 
   const onJoinClick = (e: any) => {
     e.stopPropagation();
     if (joinEvent) {
-      joinEvent(!isParticipant);
+      joinEvent(id);
     }
   };
   const raceElem = race ? <Race /> : null;
@@ -168,7 +148,7 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
               gridArea: 'creator',
             }}
           >
-            by {username}
+            by {creator}
           </Text>
         </ImageBox>
         <Flex p={2} bg="darkWhite" justifyContent="space-between">
@@ -180,11 +160,12 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
               {subtitle}
             </Text>
             <Text mt={1} fontSize={16}>
-              {dateFnsFormat(date, 'dd.MM.yyyy')}
+              {date}
             </Text>
           </Flex>
           <Flex alignItems="center" justifyContent="center">
             <HeadCountButton
+              loading={isJoining}
               count={participants.length}
               onClick={onJoinClick}
               isParticipating={isParticipant}

@@ -6,7 +6,7 @@ import { RightArrowButton, LeftArrowButton } from '../../Common';
 import { IEventStep, IEventState } from '../../../types';
 import EventCard from '../../EventCard';
 import { EVENT_TYPES } from '../../../constants';
-import { timeToString, fromEventType } from '../../../util/general';
+import { timeToString, fromEventType, dateToString } from '../../../util/general';
 
 interface IProps extends IEventStep {
   username: string;
@@ -30,17 +30,19 @@ const StepCreate: FunctionComponent<IProps> = (props: IProps) => {
     type,
     race: eventState.race || false,
     title: eventState.title || 'empty',
-    date: eventState.date || new Date(),
+    date: dateToString(eventState.date || new Date()),
   };
 
   return (
     <BaseStep title="Esikatsele">
       <Flex flexDirection="column" alignItems="center" width="100%">
         <EventCard
+          id={0}
           stayOpened={true}
           {...previewEvent}
           participants={participants}
           username={username}
+          creator={username}
         />
         <Flex pt={2} alignItems="center" justifyContent="center">
           <Flex alignItems="center" justifyContent="center">

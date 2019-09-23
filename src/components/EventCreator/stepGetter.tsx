@@ -11,7 +11,6 @@ import { EVENT_TYPES } from '../../constants';
 import { isNullOrUndefined } from '../../util/general';
 import { IEventState, ITime, EventType } from '../../types';
 
-
 const STEPS = {
   TYPE: 0,
   RACE: 1,
@@ -28,7 +27,7 @@ const getStep = (
   eventState: IEventState,
   setEventState: (eventState: IEventState) => void,
   create: () => void,
-  username: string,
+  username: string
 ) => {
   const setType = (eventType: EventType) => {
     if (!eventState.type) {
@@ -62,8 +61,9 @@ const getStep = (
     setEventState(assoc('description', description, eventState));
   };
   const toggleCreatorJoining = () => {
-    setEventState(assoc('creatorJoining', !eventState.creatorJoining, eventState));
-  }
+    const toggler = !eventState.creatorJoining;
+    setEventState(assoc('creatorJoining', toggler, eventState));
+  };
 
   const toNext = (currentStep: number) => () => {
     setStep(currentStep + 1);

@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import EventCreator from '../components/EventCreator';
+import { withRouter } from 'react-router-dom';
+import { Redirect, RouteComponentProps } from 'react-router';
 import gql from 'graphql-tag';
-import { GET_LOCALUSER } from '../gql';
+import { toast } from 'react-toastify';
+
+import EventCreator from '../components/EventCreator';
+import { GET_LOCALUSER, EVENTS_QUERY } from '../gql';
+import { ROUTES } from '../constants';
 import { IEventReq } from '../types';
-import { date } from 'yup';
 
 const CREATE_EVENT = gql`
   mutation CreateEvent(
@@ -41,11 +45,27 @@ const CREATE_EVENT = gql`
   }
 `;
 
-const EventsContainer = () => {
+const EventsContainer: FunctionComponent<RouteComponentProps> = (
+  props: RouteComponentProps
+) => {
+  const { location } = props;
+
   const { loading: userLoading, error: userError, data: userData } = useQuery(
     GET_LOCALUSER
   );
-  const [createEvent] = useMutation(CREATE_EVENT);
+  const [createEventQuery] = useMutation(CREATE_EVENT, {
+    // update(cache, { data: { createEvent } }) {
+    //   const resp: any = cache.readQuery({ query: EVENTS_QUERY });
+    //   console.log('update');
+    //   console.log(resp);
+      
+    //   // const { findManyEvents } = resp;
+    //   // cache.writeQuery({
+    //   //   query: EVENTS_QUERY,
+    //   //   data: { findManyEvents: findManyEvents.concat([createEvent]) },
+    //   // });
+    // },
+  });
 
   if (userLoading) {
     return <h1>loading</h1>;
@@ -60,14 +80,24 @@ const EventsContainer = () => {
 
   const eventCreator = async (evt: IEventReq) => {
     try {
-      const resp = await createEvent({
+      const { data } = await createEventQuery({
         variables: {
           ...evt,
           date: evt.date.toISOString(),
           addMe: evt.creatorJoining,
         },
       });
-      console.log(resp);
+      console.log(data);
+
+      toast(`Tapahtuma luotu`);
+      return (
+        <Redirect
+          to={{
+            pathname: ROUTES.home,
+            state: { from: location },
+          }}
+        />
+      );
     } catch (error) {
       console.error(error);
     }
@@ -76,4 +106,4 @@ const EventsContainer = () => {
   return <EventCreator createEvent={eventCreator} username={username} />;
 };
 
-export default EventsContainer;
+export default withRouter(EventsContainer);

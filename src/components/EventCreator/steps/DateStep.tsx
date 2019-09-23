@@ -4,6 +4,8 @@ import DayPicker from 'react-day-picker';
 import Helmet from 'react-helmet';
 import 'react-day-picker/lib/style.css';
 import dateFnsFormat from 'date-fns/format';
+import startOfToday from 'date-fns/startOfToday'
+import isAfter from 'date-fns/isAfter'
 import BaseStep from './BaseStep';
 import { RightArrowButton, LeftArrowButton } from '../../Common';
 import { isNullOrUndefined } from '../../../util/general';
@@ -25,7 +27,12 @@ const formatDate = (date?: Date): string => {
 const DateStep: FunctionComponent<IProps> = (props: IProps) => {
   const { date, toNextStep, toPrevStep, setDate } = props;
 
-  const handleDayClick = (selectedDay: any) => setDate(selectedDay);
+  const handleDayClick = (selectedDay: Date) => {
+    if (isAfter(startOfToday(), selectedDay)) {
+      return;
+    }
+    setDate(selectedDay)
+  } ;
   const toDay = (day: Date) => setDate(day);
 
   return (
