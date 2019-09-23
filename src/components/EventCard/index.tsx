@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
-import { Box, Card, Flex, Text } from 'rebass';
+import { Box, Card, Flex, Heading, Text } from 'rebass';
 import styled from '@emotion/styled';
 import { map } from 'ramda';
 import { Medal } from 'styled-icons/fa-solid/Medal';
@@ -8,6 +8,9 @@ import HeadCountButton from '../HeadCountButton';
 import { isParticipating } from '../../util/general';
 import { IParticipant, IEvent } from '../../types';
 import dateFnsFormat from 'date-fns/format';
+import parse, { DomElement, domToReact } from 'html-react-parser';
+
+type ReactElement = React.DetailedReactHTMLElement<{}, HTMLElement>;
 
 interface IProps extends IEvent {
   username: string;
@@ -18,10 +21,32 @@ interface IProps extends IEvent {
 
 const ANIM_TIME = 500;
 
+interface IBoxProps {
+  bgImage: string;
+}
+
+const ImageBox = styled.div<IBoxProps>`
+  display: grid;
+  background-size: cover;
+  border-radius: 15px 15px 0 0;
+  font-weight: bold;
+  height: 150px;
+  width: 100%;
+  background-image: url(${(props: IBoxProps) => props.bgImage});
+  grid-template-rows: 20px auto 20px;
+  justify-items: center;
+  align-items: center;
+  grid-template-areas:
+    'empty'
+    'title'
+    'creator';
+`;
+
+/*
 const ImageBox = (props: any) => (
   <Flex
     flexDirection="column"
-    justifyContent="center"
+    justifyContent="space-between"
     alignItems="center"
     width="100%"
     height={150}
@@ -34,10 +59,11 @@ const ImageBox = (props: any) => (
       height: '15px',
       width: '100%',
       backgroundImage: `url(${props.bgImage})`,
+      position: 'relative',
     }}
   />
 );
-
+*/
 const Race = styled(Medal)`
   color: white;
   width: 30px;
@@ -110,18 +136,40 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
     >
       <Card width="100%" mx="auto" variant="shadow">
         <ImageBox bgImage={eventImage || type.defaultImage}>
+          <Flex
+            flexDirection="column"
+            alignItems="center"
+            sx={{ gridArea: 'title' }}
+          >
+            <Text
+              letterSpacing={4}
+              color="white"
+              fontSize={30}
+              fontWeight={900}
+              sx={{
+                textShadow: '2px 2px 5px black',
+              }}
+            >
+              {type.title}
+            </Text>
+            {raceElem}
+          </Flex>
+
           <Text
-            letterSpacing={4}
+            fontSize={11}
+            fontFamily="monospace"
+            p={1}
             color="white"
-            fontSize={30}
-            fontWeight={900}
+            width="100%"
+            textAlign="right"
             sx={{
-              textShadow: '2px 2px 5px black',
+              backgroundImage:
+                'linear-gradient(rgba(0,0,0,0.0), rgba(0,0,0,0.6))',
+              gridArea: 'creator',
             }}
           >
-            {type.title}
+            by {username}
           </Text>
-          {raceElem}
         </ImageBox>
         <Flex p={2} bg="darkWhite" justifyContent="space-between">
           <Flex justifyContent="space-around" flexDirection="column">
@@ -163,7 +211,58 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
             <Text fontWeight="bold" color="lightBlack" width={60}>
               Kuvaus:
             </Text>
-            <Text my={2}>{description}</Text>
+            <Text my={2}>
+              {parse(description || '', {
+                replace: (domNode: DomElement): any => {
+                  const { name, children } = domNode;
+                  if (!children) {
+                    return '';
+                  }
+
+                  if (name === 'em') {
+                    return (
+                      <Text as="span" sx={{ fontStyle: 'italic' }}>
+                        {domToReact(children)}
+                      </Text>
+                    );
+                  }
+                  if (name === 'strong') {
+                    return (
+                      <Text as="span" fontWeight="bold">
+                        {domToReact(children)}
+                      </Text>
+                    );
+                  }
+                  if (name === 'u') {
+                    return (
+                      <Text as="span" sx={{ fontStyle: 'underline' }}>
+                        {domToReact(children)}
+                      </Text>
+                    );
+                  }
+                  if (name === 'h1') {
+                    return (
+                      <Heading fontSize={4}>{domToReact(children)}</Heading>
+                    );
+                  }
+                  if (name === 'ul') {
+                    return (
+                      <Text p={1}  sx={{ listStyleType: 'circle' }}>
+                        {domToReact(children)}
+                      </Text>
+                    );
+                  }
+                  if (name === 'ol') {
+                    return (
+                      <Text p={1} sx={{ listStyleType: 'lower-latin' }}>
+                        {domToReact(children)}
+                      </Text>
+                    );
+                  }
+                  
+                },
+              })}
+            </Text>
           </Box>
         </AnimateHeight>
       </Card>

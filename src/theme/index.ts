@@ -11,6 +11,7 @@ const lightBlack = '#404035';
 const pink = '#FF80EA';
 const white = '#fff';
 const transparentBlack = 'rgba(0,0,0,0.6)';
+const faintBg = 'rgba(0,0,0,0.2)';
 
 const primaryForm = {
   bg: 'white',
@@ -146,6 +147,7 @@ const theme: any = {
     black,
     blue,
     darkWhite,
+    faintBg,
     lightBlack,
     lightergray,
     lightestgray,
@@ -159,7 +161,7 @@ const theme: any = {
   fonts: {
     body: 'system-ui, sans-serif',
     heading: 'Titillium Web',
-    monospace: `'Share Tech Mono', monospace`,
+    monospace: `'Anonymous Pro', monospace`,
   },
   forms: {
     primary: primaryForm,

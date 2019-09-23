@@ -15,6 +15,7 @@
     "graphql": "^14.5.4",
     "graphql-tag": "^2.10.1",
     "history": "^4.9.0",
+    "html-react-parser": "^0.9.1",
     "jwt-decode": "^2.2.0",
     "jwt-simple": "^0.5.6",
     "ramda": "^0.26.1",

@@ -8,7 +8,7 @@ import EventCard from './';
 import { IParticipant, EventType } from '../../types';
 import { EVENT_TYPES } from '../../constants';
 
-const rand = faker.random.number(EVENT_TYPES.length);
+const rand = faker.random.number(EVENT_TYPES.length - 1);
 
 const createParticipant = (id: number): IParticipant => {
   return {
@@ -27,14 +27,39 @@ const common = {
   subtitle: faker.commerce.productName(),
   username: 'peelo',
   time: '10:00',
-  description: faker.lorem.paragraph(),
+  description: `
+    <p>p: ${faker.lorem.sentence()} 
+      <strong>strong: ${faker.lorem.sentence()}</strong>
+      <em>em: ${faker.lorem.sentence()}</em>
+      <u>u: ${faker.lorem.sentence()}</u>
+      <h1>h1: ${faker.lorem.sentence()}</h1>
+    </p>
+    <ol>
+      <li> ${faker.lorem.word()}</li>
+      <li> ${faker.lorem.word()}</li>
+      <li> ${faker.lorem.word()}</li>
+    </ol>
+    <p>
+      <ul>
+        <li> ${faker.lorem.word()}</li>
+        <li> ${faker.lorem.word()}</li>
+        <li> ${faker.lorem.word()}</li>
+      </ul>
+    </p>
+    `,
   participants,
   race: true,
   type: EVENT_TYPES[rand],
 };
 
+const noRace = {
+  ...common,
+  race: false,
+}
+
 stories
   .add('not participant to race', () => <EventCard {...common} />)
+  .add('not participant', () => <EventCard {...noRace} />)
   .add('participating', () => (
     <EventCard race={false} {...common} username={participants[0].username} />
   ))
