@@ -1093,6 +1093,20 @@
   dependencies:
     reflexbox "^4.0.5"
 
+"@shopify/react-compose@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@shopify/react-compose/-/react-compose-1.0.4.tgz#a2f0253925088420a3589093c23a9ce50574b34a"
+  dependencies:
+    "@shopify/useful-types" "^2.0.1"
+    hoist-non-react-statics "^3.0.1"
+    tslib "^1.9.3"
+
+"@shopify/useful-types@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@shopify/useful-types/-/useful-types-2.0.1.tgz#df27503acb26249b83be84e2298186bf7a0194fc"
+  dependencies:
+    tslib "^1.9.3"
+
 "@storybook/addon-actions@^5.1.11":
   version "5.1.11"
   resolved "https://registry.yarnpkg.com/@storybook/addon-actions/-/addon-actions-5.1.11.tgz#ebc299b9dfe476b5c65eb5d148c4b064f682ca08"
@@ -5736,7 +5750,7 @@ hoist-non-react-statics@^2.3.1:
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
 
-hoist-non-react-statics@^3.1.0, hoist-non-react-statics@^3.3.0:
+hoist-non-react-statics@^3.0.1, hoist-non-react-statics@^3.1.0, hoist-non-react-statics@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.0.tgz#b09178f0122184fb95acf525daaecb4d8f45958b"
   dependencies:
