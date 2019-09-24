@@ -44,7 +44,6 @@ const validationSchema = Yup.object().shape({
 });
 const initialValues = {
   email: '',
-  password: '',
 };
 
 export const ForgotPasswordForm: FunctionComponent<IAuthFormProps> = (
