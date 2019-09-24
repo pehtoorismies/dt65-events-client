@@ -1,9 +1,9 @@
 import { Field, Form, FormikProps } from 'formik';
 import React, { FunctionComponent } from 'react';
-import { Button, Flex } from 'rebass';
+import { Flex } from 'rebass';
 import * as Yup from 'yup';
 import { IAuthFormProps, IFormProps } from '../../../types';
-import { BasicInput } from '../../Common';
+import { BasicInput, Button } from '../../Common';
 import BaseForm from './BaseForm';
 
 interface IFormValues {
@@ -35,6 +35,7 @@ const render = (formikBag: FormikProps<IFormValues>) => {
           m={2}
           type="submit"
           disabled={isSubmitting}
+          isLoading={isSubmitting}
         >
           Kirjaudu
         </Button>

@@ -84,6 +84,8 @@ const EventsContainer: FunctionComponent<RouteComponentProps> = (
       </Flex>
     );
   }
+  const onViewEvent = (id: ID): void => history.push(`${ROUTES.events}/${id}}`);
+
   const username = path(['localUser', 'username'], userData);
   return (
     <Fragment>
@@ -106,6 +108,7 @@ const EventsContainer: FunctionComponent<RouteComponentProps> = (
             {...e}
             username={username}
             joinEvent={joinEvent}
+            onViewClick={onViewEvent}
           />
         );
       })}

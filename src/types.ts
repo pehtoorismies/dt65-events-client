@@ -68,7 +68,7 @@ export interface IEventStep {
 }
 
 export interface IEventBase {
-  
+  address?: string;
   description?: string;
   race: boolean;
   subtitle?: string;

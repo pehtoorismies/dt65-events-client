@@ -10,8 +10,18 @@ storiesOf('Common/Button', module)
       Hello Button
     </Button>
   ))
+  .add('primary - loading', () => (
+    <Button variant="primary" onClick={action('clicked')} isLoading={true}>
+      Hello Button
+    </Button>
+  ))
   .add('primary - disabled', () => (
     <Button disabled={true} variant="primary" onClick={action('clicked')}>
+      Hello Button Disabled
+    </Button>
+  ))
+  .add('primary - disabled/loading', () => (
+    <Button disabled={true} isLoading={true} variant="primary" onClick={action('clicked')}>
       Hello Button Disabled
     </Button>
   ))

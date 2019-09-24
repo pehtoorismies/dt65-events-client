@@ -57,7 +57,6 @@ const eventFormError = {
 };
 
 const primaryButton = {
-  // width: '100%',
   py: 3,
   backgroundColor: pink,
   color: white,
@@ -65,7 +64,13 @@ const primaryButton = {
   fontWeight: 'bold',
   '&[disabled]': {
     backgroundColor: Color(pink)
-      .lighten(0.4)
+      .lighten(0.2)
+      .string(),
+    cursor: 'not-allowed',
+  },
+  '&[disabled]:hover': {
+    backgroundColor: Color(pink)
+      .lighten(0.2)
       .string(),
     cursor: 'not-allowed',
   },
