@@ -1,20 +1,22 @@
-import React, { FunctionComponent, Fragment, useState } from 'react';
-import { Button, Flex, Text } from 'rebass';
-import gql from 'graphql-tag';
-import { RouteComponentProps } from 'react-router';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import { withRouter } from 'react-router-dom';
+import { useMutation, useQuery } from '@apollo/react-hooks';
+import compose from '@shopify/react-compose';
 import parseISO from 'date-fns/parseISO';
-import EventCard from '../components/EventCard';
-import { fromApiType, dateToString } from '../util/general';
-import { ROUTES, EVENT_TYPES } from '../constants';
-import { EVENTS_QUERY, GET_LOCALUSER } from '../gql';
-import { ID } from '../types';
+import gql from 'graphql-tag';
 import append from 'ramda/es/append';
-import findIndex from 'ramda/es/findIndex';
 import equals from 'ramda/es/equals';
+import findIndex from 'ramda/es/findIndex';
 import remove from 'ramda/es/remove';
-import path from 'ramda/es/path';
+import React, { Fragment, FunctionComponent, useState } from 'react';
+import { RouteComponentProps } from 'react-router';
+import { withRouter } from 'react-router-dom';
+import { Button, Flex, Text } from 'rebass';
+
+import EventCard from '../components/EventCard';
+import { EVENT_TYPES, ROUTES } from '../constants';
+import { EVENTS_QUERY } from '../gql';
+import withUser, { IUserProps } from '../hoc/withUser';
+import { ID } from '../types';
+import { dateToString, fromApiType } from '../util/general';
 
 const TOGGLE_JOIN_EVENT = gql`
   mutation ToggleJoinEvent($eventId: ID!) {
@@ -33,10 +35,13 @@ const findLoading = (id: ID, loadingEvents: ID[]): boolean => {
   return idx >= 0;
 };
 
-const EventsContainer: FunctionComponent<RouteComponentProps> = (
-  props: RouteComponentProps
+const EventsContainer: FunctionComponent<RouteComponentProps & IUserProps> = (
+  props: RouteComponentProps & IUserProps
 ) => {
-  const { history } = props;
+  const {
+    history,
+    user: { username },
+  } = props;
   const [loadingEventsList, setLoadingEventsList] = useState<ID[]>([]);
   const {
     loading: eventsLoading,
@@ -44,7 +49,6 @@ const EventsContainer: FunctionComponent<RouteComponentProps> = (
     data: eventsData,
   } = useQuery(EVENTS_QUERY);
 
-  const { data: userData } = useQuery(GET_LOCALUSER);
   const [
     toggleJoinEventMutation,
     { error: errorJoin, loading: loadingJoin },
@@ -57,12 +61,13 @@ const EventsContainer: FunctionComponent<RouteComponentProps> = (
     console.error(eventsError);
     return <h1>Error</h1>;
   }
+
   const toCreateEvent = () => history.push(ROUTES.createEvent);
   const joinEvent = async (eventId: ID) => {
     try {
       const updated = append(eventId, loadingEventsList);
       setLoadingEventsList(updated);
-      const resp = await toggleJoinEventMutation({ variables: { eventId } });
+      await toggleJoinEventMutation({ variables: { eventId } });
       const idx = findIndex(equals(eventId))(loadingEventsList);
       const removed = remove(1, idx, loadingEventsList);
       setLoadingEventsList(removed);
@@ -86,7 +91,6 @@ const EventsContainer: FunctionComponent<RouteComponentProps> = (
   }
   const onViewEvent = (id: ID): void => history.push(`${ROUTES.events}/${id}}`);
 
-  const username = path(['localUser', 'username'], userData);
   return (
     <Fragment>
       {events.map((evt: any) => {
@@ -116,4 +120,8 @@ const EventsContainer: FunctionComponent<RouteComponentProps> = (
   );
 };
 
-export default withRouter(EventsContainer);
+export default compose(
+  withUser,
+  // @ts-ignore
+  withRouter
+)(EventsContainer);

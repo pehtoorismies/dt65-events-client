@@ -4,6 +4,7 @@ import React, { FunctionComponent, useState } from 'react';
 import { BallBeat } from 'react-pure-loaders';
 import { Redirect, RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+
 import { TextLink } from '../components/Common';
 import { Register } from '../components/Forms/Auth';
 import { ROUTES } from '../constants';

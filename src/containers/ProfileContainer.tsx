@@ -1,28 +1,28 @@
-import React, { FunctionComponent } from 'react';
-import { withRouter } from 'react-router-dom';
-import { withApollo, WithApolloClient } from 'react-apollo';
 import compose from '@shopify/react-compose';
+import React, { FunctionComponent } from 'react';
+import { withApollo, WithApolloClient } from 'react-apollo';
 import { RouteComponentProps } from 'react-router';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { withRouter } from 'react-router-dom';
+import { User } from 'styled-icons/boxicons-regular/User';
+
 import Profile from '../components/Profile';
 import { ROUTES } from '../constants';
-import { User } from 'styled-icons/boxicons-regular/User';
-import { GET_LOCALUSER } from '../gql';
+import withUser, { IUserProps } from '../hoc/withUser';
 import { logout } from '../util/auth';
-import path from 'ramda/es/path';
+
 
 interface IProps {
   id: number;
 }
 
-const FooterMenuContainer: FunctionComponent<WithApolloClient<RouteComponentProps>> = (
-  props: (WithApolloClient<RouteComponentProps>)
-) => {
-  const { history, client } = props;
-  console.log(client);
-
-
-  const { data: userData } = useQuery(GET_LOCALUSER);
+const ProfileContainer: FunctionComponent<
+  WithApolloClient<RouteComponentProps & IUserProps>
+> = (props: WithApolloClient<RouteComponentProps & IUserProps>) => {
+  const {
+    history,
+    client,
+    user: { username },
+  } = props;
 
   const go = (route: string) => () => {
     history.push(route);
@@ -41,7 +41,6 @@ const FooterMenuContainer: FunctionComponent<WithApolloClient<RouteComponentProp
     },
   ];
 
-  const username = path(['localUser', 'username'], userData);
   if (!username) {
     throw new Error('No user present');
   }
@@ -53,4 +52,5 @@ export default compose(
   withApollo,
   // @ts-ignore
   withRouter,
-)(FooterMenuContainer);
+  withUser
+)(ProfileContainer);

@@ -19,17 +19,14 @@ const Dt65Route = (props: IPrivateRouteProps) => {
       // tslint:disable-next-line: jsx-no-lambda
       render={(props: any) => {
         const { valid, errorMessage } = isAuthenticated();
-        console.log('valid', valid);
-        console.log('errorMsg', errorMessage);
 
         if (!privateRoute) {
-          return <Fragment>
-            <Component {...props} />
-          </Fragment>;
+          return (
+            <Fragment>
+              <Component {...props} />
+            </Fragment>
+          );
         }
-
-        
-        
 
         if (valid) {
           return (

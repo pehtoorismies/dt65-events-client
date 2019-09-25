@@ -1,13 +1,14 @@
-import React, { FunctionComponent } from 'react';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import { withRouter } from 'react-router-dom';
-import { Redirect, RouteComponentProps } from 'react-router';
+import { useMutation } from '@apollo/react-hooks';
+import compose from '@shopify/react-compose';
 import gql from 'graphql-tag';
+import React, { FunctionComponent } from 'react';
+import { Redirect, RouteComponentProps } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import EventCreator from '../components/EventCreator';
-import { GET_LOCALUSER, EVENTS_QUERY } from '../gql';
 import { ROUTES } from '../constants';
+import withUser, { IUserProps } from '../hoc/withUser';
 import { IEventReq } from '../types';
 
 const CREATE_EVENT = gql`
@@ -45,20 +46,19 @@ const CREATE_EVENT = gql`
   }
 `;
 
-const EventsContainer: FunctionComponent<RouteComponentProps> = (
-  props: RouteComponentProps
+const EventsContainer: FunctionComponent<RouteComponentProps & IUserProps> = (
+  props: RouteComponentProps & IUserProps
 ) => {
-  const { location } = props;
+  const {
+    location,
+    user: { username },
+  } = props;
 
-  const { loading: userLoading, error: userError, data: userData } = useQuery(
-    GET_LOCALUSER
-  );
   const [createEventQuery] = useMutation(CREATE_EVENT, {
     // update(cache, { data: { createEvent } }) {
     //   const resp: any = cache.readQuery({ query: EVENTS_QUERY });
     //   console.log('update');
     //   console.log(resp);
-      
     //   // const { findManyEvents } = resp;
     //   // cache.writeQuery({
     //   //   query: EVENTS_QUERY,
@@ -66,17 +66,6 @@ const EventsContainer: FunctionComponent<RouteComponentProps> = (
     //   // });
     // },
   });
-
-  if (userLoading) {
-    return <h1>loading</h1>;
-  }
-  if (userError) {
-    return <h1>error</h1>;
-  }
-
-  const {
-    localUser: { username },
-  } = userData;
 
   const eventCreator = async (evt: IEventReq) => {
     try {
@@ -106,4 +95,8 @@ const EventsContainer: FunctionComponent<RouteComponentProps> = (
   return <EventCreator createEvent={eventCreator} username={username} />;
 };
 
-export default withRouter(EventsContainer);
+export default compose(
+  withUser,
+  // @ts-ignore
+  withRouter
+)(EventsContainer);

@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
-import { withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
+import { withRouter } from 'react-router-dom';
+
 import { MenuFooter } from '../components/Menu';
 import { ROUTES } from '../constants';
 

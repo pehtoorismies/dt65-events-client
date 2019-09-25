@@ -3,12 +3,13 @@ import gql from 'graphql-tag';
 import React, { FunctionComponent, useState } from 'react';
 import { Redirect, RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+
 import { TextLink } from '../components/Common';
 import { Login } from '../components/Forms/Auth';
 import { ROUTES } from '../constants';
+import { GET_LOCALUSER } from '../gql';
 import { getLocalUser, login as authLogin } from '../util/auth';
 import { setGraphQLErrors } from '../util/graphqlErrors';
-import { GET_LOCALUSER } from '../gql';
 
 const LOGIN_MUTATION = gql`
   mutation Login($usernameOrEmail: String!, $password: String!) {
@@ -55,11 +56,11 @@ const LoginContainer: FunctionComponent<RouteComponentProps> = (
     } catch (e) {
       const { graphQLErrors, networkError } = e;
       if (graphQLErrors) {
-        console.log('gQL', graphQLErrors);
+        console.error('gQL', graphQLErrors);
         
         setGraphQLErrors(actions.setFieldError, setGeneralError, graphQLErrors);
       } else if (networkError) {
-        console.log('networkError', networkError);
+        console.error('networkError', networkError);
         setGeneralError('Network problems');
       }
     } finally {

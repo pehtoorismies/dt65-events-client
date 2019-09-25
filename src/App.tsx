@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import EventsContainer from './containers/EventsContainer';
 import ProfileContainer from './containers/ProfileContainer';
 import CreateEventContainer from './containers/CreateEventContainer';
+import ViewEventContainer from './containers/ViewEventContainer';
 import HeaderMenuContainer from './containers/HeaderMenuContainer';
 
 import { ROUTES } from './constants';
@@ -49,6 +50,12 @@ const App = () => (
               exact={true}
               path={ROUTES.profile}
               component={ProfileContainer}
+              privateRoute={true}
+            />
+             <Dt65Route
+              exact={true}
+              path={ROUTES.event}
+              component={ViewEventContainer}
               privateRoute={true}
             />
             <Dt65Route

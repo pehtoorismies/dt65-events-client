@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 import React, { FunctionComponent } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Box, Button, Text } from 'rebass';
+
 import InfoMessage from '../components/InfoMessage';
 import { ROUTES } from '../constants';
 

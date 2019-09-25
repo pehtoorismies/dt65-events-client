@@ -1,9 +1,10 @@
+import { useMutation } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 import React, { FunctionComponent } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
-import { useMutation } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
 import { toast } from 'react-toastify';
+
 import { TextLink } from '../components/Common';
 import { ForgotPassword } from '../components/Forms/Auth';
 import { ROUTES } from '../constants';
