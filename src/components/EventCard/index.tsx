@@ -15,7 +15,6 @@ import parse, { DomElement, domToReact } from 'html-react-parser';
 import css from '@emotion/css';
 
 interface IProps extends IEvent {
-  id: ID;
   isJoining?: boolean;
   username: string;
   eventImage?: string;
@@ -159,6 +158,11 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
   const [showDetails, setShowDetails] = useState(stayOpened);
   const ExposeArrow = showDetails ? UpArrow : DownArrow;
 
+  const eyeButton = onViewClick ? <EyeBtn onClick={viewClick} /> : null;
+  const toggleOpenButton = !stayOpened ? (
+    <ExposeArrow onClick={exposeDetails} />
+  ) : null;
+
   return (
     <Flex
       m={1}
@@ -182,8 +186,8 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
             }}
           >
             <Flex ml={2}>
-              <EyeBtn onClick={viewClick} />
-              <ExposeArrow onClick={exposeDetails} />
+              {eyeButton}
+              {toggleOpenButton}
             </Flex>
             <EditBtn onClick={editClick} />
           </Flex>

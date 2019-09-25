@@ -1,7 +1,6 @@
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import compose from '@shopify/react-compose';
-import parseISO from 'date-fns/parseISO';
-import gql from 'graphql-tag';
+
 import append from 'ramda/es/append';
 import equals from 'ramda/es/equals';
 import findIndex from 'ramda/es/findIndex';
@@ -12,23 +11,13 @@ import { withRouter } from 'react-router-dom';
 import { Button, Flex, Text } from 'rebass';
 
 import EventCard from '../components/EventCard';
-import { EVENT_TYPES, ROUTES } from '../constants';
-import { EVENTS_QUERY } from '../gql';
+import { ROUTES } from '../constants';
+import { EVENTS_QUERY, TOGGLE_JOIN_EVENT } from '../gql';
 import withUser, { IUserProps } from '../hoc/withUser';
-import { ID } from '../types';
-import { dateToString, fromApiType } from '../util/general';
+import { ID, IEventResp } from '../types';
+import { parseEvent } from '../util/general';
 
-const TOGGLE_JOIN_EVENT = gql`
-  mutation ToggleJoinEvent($eventId: ID!) {
-    toggleJoinEvent(eventId: $eventId) {
-      id
-      participants {
-        username
-        _id
-      }
-    }
-  }
-`;
+
 
 const findLoading = (id: ID, loadingEvents: ID[]): boolean => {
   const idx = findIndex(equals(id))(loadingEvents);
@@ -89,20 +78,13 @@ const EventsContainer: FunctionComponent<RouteComponentProps & IUserProps> = (
       </Flex>
     );
   }
-  const onViewEvent = (id: ID): void => history.push(`${ROUTES.events}/${id}}`);
+  const onViewEvent = (id: ID): void => history.push(`${ROUTES.events}/${id}`);
 
   return (
     <Fragment>
-      {events.map((evt: any) => {
+      {events.map((evt: IEventResp) => {
         const e = {
-          ...evt,
-          creator: evt.creator.username,
-          date: dateToString(parseISO(evt.date)),
-          type: fromApiType(evt.type, EVENT_TYPES),
-          participants: evt.participants.map((p: any) => ({
-            ...p,
-            id: p._id,
-          })),
+          ...parseEvent(evt),
           isJoining: findLoading(evt.id, loadingEventsList),
         };
 

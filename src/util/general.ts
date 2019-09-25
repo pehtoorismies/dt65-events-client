@@ -1,11 +1,20 @@
-import { isNull, isUndefined } from 'ramda-adjunct';
 import format from 'date-fns/format';
 import { fi } from 'date-fns/locale';
-import propEq from 'ramda/es/propEq';
-import findIndex from 'ramda/es/findIndex';
+import parseISO from 'date-fns/parseISO';
+import { isNull, isUndefined } from 'ramda-adjunct';
 import find from 'ramda/es/find';
-import {} from '../constants';
-import { IParticipant, ITime, EventType, IEventType } from '../types';
+import findIndex from 'ramda/es/findIndex';
+import propEq from 'ramda/es/propEq';
+
+import { EVENT_TYPES } from '../constants';
+import {
+  EventType,
+  IEvent,
+  IEventResp,
+  IEventType,
+  IParticipant,
+  ITime,
+} from '../types';
 
 export const isNullOrUndefined = (a: any) => isNull(a) || isUndefined(a);
 
@@ -49,4 +58,13 @@ export const fromApiType = (
   events: IEventType[]
 ): IEventType => {
   return find(propEq('apiType', apiType))(events);
+};
+
+export const parseEvent = (evt: IEventResp): IEvent => {
+  return {
+    ...evt,
+    creator: evt.creator.username,
+    date: dateToString(parseISO(evt.date)),
+    type: fromApiType(evt.type, EVENT_TYPES),
+  };
 };

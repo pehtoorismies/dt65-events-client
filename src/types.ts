@@ -82,7 +82,16 @@ export interface IEventReq extends IEventBase {
   creatorJoining: boolean;
 }
 
+export interface IEventResp extends IEventBase {
+  id: ID,
+  date: string;
+  type: string;
+  participants: IParticipant[];
+  creator: IParticipant;
+}
+
 export interface IEvent extends IEventBase {
+  id: ID;
   date: string;
   participants: IParticipant[];
   type: IEventType;

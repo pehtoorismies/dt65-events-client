@@ -13,11 +13,11 @@ const EventFragment = gql`
     updatedAt
     participants {
       username
-      _id
+      id
     }
     creator {
       username
-      _id
+      id
     }
   }
 `;
@@ -40,7 +40,6 @@ export const EVENTS_QUERY = gql`
   ${EventFragment}
 `;
 
-
 export const EVENT_QUERY = gql`
   query FindEvent($id: ID!) {
     findEvent(id: $id) {
@@ -48,4 +47,16 @@ export const EVENT_QUERY = gql`
     }
   }
   ${EventFragment}
+`;
+
+export const TOGGLE_JOIN_EVENT = gql`
+  mutation ToggleJoinEvent($eventId: ID!) {
+    toggleJoinEvent(eventId: $eventId) {
+      id
+      participants {
+        username
+        id
+      }
+    }
+  }
 `;
