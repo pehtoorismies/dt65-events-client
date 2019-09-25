@@ -1,16 +1,23 @@
 import Color from 'color';
 
+const redColor = Color('#FF5471');
+const pinkColor = Color('#FF80EA');
+
 const blue = '#07c';
-const red = '#FF5471';
+const red = redColor.hex();
+const lightRed = redColor.lighten(0.4).hex();
 const lightgray = '#9a9a9a';
 const lightergray = '#E6E6E6';
 const lightestgray = '#e9e9e9';
 const darkWhite = '#f4f4f5';
 const black = '#140D33';
 const lightBlack = '#404035';
-const pink = '#FF80EA';
+const pink = pinkColor.hex();
+const lightPink = pinkColor.lighten(0.2).hex();
+const darkPink = pinkColor.darken(0.1).hex();
 const white = '#fff';
 const transparentBlack = 'rgba(0,0,0,0.6)';
+const moreTransparentBlack = 'rgba(0,0,0,0.7)';
 const faintBg = 'rgba(0,0,0,0.2)';
 
 const primaryForm = {
@@ -63,22 +70,16 @@ const primaryButton = {
   textTransform: 'uppercase',
   fontWeight: 'bold',
   '&[disabled]': {
-    backgroundColor: Color(pink)
-      .lighten(0.2)
-      .string(),
+    backgroundColor: lightPink,
     cursor: 'not-allowed',
   },
   '&[disabled]:hover': {
-    backgroundColor: Color(pink)
-      .lighten(0.2)
-      .string(),
+    backgroundColor: lightPink,
     cursor: 'not-allowed',
   },
   '&:hover': {
     cursor: 'pointer',
-    backgroundColor: Color(pink)
-      .darken(0.1)
-      .string(),
+    backgroundColor: darkPink,
   },
 };
 
@@ -130,14 +131,22 @@ const theme: any = {
       },
     },
     warn: {
-      backgroundColor: red,
+      ...primaryButton,
+      backgroundColor: 'red',
       boxShadow: 'inset 0 0 0 2px',
       color: white,
 
       '&:hover': {
-        color: Color(red)
-          .lighten(0.5)
-          .string(),
+        backgroundColor: lightRed,
+        cursor: 'not-allowed',
+      },
+      '&[disabled]': {
+        backgroundColor: lightRed,
+        cursor: 'not-allowed',
+      },
+      '&[disabled]:hover': {
+        backgroundColor: lightRed,
+        cursor: 'not-allowed',
       },
     },
   },
@@ -157,9 +166,13 @@ const theme: any = {
     lightergray,
     lightestgray,
     lightgray,
+    lightPink,
     pink,
+    darkPink,
+    lightRed,
     red,
     transparentBlack,
+    moreTransparentBlack,
     white,
   },
   fontSizes: [12, 14, 16, 20, 24, 32, 48, 64],

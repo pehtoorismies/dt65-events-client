@@ -4,12 +4,14 @@ import path from 'ramda/es/path';
 import React, { FunctionComponent } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import EventCard from '../components/EventCard';
-import { EVENT_QUERY, TOGGLE_JOIN_EVENT } from '../gql';
+import { ROUTES } from '../constants';
+import { DELETE_EVENT_MUTATION, EVENT_QUERY, TOGGLE_JOIN_EVENT } from '../gql';
 import withUser, { IUserProps } from '../hoc/withUser';
-import { parseEvent } from '../util/general';
 import { ID } from '../types';
+import { parseEvent } from '../util/general';
 
 const ViewEventContainer: FunctionComponent<
   RouteComponentProps & IUserProps
@@ -24,15 +26,26 @@ const ViewEventContainer: FunctionComponent<
   const [toggleJoinEventMutation, { loading: loadingJoin }] = useMutation(
     TOGGLE_JOIN_EVENT
   );
+  const [deleteEventMutation, { loading: loadingDelete }] = useMutation(
+    DELETE_EVENT_MUTATION
+  );
 
   const joinEvent = async (eventId: ID) => {
     try {
-      await toggleJoinEventMutation({ variables: { eventId } });
+      await toggleJoinEventMutation({ variables: { id: eventId } });
     } catch (error) {
       console.error(error);
     }
   };
-
+  const deleteEvent = async (eventID: ID) => {
+    try {
+      await deleteEventMutation({ variables: { id: eventID } });
+      toast(`Tapahtuma poistettu`);
+      history.push(ROUTES.home);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const {
     loading: loadingEvent,
     error: errorEvent,
@@ -59,6 +72,7 @@ const ViewEventContainer: FunctionComponent<
       stayOpened={true}
       joinEvent={joinEvent}
       isJoining={loadingJoin}
+      onDeleteClick={deleteEvent}
     />
   );
 };

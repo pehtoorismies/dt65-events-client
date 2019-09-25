@@ -49,9 +49,15 @@ export const EVENT_QUERY = gql`
   ${EventFragment}
 `;
 
+export const DELETE_EVENT_MUTATION = gql`
+  mutation DeleteEvent($id: ID!) {
+    deleteEvent(id: $id)
+  }
+`;
+
 export const TOGGLE_JOIN_EVENT = gql`
-  mutation ToggleJoinEvent($eventId: ID!) {
-    toggleJoinEvent(eventId: $eventId) {
+  mutation ToggleJoinEvent($id: ID!) {
+    toggleJoinEvent(id: $id) {
       id
       participants {
         username

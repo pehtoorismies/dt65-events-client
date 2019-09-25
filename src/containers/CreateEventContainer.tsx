@@ -69,14 +69,13 @@ const EventsContainer: FunctionComponent<RouteComponentProps & IUserProps> = (
 
   const eventCreator = async (evt: IEventReq) => {
     try {
-      const { data } = await createEventQuery({
+      await createEventQuery({
         variables: {
           ...evt,
           date: evt.date.toISOString(),
           addMe: evt.creatorJoining,
         },
       });
-      console.log(data);
 
       toast(`Tapahtuma luotu`);
       return (

@@ -20,7 +20,7 @@ const createParticipant = (id: number): IParticipant => {
 const stories = storiesOf('EventCard', module);
 const participants = times(createParticipant, faker.random.number(10) + 5);
 
-const evtId : ID = 1;
+const evtId: ID = 1;
 
 const common = {
   id: evtId,
@@ -54,12 +54,15 @@ const common = {
   participants,
   race: true,
   type: EVENT_TYPES[rand],
+  onDeleteClick: action('Delete'),
+  onEditClick: action('Edit'),
+  onViewClick: action('View'),
 };
 
 const noRace = {
   ...common,
   race: false,
-}
+};
 
 stories
   .add('not participant to race', () => <EventCard {...common} />)

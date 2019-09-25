@@ -1,18 +1,23 @@
-import React, { FunctionComponent, useState } from 'react';
-import { Box, Card, Flex, Heading, Text } from 'rebass';
-import styled from '@emotion/styled';
-import { map } from 'ramda';
-import { Medal } from 'styled-icons/fa-solid/Medal';
-import { Edit } from 'styled-icons/boxicons-regular/Edit';
-import { Eye } from 'styled-icons/fa-solid/Eye';
-import { CaretUpCircle } from 'styled-icons/boxicons-solid/CaretUpCircle';
-import { CaretDownCircle } from 'styled-icons/boxicons-solid/CaretDownCircle';
-import AnimateHeight from 'react-animate-height';
-import HeadCountButton from '../HeadCountButton';
-import { isParticipating } from '../../util/general';
-import { IParticipant, IEvent, ID } from '../../types';
-import parse, { DomElement, domToReact } from 'html-react-parser';
 import css from '@emotion/css';
+import styled from '@emotion/styled';
+import parse, { DomElement, domToReact } from 'html-react-parser';
+import { map } from 'ramda';
+import React, { FunctionComponent, useState } from 'react';
+import AnimateHeight from 'react-animate-height';
+import { PortalWithState } from 'react-portal';
+import Switch from 'react-switch';
+import { Box, Card, Flex, Heading, Text } from 'rebass';
+import { Edit } from 'styled-icons/boxicons-regular/Edit';
+import { CaretDownCircle } from 'styled-icons/boxicons-solid/CaretDownCircle';
+import { CaretUpCircle } from 'styled-icons/boxicons-solid/CaretUpCircle';
+import { Eye } from 'styled-icons/fa-solid/Eye';
+import { Medal } from 'styled-icons/fa-solid/Medal';
+
+import { ID, IEvent, IParticipant } from '../../types';
+import { isParticipating } from '../../util/general';
+import { Button } from '../Common';
+import HeadCountButton from '../HeadCountButton';
+import { colors } from '../../theme';
 
 interface IProps extends IEvent {
   isJoining?: boolean;
@@ -22,6 +27,7 @@ interface IProps extends IEvent {
   stayOpened?: boolean;
   onViewClick?: (eventId: ID) => void;
   onEditClick?: (eventId: ID) => void;
+  onDeleteClick?: (eventId: ID) => void;
 }
 
 const ANIM_TIME = 500;
@@ -93,6 +99,24 @@ const Pill = (props: any) => (
   />
 );
 
+const Overlay = (props: any) => (
+  <Flex
+    {...props}
+    bg="moreTransparentBlack"
+    height="100vh"
+    width="100vw"
+    alignItems="center"
+    justifyContent="center"
+    sx={{
+      position: 'fixed',
+      zIndex: 4,
+      top: 0,
+      left: 0,
+      backgroundImage: 'radial-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.8))',
+    }}
+  />
+);
+
 const renderPill = (username: string) => (participant: IParticipant) => {
   const { username: usr, id } = participant;
   const color = username === usr ? 'pink' : 'blue';
@@ -116,6 +140,7 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
     eventImage,
     isJoining,
     joinEvent,
+    onDeleteClick,
     onViewClick,
     onEditClick,
     participants,
@@ -149,13 +174,9 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
       onViewClick(id);
     }
   };
-  const editClick = () => {
-    if (onEditClick) {
-      onEditClick(id);
-    }
-  };
 
   const [showDetails, setShowDetails] = useState(stayOpened);
+  const [disableDelete, setDisableDelete] = useState(true);
   const ExposeArrow = showDetails ? UpArrow : DownArrow;
 
   const eyeButton = onViewClick ? <EyeBtn onClick={viewClick} /> : null;
@@ -164,186 +185,274 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
   ) : null;
 
   return (
-    <Flex
-      m={1}
-      bg="white"
-      width="100%"
-      sx={{ maxWidth: 400, borderBottom: borderStyle }}
-    >
-      <Card width="100%" mx="auto" variant="shadow">
-        <ImageBox bgImage={eventImage || type.defaultImage}>
-          <Flex
-            width="100%"
-            alignItems="center"
-            justifyContent="space-between"
-            height={30}
-            pr={2}
-            sx={{
-              gridArea: 'header',
-              borderRadius: '15px 15px 0 0',
-              backgroundImage:
-                'linear-gradient(0deg, rgba(0,0,0,0.0), rgba(0,0,0,0.5))',
-            }}
-          >
-            <Flex ml={2}>
-              {eyeButton}
-              {toggleOpenButton}
-            </Flex>
-            <EditBtn onClick={editClick} />
-          </Flex>
+    <PortalWithState closeOnEsc={true}>
+      {({ openPortal, closePortal, isOpen, portal }) => {
+        const editClick = () => {
+          if (onEditClick) {
+            onEditClick(id);
+          }
+        };
+        const deleteClick = () => {
+          if (onDeleteClick) {
+            onDeleteClick(id);
+            closePortal();
+          }
+        };
 
-          <Flex
-            flexDirection="column"
-            alignItems="center"
-            sx={{ gridArea: 'title' }}
-          >
-            <Text
-              letterSpacing={4}
-              color="white"
-              fontSize={30}
-              fontWeight={900}
+        return (
+          <React.Fragment>
+            <Flex
+              m={1}
+              bg="white"
+              width="100%"
               sx={{
-                textShadow: '2px 2px 5px black',
+                maxWidth: 400,
+                borderBottom: borderStyle,
+                position: 'relative',
               }}
             >
-              {type.title}
-            </Text>
-            {raceElem}
-          </Flex>
+              <Card width="100%" mx="auto" variant="shadow">
+                <ImageBox bgImage={eventImage || type.defaultImage}>
+                  <Flex
+                    width="100%"
+                    alignItems="center"
+                    justifyContent="space-between"
+                    height={30}
+                    pr={2}
+                    sx={{
+                      gridArea: 'header',
+                      borderRadius: '15px 15px 0 0',
+                      backgroundImage:
+                        'linear-gradient(0deg, rgba(0,0,0,0.0), rgba(0,0,0,0.5))',
+                    }}
+                  >
+                    <Flex ml={2}>
+                      {eyeButton}
+                      {toggleOpenButton}
+                    </Flex>
+                    <EditBtn onClick={openPortal} />
+                  </Flex>
 
-          <Text
-            fontSize={11}
-            fontFamily="monospace"
-            p={1}
-            color="white"
-            width="100%"
-            textAlign="right"
-            sx={{
-              backgroundImage:
-                'linear-gradient(rgba(0,0,0,0.0), rgba(0,0,0,0.6))',
-              gridArea: 'creator',
-            }}
-          >
-            by {creator}
-          </Text>
-        </ImageBox>
-        <Flex
-          p={2}
-          bg="darkWhite"
-          justifyContent="space-between"
-          sx={{
-            border: borderStyle,
-            borderTop: 0,
-            borderBottom: 0,
-          }}
-        >
-          <Flex justifyContent="space-around" flexDirection="column">
-            <Text fontSize={20} fontWeight="bold">
-              {title}
-            </Text>
-            <Text fontSize={16} fontWeight="bold">
-              {subtitle}
-            </Text>
-            <Text mt={1} fontSize={16}>
-              {date}
-            </Text>
-          </Flex>
-          <Flex alignItems="center" justifyContent="center">
-            <HeadCountButton
-              loading={isJoining}
-              count={participants.length}
-              onClick={onJoinClick}
-              isParticipating={isParticipant}
-            />
-          </Flex>
-        </Flex>
-        <AnimateHeight duration={ANIM_TIME} height={showDetails ? 'auto' : 0}>
-          <Box
-            px={2}
-            pt={1}
-            bg="darkWhite"
-            sx={{
-              borderLeft: borderStyle,
-              borderRight: borderStyle,
-            }}
-          >
-            <Flex>
-              <Text fontWeight="bold" color="lightBlack" width={60}>
-                Sijainti:
-              </Text>
-              <Text ml={1} color={address ? 'black' : 'lightgrey'}>
-                {address || 'ei määritelty'}
-              </Text>
-            </Flex>
-            <Flex my={1}>
-              <Text fontWeight="bold" color="lightBlack" width={60}>
-                Aika:
-              </Text>
-              <Text ml={1} color={time ? 'black' : 'lightgrey'}>
-                {time || 'ei määritelty'}
-              </Text>
-            </Flex>
-            <Flex flexWrap="wrap" py={1}>
-              {map(renderPill(username), participants)}
-            </Flex>
-            <Text fontWeight="bold" color="lightBlack" width={60}>
-              Kuvaus:
-            </Text>
-            <Text py={2} ml={1} color={description ? 'black' : 'lightgrey'}>
-              {parse(description || 'ei määritelty', {
-                replace: (domNode: DomElement): any => {
-                  const { name, children } = domNode;
-                  if (!children) {
-                    return '';
-                  }
+                  <Flex
+                    flexDirection="column"
+                    alignItems="center"
+                    sx={{ gridArea: 'title' }}
+                  >
+                    <Text
+                      letterSpacing={4}
+                      color="white"
+                      fontSize={30}
+                      fontWeight={900}
+                      sx={{
+                        textShadow: '2px 2px 5px black',
+                      }}
+                    >
+                      {type.title}
+                    </Text>
+                    {raceElem}
+                  </Flex>
 
-                  if (name === 'em') {
-                    return (
-                      <Text as="span" sx={{ fontStyle: 'italic' }}>
-                        {domToReact(children)}
+                  <Text
+                    fontSize={11}
+                    fontFamily="monospace"
+                    p={1}
+                    color="white"
+                    width="100%"
+                    textAlign="right"
+                    sx={{
+                      backgroundImage:
+                        'linear-gradient(rgba(0,0,0,0.0), rgba(0,0,0,0.6))',
+                      gridArea: 'creator',
+                    }}
+                  >
+                    by {creator}
+                  </Text>
+                </ImageBox>
+                <Flex
+                  p={2}
+                  bg="darkWhite"
+                  justifyContent="space-between"
+                  sx={{
+                    border: borderStyle,
+                    borderTop: 0,
+                    borderBottom: 0,
+                  }}
+                >
+                  <Flex justifyContent="space-around" flexDirection="column">
+                    <Text fontSize={20} fontWeight="bold">
+                      {title}
+                    </Text>
+                    <Text fontSize={16} fontWeight="bold">
+                      {subtitle}
+                    </Text>
+                    <Text mt={1} fontSize={16}>
+                      {date}
+                    </Text>
+                  </Flex>
+                  <Flex alignItems="center" justifyContent="center">
+                    <HeadCountButton
+                      loading={isJoining}
+                      count={participants.length}
+                      onClick={onJoinClick}
+                      isParticipating={isParticipant}
+                    />
+                  </Flex>
+                </Flex>
+                <AnimateHeight
+                  duration={ANIM_TIME}
+                  height={showDetails ? 'auto' : 0}
+                >
+                  <Box
+                    px={2}
+                    pt={1}
+                    bg="darkWhite"
+                    sx={{
+                      borderLeft: borderStyle,
+                      borderRight: borderStyle,
+                    }}
+                  >
+                    <Flex>
+                      <Text fontWeight="bold" color="lightBlack" width={60}>
+                        Sijainti:
                       </Text>
-                    );
-                  }
-                  if (name === 'strong') {
-                    return (
-                      <Text as="span" fontWeight="bold">
-                        {domToReact(children)}
+                      <Text ml={1} color={address ? 'black' : 'lightgrey'}>
+                        {address || 'ei määritelty'}
                       </Text>
-                    );
-                  }
-                  if (name === 'u') {
-                    return (
-                      <Text as="span" sx={{ fontStyle: 'underline' }}>
-                        {domToReact(children)}
+                    </Flex>
+                    <Flex my={1}>
+                      <Text fontWeight="bold" color="lightBlack" width={60}>
+                        Aika:
                       </Text>
-                    );
-                  }
-                  if (name === 'h1') {
-                    return (
-                      <Heading fontSize={4}>{domToReact(children)}</Heading>
-                    );
-                  }
-                  if (name === 'ul') {
-                    return (
-                      <Text p={1} sx={{ listStyleType: 'circle' }}>
-                        {domToReact(children)}
+                      <Text ml={1} color={time ? 'black' : 'lightgrey'}>
+                        {time || 'ei määritelty'}
                       </Text>
-                    );
-                  }
-                  if (name === 'ol') {
-                    return (
-                      <Text p={1} sx={{ listStyleType: 'lower-latin' }}>
-                        {domToReact(children)}
-                      </Text>
-                    );
-                  }
-                },
-              })}
-            </Text>
-          </Box>
-        </AnimateHeight>
-      </Card>
-    </Flex>
+                    </Flex>
+                    <Flex flexWrap="wrap" py={1}>
+                      {map(renderPill(username), participants)}
+                    </Flex>
+                    <Text fontWeight="bold" color="lightBlack" width={60}>
+                      Kuvaus:
+                    </Text>
+                    <Text
+                      py={2}
+                      ml={1}
+                      color={description ? 'black' : 'lightgrey'}
+                    >
+                      {parse(description || 'ei määritelty', {
+                        replace: (domNode: DomElement): any => {
+                          const { name, children } = domNode;
+                          if (!children) {
+                            return '';
+                          }
+
+                          if (name === 'em') {
+                            return (
+                              <Text as="span" sx={{ fontStyle: 'italic' }}>
+                                {domToReact(children)}
+                              </Text>
+                            );
+                          }
+                          if (name === 'strong') {
+                            return (
+                              <Text as="span" fontWeight="bold">
+                                {domToReact(children)}
+                              </Text>
+                            );
+                          }
+                          if (name === 'u') {
+                            return (
+                              <Text as="span" sx={{ fontStyle: 'underline' }}>
+                                {domToReact(children)}
+                              </Text>
+                            );
+                          }
+                          if (name === 'h1') {
+                            return (
+                              <Heading fontSize={4}>
+                                {domToReact(children)}
+                              </Heading>
+                            );
+                          }
+                          if (name === 'ul') {
+                            return (
+                              <Text p={1} sx={{ listStyleType: 'circle' }}>
+                                {domToReact(children)}
+                              </Text>
+                            );
+                          }
+                          if (name === 'ol') {
+                            return (
+                              <Text p={1} sx={{ listStyleType: 'lower-latin' }}>
+                                {domToReact(children)}
+                              </Text>
+                            );
+                          }
+                        },
+                      })}
+                    </Text>
+                  </Box>
+                </AnimateHeight>
+              </Card>
+            </Flex>
+            {portal(
+              <Overlay onClick={closePortal}>
+                <Flex
+                  // tslint:disable-next-line: jsx-no-lambda
+                  onClick={e => e.stopPropagation()}
+                  width="80%"
+                  sx={{
+                    borderRadius: '10px',
+                    maxWidth: '300px',
+                    border: '2px solid lightgrey',
+                  }}
+                  p={4}
+                  alignItems="center"
+                  justifyContent="center"
+                  flexDirection="column"
+                  bg="white"
+                >
+                  <Text fontWeight="bold">Nimi: {title} </Text>
+                  <Text mb={2}>Valitse seuraavista</Text>
+                  <Button
+                    onClick={editClick}
+                    variant="secondary"
+                    my={2}
+                    width="100%"
+                  >
+                    Muokkaa tapahtumaa
+                  </Button>
+                  <Flex alignItems="center" justifyContent="center">
+                    <Text mr={2} fontWeight="bold" fontSize={3} color="red">
+                      POISTA
+                    </Text>
+                    <Switch
+                      offColor={colors.lightRed}
+                      onColor={colors.red}
+                      offHandleColor={colors.white}
+                      onHandleColor={colors.white}
+                      // tslint:disable-next-line: jsx-no-lambda
+                      onChange={() => {
+                        setDisableDelete(!disableDelete);
+                      }}
+                      checked={!disableDelete}
+                    />
+                  </Flex>
+                  <Button
+                    onClick={deleteClick}
+                    variant="warn"
+                    disabled={disableDelete}
+                    my={2}
+                    width="100%"
+                  >
+                    Varmista poisto
+                  </Button>
+                </Flex>
+              </Overlay>
+            )}
+          </React.Fragment>
+        );
+      }}
+    </PortalWithState>
   );
 };
 
