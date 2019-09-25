@@ -16,6 +16,7 @@ import { DELETE_EVENT_MUTATION, EVENTS_QUERY, TOGGLE_JOIN_EVENT } from '../gql';
 import withUser, { IUserProps } from '../hoc/withUser';
 import { ID, IEventResp } from '../types';
 import { parseEvent } from '../util/general';
+import replace from 'ramda/es/replace';
 
 const findLoading = (id: ID, loadingEvents: ID[]): boolean => {
   const idx = findIndex(equals(id))(loadingEvents);
@@ -80,7 +81,12 @@ const EventsContainer: FunctionComponent<RouteComponentProps & IUserProps> = (
       </Flex>
     );
   }
-  const onViewEvent = (id: ID): void => history.push(`${ROUTES.events}/${id}`);
+
+  const onViewEvent = (id: ID): void => {
+    const url = replace(/:id/g, String(id), ROUTES.viewEvent);
+    history.push(url);
+  };
+
   const onDeleteEvent = async (eventID: ID) => {
     try {
       await deleteEventMutation({ variables: { id: eventID } });
@@ -89,6 +95,10 @@ const EventsContainer: FunctionComponent<RouteComponentProps & IUserProps> = (
       console.error(error);
     }
   };
+  const onEditEvent = (eventId: ID) => {
+    const url = replace(/:id/g, String(eventId), ROUTES.editEvent);
+    history.push(url);
+  }
 
   return (
     <Fragment>
@@ -106,6 +116,7 @@ const EventsContainer: FunctionComponent<RouteComponentProps & IUserProps> = (
             joinEvent={joinEvent}
             onViewClick={onViewEvent}
             onDeleteClick={onDeleteEvent}
+            onEditClick={onEditEvent}
           />
         );
       })}

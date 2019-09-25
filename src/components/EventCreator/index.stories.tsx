@@ -90,6 +90,7 @@ storiesOf('EventCreator/steps', module)
   ))
   .add('Create', () => (
     <CreateStep
+      isEdit={false}
       username="pertti"
       {...commonActions}
       eventState={eventState}

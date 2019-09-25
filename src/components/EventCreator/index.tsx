@@ -13,25 +13,26 @@ interface IProps {
   createEvent: (evt: IEventReq) => void;
   username: string;
   errorMessage?: string;
+  editState?: IEventState;
 }
 
 const MAX_STEP = 7;
 
 const EventCreator: FunctionComponent<IProps> = (props: IProps) => {
-  const { createEvent, username } = props;
+  const { createEvent, username, editState } = props;
   const [step, setStep] = useState<number>(0);
-  const [eventState, setEventState] = useState<IEventState>({
+  const isEdit = !!editState;
+
+  const initState = editState || {
     time: { hour: 12, minute: 0 },
     timeEnabled: false,
     creatorJoining: true,
-  });
+  };
+
+  const [eventState, setEventState] = useState<IEventState>(initState);
 
   const create = (): void => {
-    if (
-      !eventState.date ||
-      !eventState.type ||
-      !eventState.title
-    ) {
+    if (!eventState.date || !eventState.type || !eventState.title) {
       console.error(eventState);
       throw new Error('Unpossible state'); // TODO: fix
     }
@@ -74,7 +75,15 @@ const EventCreator: FunctionComponent<IProps> = (props: IProps) => {
         <StepCounter completed={step} total={MAX_STEP} />
       </Flex>
       <Flex>
-        {getStep(step, setStep, eventState, setEventState, create, username)}
+        {getStep(
+          step,
+          setStep,
+          eventState,
+          setEventState,
+          create,
+          username,
+          isEdit
+        )}
       </Flex>
     </Box>
   );

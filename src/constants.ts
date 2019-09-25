@@ -131,7 +131,7 @@ const GRAPHQL_TYPES = {
 const ROUTES = {
   createEvent: '/create-event',
   editEvent: `${EVENTS_PATH}/edit/:id`,
-  event: `${EVENTS_PATH}/:id`,
+  viewEvent: `${EVENTS_PATH}/:id`,
   events: EVENTS_PATH,
   forgotPassword: '/forgot-password',
   home: '/',

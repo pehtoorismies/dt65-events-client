@@ -1,29 +1,27 @@
+import 'react-toastify/dist/ReactToastify.css';
+
 import { ThemeProvider } from 'emotion-theming';
 import React, { Fragment } from 'react';
 import { ApolloProvider } from 'react-apollo';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { Box } from 'rebass';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-import EventsContainer from './containers/EventsContainer';
-import ProfileContainer from './containers/ProfileContainer';
-import CreateEventContainer from './containers/CreateEventContainer';
-import ViewEventContainer from './containers/ViewEventContainer';
-import HeaderMenuContainer from './containers/HeaderMenuContainer';
+import { Box } from 'rebass';
 
 import { ROUTES } from './constants';
+import CreateEventContainer from './containers/CreateEventContainer';
+import EditEventContainer from './containers/EditEventContainer';
+import EventsContainer from './containers/EventsContainer';
 import ForgotPasswordContainer from './containers/ForgotPasswordContainer';
+import HeaderMenuContainer from './containers/HeaderMenuContainer';
 import LoginContainer from './containers/LoginContainer';
+import ProfileContainer from './containers/ProfileContainer';
 import RegisterContainer from './containers/RegisterContainer';
 import RegisterSuccessContainer from './containers/RegisterSuccessContainer';
-import GlobalStyle from './GlobalStyle';
+import ViewEventContainer from './containers/ViewEventContainer';
 import Dt65Route from './Dt65Route';
-import apolloClient from './util/apolloClient';
-
+import GlobalStyle from './GlobalStyle';
 import { theme } from './theme';
-
-// console.log(process.env.NODE_ENV)
+import apolloClient from './util/apolloClient';
 
 const App = () => (
   <Fragment>
@@ -54,8 +52,14 @@ const App = () => (
             />
              <Dt65Route
               exact={true}
-              path={ROUTES.event}
+              path={ROUTES.viewEvent}
               component={ViewEventContainer}
+              privateRoute={true}
+            />
+            <Dt65Route
+              exact={true}
+              path={ROUTES.editEvent}
+              component={EditEventContainer}
               privateRoute={true}
             />
             <Dt65Route

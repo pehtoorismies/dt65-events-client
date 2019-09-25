@@ -1,10 +1,11 @@
+import { Field, Form, Formik, FormikProps } from 'formik';
 import React, { FunctionComponent } from 'react';
-import BaseStep from './BaseStep';
-import * as Yup from 'yup';
 import { Box, Flex, Text } from 'rebass';
-import { Formik, Field, FormikProps, Form } from 'formik';
-import { RightArrowButton, LeftArrowButton, EventInput } from '../../Common';
+import * as Yup from 'yup';
+
 import { IEventStep } from '../../../types';
+import { EventInput, LeftArrowButton, RightArrowButton } from '../../Common';
+import BaseStep from './BaseStep';
 
 interface IProps extends IEventStep {
   title?: string;
@@ -104,13 +105,15 @@ const TitleStep: FunctionComponent<IProps> = (props: IProps) => {
       </Flex>
     );
   };
+  const initialValues = { title: title || '', subtitle: subtitle || '' };
 
   return (
     <BaseStep title="Anna tapahtumalle nimi">
       <Flex justifyContent="center" alignSelf="center">
         <Formik
+          isInitialValid={validationSchema.isValidSync(initialValues)}
           validationSchema={validationSchema}
-          initialValues={{ title: title || '', subtitle: subtitle || '' }}
+          initialValues={initialValues}
           onSubmit={onSubmit}
           render={renderForm}
         />

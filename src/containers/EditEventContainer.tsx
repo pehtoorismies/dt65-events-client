@@ -1,15 +1,15 @@
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation, useQuery } from '@apollo/react-hooks';
 import compose from '@shopify/react-compose';
 import gql from 'graphql-tag';
+import path from 'ramda/es/path';
 import React, { FunctionComponent } from 'react';
-import { Redirect, RouteComponentProps } from 'react-router';
+import { RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 import EventCreator from '../components/EventCreator';
-import { ROUTES } from '../constants';
+import { EVENT_QUERY } from '../gql';
 import withUser, { IUserProps } from '../hoc/withUser';
-import { IEventReq } from '../types';
+import { toEventState } from '../util/general';
 
 const CREATE_EVENT = gql`
   mutation CreateEvent(
@@ -46,13 +46,24 @@ const CREATE_EVENT = gql`
   }
 `;
 
-const CreateEventContainer: FunctionComponent<RouteComponentProps & IUserProps> = (
-  props: RouteComponentProps & IUserProps
-) => {
+const EditEventContainer: FunctionComponent<
+  RouteComponentProps & IUserProps
+> = (props: RouteComponentProps & IUserProps) => {
   const {
     location,
+    match,
     user: { username },
   } = props;
+
+  const id = path(['params', 'id'], match);
+
+  const {
+    loading: loadingEvent,
+    error: errorEvent,
+    data: dataEvent,
+  } = useQuery(EVENT_QUERY, {
+    variables: { id },
+  });
 
   const [createEventQuery] = useMutation(CREATE_EVENT, {
     // update(cache, { data: { createEvent } }) {
@@ -67,35 +78,51 @@ const CreateEventContainer: FunctionComponent<RouteComponentProps & IUserProps> 
     // },
   });
 
-  const eventCreator = async (evt: IEventReq) => {
-    try {
-      await createEventQuery({
-        variables: {
-          ...evt,
-          date: evt.date.toISOString(),
-          addMe: evt.creatorJoining,
-        },
-      });
+  if (loadingEvent) {
+    return <h1>loading</h1>;
+  }
+  if (errorEvent) {
+    console.error(errorEvent);
+    return <h1>error</h1>;
+  }
 
-      toast(`Tapahtuma luotu`);
-      return (
-        <Redirect
-          to={{
-            pathname: ROUTES.home,
-            state: { from: location },
-          }}
-        />
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const eventState = toEventState(dataEvent.findEvent);
 
-  return <EventCreator createEvent={eventCreator} username={username} />;
+  // const eventCreator = async (evt: IEventReq) => {
+  //   try {
+  //     await createEventQuery({
+  //       variables: {
+  //         ...evt,
+  //         date: evt.date.toISOString(),
+  //         addMe: evt.creatorJoining,
+  //       },
+  //     });
+
+  //     toast(`Tapahtuma luotu`);
+  //     return (
+  //       <Redirect
+  //         to={{
+  //           pathname: ROUTES.home,
+  //           state: { from: location },
+  //         }}
+  //       />
+  //     );
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  return (
+    <EventCreator
+      createEvent={() => {}}
+      username={username}
+      editState={eventState}
+    />
+  );
 };
 
 export default compose(
   withUser,
   // @ts-ignore
   withRouter
-)(CreateEventContainer);
+)(EditEventContainer);

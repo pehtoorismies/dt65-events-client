@@ -60,6 +60,7 @@ export interface IEventState {
   timeEnabled: boolean;
   title?: string;
   type?: EventType;
+  participants?: IParticipant[];
 }
 
 export interface IEventStep {

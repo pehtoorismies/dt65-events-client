@@ -27,7 +27,8 @@ const getStep = (
   eventState: IEventState,
   setEventState: (eventState: IEventState) => void,
   create: () => void,
-  username: string
+  username: string,
+  isEdit: boolean,
 ) => {
   const setType = (eventType: EventType) => {
     if (!eventState.type) {
@@ -149,6 +150,7 @@ const getStep = (
         eventState={eventState}
         toNextStep={create}
         toPrevStep={toPrev(STEPS.PREVIEW)}
+        isEdit={isEdit}
       />
     );
   }

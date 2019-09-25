@@ -12,6 +12,7 @@ import { DELETE_EVENT_MUTATION, EVENT_QUERY, TOGGLE_JOIN_EVENT } from '../gql';
 import withUser, { IUserProps } from '../hoc/withUser';
 import { ID } from '../types';
 import { parseEvent } from '../util/general';
+import replace from 'ramda/es/replace';
 
 const ViewEventContainer: FunctionComponent<
   RouteComponentProps & IUserProps
@@ -46,6 +47,11 @@ const ViewEventContainer: FunctionComponent<
       console.error(error);
     }
   };
+  const editEvent = (eventId: ID) => {
+    const url = replace(/:id/g, String(eventId), ROUTES.editEvent);
+    history.push(url);
+  }
+
   const {
     loading: loadingEvent,
     error: errorEvent,
@@ -73,6 +79,7 @@ const ViewEventContainer: FunctionComponent<
       joinEvent={joinEvent}
       isJoining={loadingJoin}
       onDeleteClick={deleteEvent}
+      onEditClick={editEvent}
     />
   );
 };
