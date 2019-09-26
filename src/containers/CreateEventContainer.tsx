@@ -50,6 +50,7 @@ const CreateEventContainer: FunctionComponent<
   RouteComponentProps & IUserProps
 > = (props: RouteComponentProps & IUserProps) => {
   const {
+    history,
     location,
     user: { username },
   } = props;
@@ -66,6 +67,8 @@ const CreateEventContainer: FunctionComponent<
     //   // });
     // },
   });
+
+  const onCancel = () => history.push(ROUTES.home);
 
   const applyEvent = async (evt: IEventReq) => {
     try {
@@ -90,7 +93,13 @@ const CreateEventContainer: FunctionComponent<
     }
   };
 
-  return <EventWizard applyEvent={applyEvent} username={username} />;
+  return (
+    <EventWizard
+      applyEvent={applyEvent}
+      username={username}
+      onCancel={onCancel}
+    />
+  );
 };
 
 export default compose(

@@ -11,6 +11,7 @@ import imgSwimming from './images/events-swimming.jpg';
 import imgTrackRunning from './images/events-track-running.jpg';
 import imgTriathlon from './images/events-triathlon.jpg';
 import imgUltras from './images/events-ultras.jpg';
+import { from } from 'zen-observable';
 
 const FI_LOCAL = {
   months: [
@@ -128,6 +129,18 @@ const GRAPHQL_TYPES = {
   LOCAL_USER: 'LocalUser',
 };
 
+const QUERY_PARAMS = {
+  KEYS: {
+    FROM: 'from',
+  },
+  VALUES: {
+    FROM: {
+      HOME: 'home',
+      VIEW: 'view',
+    },
+  },
+};
+
 const ROUTES = {
   createEvent: '/create-event',
   editEvent: `${EVENTS_PATH}/edit/:id`,
@@ -144,4 +157,4 @@ const ROUTES = {
   registerSuccess: '/registerSuccess',
 };
 
-export { FI_LOCAL, EVENT_TYPES, WEEK_DAYS, ROUTES, GRAPHQL_TYPES };
+export { FI_LOCAL, EVENT_TYPES, WEEK_DAYS, ROUTES, GRAPHQL_TYPES, QUERY_PARAMS };

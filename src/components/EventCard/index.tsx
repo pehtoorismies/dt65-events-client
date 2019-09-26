@@ -15,7 +15,7 @@ import { Medal } from 'styled-icons/fa-solid/Medal';
 
 import { ID, IEvent, IParticipant } from '../../types';
 import { isParticipating } from '../../util/general';
-import { Button } from '../Common';
+import { Button, PortalOverlay } from '../Common';
 import HeadCountButton from '../HeadCountButton';
 import { colors } from '../../theme';
 
@@ -99,23 +99,6 @@ const Pill = (props: any) => (
   />
 );
 
-const Overlay = (props: any) => (
-  <Flex
-    {...props}
-    bg="moreTransparentBlack"
-    height="100vh"
-    width="100vw"
-    alignItems="center"
-    justifyContent="center"
-    sx={{
-      position: 'fixed',
-      zIndex: 4,
-      top: 0,
-      left: 0,
-      backgroundImage: 'radial-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.8))',
-    }}
-  />
-);
 
 const renderPill = (username: string) => (participant: IParticipant) => {
   const { username: usr, id } = participant;
@@ -186,7 +169,7 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
 
   return (
     <PortalWithState closeOnEsc={true}>
-      {({ openPortal, closePortal, isOpen, portal }) => {
+      {({ openPortal, closePortal, portal }) => {
         const editClick = () => {
           if (onEditClick) {
             onEditClick(id);
@@ -395,7 +378,7 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
               </Card>
             </Flex>
             {portal(
-              <Overlay onClick={closePortal}>
+              <PortalOverlay onClick={closePortal}>
                 <Flex
                   // tslint:disable-next-line: jsx-no-lambda
                   onClick={e => e.stopPropagation()}
@@ -447,7 +430,7 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
                     Varmista poisto
                   </Button>
                 </Flex>
-              </Overlay>
+              </PortalOverlay>
             )}
           </React.Fragment>
         );

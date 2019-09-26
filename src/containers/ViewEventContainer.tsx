@@ -7,11 +7,11 @@ import { withRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import EventCard from '../components/EventCard';
-import { ROUTES } from '../constants';
+import { ROUTES, QUERY_PARAMS } from '../constants';
 import { DELETE_EVENT_MUTATION, EVENT_QUERY, TOGGLE_JOIN_EVENT } from '../gql';
 import withUser, { IUserProps } from '../hoc/withUser';
 import { ID } from '../types';
-import { parseEvent } from '../util/general';
+import { parseEvent, queryParamsFrom } from '../util/general';
 import replace from 'ramda/es/replace';
 
 const ViewEventContainer: FunctionComponent<
@@ -49,8 +49,8 @@ const ViewEventContainer: FunctionComponent<
   };
   const editEvent = (eventId: ID) => {
     const url = replace(/:id/g, String(eventId), ROUTES.editEvent);
-    history.push(url);
-  }
+    history.push(`${url}?${queryParamsFrom(QUERY_PARAMS.VALUES.FROM.VIEW)}`);
+  };
 
   const {
     loading: loadingEvent,

@@ -1,19 +1,24 @@
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 import React from 'react';
+
 import EventWizard from '.';
-import StepType from './steps/TypeStep';
-import RaceStep from './steps/RaceStep';
-import TitleStep from './steps/TitleStep';
-import DateStep from './steps/DateStep';
-import TimeStep from './steps/TimeStep';
-import CreateStep from './steps/CreateStep';
-import DescriptionStep from './steps/DescriptionStep';
 import { EVENT_TYPES } from '../../constants';
 import { IEventState } from '../../types';
+import CreateStep from './steps/CreateStep';
+import DateStep from './steps/DateStep';
+import DescriptionStep from './steps/DescriptionStep';
+import RaceStep from './steps/RaceStep';
+import TimeStep from './steps/TimeStep';
+import TitleStep from './steps/TitleStep';
+import StepType from './steps/TypeStep';
 
 storiesOf('EventWizard', module).add('Wizard', () => (
-  <EventWizard applyEvent={action('Create')} username="koira" />
+  <EventWizard
+    applyEvent={action('Create')}
+    username="koira"
+    onCancel={action('Cancel')}
+  />
 ));
 
 const commonActions = {

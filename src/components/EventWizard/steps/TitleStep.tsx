@@ -28,8 +28,18 @@ const validationSchema = Yup.object().shape({
     .max(30, 'Enintään 25 kirjainta')
     .required('Anna tapahtuman nimi'),
   subtitle: Yup.string()
-    .min(3, 'Vähintään 3 kirjainta')
-    .max(30, 'Enintään 25 kirjainta'),
+    .test('min', 'Vähintään 3 kirjainta', (value: string) => {
+      if (!value) {
+        return true;
+      }
+      return value.length > 2;
+    })
+    .test('max', 'Enintään 25 kirjainta', (value: string) => {
+      if (!value) {
+        return true;
+      }
+      return value.length <= 25;
+    }),
 });
 
 const TitleStep: FunctionComponent<IProps> = (props: IProps) => {

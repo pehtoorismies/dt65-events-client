@@ -12,7 +12,7 @@ import { ROUTES } from '../constants';
 import { EVENT_QUERY } from '../gql';
 import withUser, { IUserProps } from '../hoc/withUser';
 import { IEventReq } from '../types';
-import { toEventState } from '../util/general';
+import { toEventState, fromUrlFromQueryString } from '../util/general';
 
 const UPDATE_EVENT = gql`
   mutation UpdateEvent(
@@ -48,10 +48,14 @@ const EditEventContainer: FunctionComponent<
   const {
     history,
     match,
+    location: { search },
     user: { username },
   } = props;
 
   const id = path(['params', 'id'], match);
+
+  const onCancel = () =>
+    history.push(fromUrlFromQueryString(search, String(id)));
 
   const {
     loading: loadingEvent,
@@ -94,6 +98,7 @@ const EditEventContainer: FunctionComponent<
       applyEvent={applyEvent}
       username={username}
       editState={eventState}
+      onCancel={onCancel}
     />
   );
 };

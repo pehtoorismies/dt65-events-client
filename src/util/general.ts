@@ -1,6 +1,7 @@
 import format from 'date-fns/format';
 import { fi } from 'date-fns/locale';
 import parseISO from 'date-fns/parseISO';
+import qs from 'qs';
 import { isNull, isUndefined } from 'ramda-adjunct';
 import find from 'ramda/es/find';
 import findIndex from 'ramda/es/findIndex';
@@ -8,7 +9,7 @@ import match from 'ramda/es/match';
 import path from 'ramda/es/path';
 import propEq from 'ramda/es/propEq';
 
-import { EVENT_TYPES } from '../constants';
+import { EVENT_TYPES, QUERY_PARAMS, ROUTES } from '../constants';
 import {
   EventType,
   IEvent,
@@ -18,6 +19,8 @@ import {
   IParticipant,
   ITime,
 } from '../types';
+import prop from 'ramda/es/prop';
+import replace from 'ramda/es/replace';
 
 export const isNullOrUndefined = (a: any) => isNull(a) || isUndefined(a);
 
@@ -103,4 +106,22 @@ export const toEventState = (evt: IEventResp): IEventState => {
     title: evt.title,
     type: fromApiType(evt.type, EVENT_TYPES).id,
   };
+};
+
+export const queryParamsFrom = (fromValue: string): string =>
+  `${QUERY_PARAMS.KEYS.FROM}=${fromValue}`;
+
+export const fromUrlFromQueryString = (
+  queryString: string,
+  eventId?: string
+): string => {
+  const params = qs.parse(queryString, { ignoreQueryPrefix: true });
+  const val = prop(QUERY_PARAMS.KEYS.FROM, params);
+  if (val === QUERY_PARAMS.VALUES.FROM.HOME) {
+    return ROUTES.home;
+  }
+  if (val === QUERY_PARAMS.VALUES.FROM.VIEW) {
+    return replace(/:id/g, String(eventId), ROUTES.viewEvent);
+  }
+  return ROUTES.home;
 };

@@ -11,11 +11,11 @@ import { toast } from 'react-toastify';
 import { Button, Flex, Text } from 'rebass';
 
 import EventCard from '../components/EventCard';
-import { ROUTES } from '../constants';
+import { ROUTES, QUERY_PARAMS } from '../constants';
 import { DELETE_EVENT_MUTATION, EVENTS_QUERY, TOGGLE_JOIN_EVENT } from '../gql';
 import withUser, { IUserProps } from '../hoc/withUser';
 import { ID, IEventResp } from '../types';
-import { parseEvent } from '../util/general';
+import { parseEvent, queryParamsFrom } from '../util/general';
 import replace from 'ramda/es/replace';
 
 const findLoading = (id: ID, loadingEvents: ID[]): boolean => {
@@ -97,8 +97,8 @@ const EventsContainer: FunctionComponent<RouteComponentProps & IUserProps> = (
   };
   const onEditEvent = (eventId: ID) => {
     const url = replace(/:id/g, String(eventId), ROUTES.editEvent);
-    history.push(url);
-  }
+    history.push(`${url}?${queryParamsFrom(QUERY_PARAMS.VALUES.FROM.HOME)}`);
+  };
 
   return (
     <Fragment>

@@ -87,6 +87,11 @@ const theme: any = {
   breakpoints: ['40em', '52em', '64em'],
 
   buttons: {
+    empty: {
+      color: pink,
+      backgroundColor: 'transparent',
+      p: 1,
+    },
     outline: {
       backgroundColor: 'transparent',
       boxShadow: 'inset 0 0 0 2px',
@@ -111,6 +116,14 @@ const theme: any = {
       },
     },
     primary: primaryButton,
+    mini: {
+      ...primaryButton,
+      backgroundColor: 'transparent',
+
+      color: pink,
+      py: 1,
+      fontSize: '12px',
+    },
     secondary: {
       ...primaryButton,
       backgroundColor: blue,

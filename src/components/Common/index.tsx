@@ -1,6 +1,7 @@
 // @ts-ignore
 import * as React from 'react';
 import { Text } from 'rebass';
+
 import ArrowButton from './ArrowButton';
 import BasicInput from './BasicInput';
 import BigInput from './BigInput';
@@ -8,6 +9,7 @@ import Button from './Button';
 import Checkbox from './Checkbox';
 import EventInput from './EventInput';
 import LeftArrowButton from './LeftArrowButton';
+import PortalOverlay from './PortalOverlay';
 import RightArrowButton from './RightArrowButton';
 
 const ErrorText = (props: any) => (
@@ -43,7 +45,8 @@ export {
   Checkbox,
   ErrorText,
   EventInput,
-  TextLink,
   LeftArrowButton,
+  PortalOverlay,
   RightArrowButton,
+  TextLink,
 };
