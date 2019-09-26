@@ -117,6 +117,7 @@ export const fromUrlFromQueryString = (
 ): string => {
   const params = qs.parse(queryString, { ignoreQueryPrefix: true });
   const val = prop(QUERY_PARAMS.KEYS.FROM, params);
+
   if (val === QUERY_PARAMS.VALUES.FROM.HOME) {
     return ROUTES.home;
   }

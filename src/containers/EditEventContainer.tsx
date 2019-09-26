@@ -53,9 +53,10 @@ const EditEventContainer: FunctionComponent<
   } = props;
 
   const id = path(['params', 'id'], match);
-
-  const onCancel = () =>
-    history.push(fromUrlFromQueryString(search, String(id)));
+  const redirectTo = fromUrlFromQueryString(search, String(id));
+  const onCancel = () => {
+    history.push(redirectTo);
+  };
 
   const {
     loading: loadingEvent,
@@ -87,7 +88,7 @@ const EditEventContainer: FunctionComponent<
       });
 
       toast(`Tapahtuma päivitetty`);
-      history.push(ROUTES.home);
+      history.push(redirectTo);
     } catch (error) {
       console.error(error);
     }
