@@ -78,7 +78,7 @@ export interface IEventBase {
 }
 
 export interface IEventReq extends IEventBase {
-  date: Date;
+  date: string;
   type: string;
   creatorJoining: boolean;
 }

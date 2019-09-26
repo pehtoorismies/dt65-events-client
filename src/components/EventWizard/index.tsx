@@ -1,16 +1,16 @@
+import { withTheme } from 'emotion-theming';
+import mergeRight from 'ramda/es/mergeRight';
 import React, { FunctionComponent, useState } from 'react';
 import { Box, Flex, Text } from 'rebass';
-import { withTheme } from 'emotion-theming';
-import pick from 'ramda/es/pick';
-import mergeRight from 'ramda/es/mergeRight';
-import StepCounter from '../StepCounter';
-import { IEventState, IEventReq } from '../../types';
-import getStep from './stepGetter';
-import { timeToString, toApiType } from '../../util/general';
+
 import { EVENT_TYPES } from '../../constants';
+import { IEventReq, IEventState } from '../../types';
+import { timeToString, toApiType } from '../../util/general';
+import StepCounter from '../StepCounter';
+import getStep from './stepGetter';
 
 interface IProps {
-  createEvent: (evt: IEventReq) => void;
+  applyEvent: (evt: IEventReq) => void;
   username: string;
   errorMessage?: string;
   editState?: IEventState;
@@ -18,8 +18,9 @@ interface IProps {
 
 const MAX_STEP = 7;
 
-const EventCreator: FunctionComponent<IProps> = (props: IProps) => {
-  const { createEvent, username, editState } = props;
+const EventWizard: FunctionComponent<IProps> = (props: IProps) => {
+  const { applyEvent, username, editState } = props;
+  
   const [step, setStep] = useState<number>(0);
   const isEdit = !!editState;
 
@@ -36,7 +37,7 @@ const EventCreator: FunctionComponent<IProps> = (props: IProps) => {
       console.error(eventState);
       throw new Error('Unpossible state'); // TODO: fix
     }
-    const date = eventState.date;
+    const date = eventState.date.toISOString();
     const time = eventState.timeEnabled
       ? timeToString(eventState.time)
       : undefined;
@@ -63,7 +64,7 @@ const EventCreator: FunctionComponent<IProps> = (props: IProps) => {
 
     const evt: IEventReq = mergeRight(mandatory, optional);
 
-    createEvent(evt);
+    applyEvent(evt);
   };
 
   return (
@@ -89,4 +90,4 @@ const EventCreator: FunctionComponent<IProps> = (props: IProps) => {
   );
 };
 
-export default withTheme(EventCreator);
+export default withTheme(EventWizard);

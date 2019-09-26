@@ -6,7 +6,7 @@ import { Redirect, RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import EventCreator from '../components/EventCreator';
+import EventWizard from '../components/EventWizard';
 import { ROUTES } from '../constants';
 import withUser, { IUserProps } from '../hoc/withUser';
 import { IEventReq } from '../types';
@@ -46,9 +46,9 @@ const CREATE_EVENT = gql`
   }
 `;
 
-const CreateEventContainer: FunctionComponent<RouteComponentProps & IUserProps> = (
-  props: RouteComponentProps & IUserProps
-) => {
+const CreateEventContainer: FunctionComponent<
+  RouteComponentProps & IUserProps
+> = (props: RouteComponentProps & IUserProps) => {
   const {
     location,
     user: { username },
@@ -67,12 +67,11 @@ const CreateEventContainer: FunctionComponent<RouteComponentProps & IUserProps> 
     // },
   });
 
-  const eventCreator = async (evt: IEventReq) => {
+  const applyEvent = async (evt: IEventReq) => {
     try {
       await createEventQuery({
         variables: {
           ...evt,
-          date: evt.date.toISOString(),
           addMe: evt.creatorJoining,
         },
       });
@@ -91,7 +90,7 @@ const CreateEventContainer: FunctionComponent<RouteComponentProps & IUserProps> 
     }
   };
 
-  return <EventCreator createEvent={eventCreator} username={username} />;
+  return <EventWizard applyEvent={applyEvent} username={username} />;
 };
 
 export default compose(

@@ -91,7 +91,6 @@ export const parseEvent = (evt: IEventResp): IEvent => {
 };
 
 export const toEventState = (evt: IEventResp): IEventState => {
-  
   return {
     date: parseISO(evt.date),
     description: evt.description,
@@ -102,6 +101,6 @@ export const toEventState = (evt: IEventResp): IEventState => {
     time: stringToTime(evt.time),
     timeEnabled: !!evt.time,
     title: evt.title,
-    type: EVENT_TYPES[0].id,
+    type: fromApiType(evt.type, EVENT_TYPES).id,
   };
 };

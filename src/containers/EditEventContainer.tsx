@@ -5,15 +5,18 @@ import path from 'ramda/es/path';
 import React, { FunctionComponent } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-import EventCreator from '../components/EventCreator';
+import EventWizard from '../components/EventWizard';
+import { ROUTES } from '../constants';
 import { EVENT_QUERY } from '../gql';
 import withUser, { IUserProps } from '../hoc/withUser';
+import { IEventReq } from '../types';
 import { toEventState } from '../util/general';
 
-const CREATE_EVENT = gql`
-  mutation CreateEvent(
-    $addMe: Boolean!
+const UPDATE_EVENT = gql`
+  mutation UpdateEvent(
+    $id: ID!
     $date: String!
     $description: String
     $race: Boolean!
@@ -22,8 +25,8 @@ const CREATE_EVENT = gql`
     $title: String!
     $type: String!
   ) {
-    createEvent(
-      addMe: $addMe
+    updateEvent(
+      id: $id
       event: {
         date: $date
         description: $description
@@ -35,13 +38,6 @@ const CREATE_EVENT = gql`
       }
     ) {
       id
-      type
-      participants {
-        username
-      }
-      creator {
-        username
-      }
     }
   }
 `;
@@ -50,7 +46,7 @@ const EditEventContainer: FunctionComponent<
   RouteComponentProps & IUserProps
 > = (props: RouteComponentProps & IUserProps) => {
   const {
-    location,
+    history,
     match,
     user: { username },
   } = props;
@@ -65,18 +61,7 @@ const EditEventContainer: FunctionComponent<
     variables: { id },
   });
 
-  const [createEventQuery] = useMutation(CREATE_EVENT, {
-    // update(cache, { data: { createEvent } }) {
-    //   const resp: any = cache.readQuery({ query: EVENTS_QUERY });
-    //   console.log('update');
-    //   console.log(resp);
-    //   // const { findManyEvents } = resp;
-    //   // cache.writeQuery({
-    //   //   query: EVENTS_QUERY,
-    //   //   data: { findManyEvents: findManyEvents.concat([createEvent]) },
-    //   // });
-    // },
-  });
+  const [updateEventQuery] = useMutation(UPDATE_EVENT);
 
   if (loadingEvent) {
     return <h1>loading</h1>;
@@ -88,33 +73,25 @@ const EditEventContainer: FunctionComponent<
 
   const eventState = toEventState(dataEvent.findEvent);
 
-  // const eventCreator = async (evt: IEventReq) => {
-  //   try {
-  //     await createEventQuery({
-  //       variables: {
-  //         ...evt,
-  //         date: evt.date.toISOString(),
-  //         addMe: evt.creatorJoining,
-  //       },
-  //     });
+  const applyEvent = async (evt: IEventReq) => {
+    try {
+      await updateEventQuery({
+        variables: {
+          ...evt,
+          id,
+        },
+      });
 
-  //     toast(`Tapahtuma luotu`);
-  //     return (
-  //       <Redirect
-  //         to={{
-  //           pathname: ROUTES.home,
-  //           state: { from: location },
-  //         }}
-  //       />
-  //     );
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+      toast(`Tapahtuma päivitetty`);
+      history.push(ROUTES.home);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
-    <EventCreator
-      createEvent={() => {}}
+    <EventWizard
+      applyEvent={applyEvent}
       username={username}
       editState={eventState}
     />
