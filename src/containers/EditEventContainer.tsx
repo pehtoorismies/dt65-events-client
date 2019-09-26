@@ -8,39 +8,12 @@ import { withRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import EventWizard from '../components/EventWizard';
-import { ROUTES } from '../constants';
-import { EVENT_QUERY } from '../gql';
+import { EVENT_QUERY, UPDATE_EVENT } from '../gql';
 import withUser, { IUserProps } from '../hoc/withUser';
 import { IEventReq } from '../types';
 import { toEventState, fromUrlFromQueryString } from '../util/general';
 
-const UPDATE_EVENT = gql`
-  mutation UpdateEvent(
-    $id: ID!
-    $date: String!
-    $description: String
-    $race: Boolean!
-    $time: String
-    $subtitle: String
-    $title: String!
-    $type: String!
-  ) {
-    updateEvent(
-      id: $id
-      event: {
-        date: $date
-        description: $description
-        race: $race
-        subtitle: $subtitle
-        time: $time
-        title: $title
-        type: $type
-      }
-    ) {
-      id
-    }
-  }
-`;
+
 
 const EditEventContainer: FunctionComponent<
   RouteComponentProps & IUserProps

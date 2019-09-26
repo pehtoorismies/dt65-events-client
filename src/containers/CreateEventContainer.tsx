@@ -1,57 +1,21 @@
 import { useMutation } from '@apollo/react-hooks';
 import compose from '@shopify/react-compose';
-import gql from 'graphql-tag';
 import React, { FunctionComponent } from 'react';
-import { Redirect, RouteComponentProps } from 'react-router';
+import { RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import EventWizard from '../components/EventWizard';
 import { ROUTES } from '../constants';
+import { CREATE_EVENT } from '../gql';
 import withUser, { IUserProps } from '../hoc/withUser';
 import { IEventReq } from '../types';
-
-const CREATE_EVENT = gql`
-  mutation CreateEvent(
-    $addMe: Boolean!
-    $date: String!
-    $description: String
-    $race: Boolean!
-    $time: String
-    $subtitle: String
-    $title: String!
-    $type: String!
-  ) {
-    createEvent(
-      addMe: $addMe
-      event: {
-        date: $date
-        description: $description
-        race: $race
-        subtitle: $subtitle
-        time: $time
-        title: $title
-        type: $type
-      }
-    ) {
-      id
-      type
-      participants {
-        username
-      }
-      creator {
-        username
-      }
-    }
-  }
-`;
 
 const CreateEventContainer: FunctionComponent<
   RouteComponentProps & IUserProps
 > = (props: RouteComponentProps & IUserProps) => {
   const {
     history,
-    location,
     user: { username },
   } = props;
 
@@ -80,14 +44,7 @@ const CreateEventContainer: FunctionComponent<
       });
 
       toast(`Tapahtuma luotu`);
-      return (
-        <Redirect
-          to={{
-            pathname: ROUTES.home,
-            state: { from: location },
-          }}
-        />
-      );
+      history.push(ROUTES.home);
     } catch (error) {
       console.error(error);
     }
