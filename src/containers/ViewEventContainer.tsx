@@ -60,9 +60,6 @@ const ViewEventContainer: FunctionComponent<
     variables: { id },
   });
 
-
-  throw new Error('aadsasd');
-
   if (loadingEvent) {
     return <h1>loading</h1>;
   }

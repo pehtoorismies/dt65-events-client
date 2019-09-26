@@ -1,6 +1,6 @@
 import React, { FunctionComponent, ReactNode } from 'react';
 import { FallbackProps } from 'react-error-boundary';
-import { Flex, Text, Image } from 'rebass';
+import { Flex, Text } from 'rebass';
 import { Button } from '../Common';
 
 interface IProps extends FallbackProps {
