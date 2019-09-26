@@ -30,7 +30,7 @@ const ViewEventContainer: FunctionComponent<
   const [deleteEventMutation, { loading: loadingDelete }] = useMutation(
     DELETE_EVENT_MUTATION
   );
-
+  
   const joinEvent = async (eventId: ID) => {
     try {
       await toggleJoinEventMutation({ variables: { id: eventId } });
@@ -59,6 +59,9 @@ const ViewEventContainer: FunctionComponent<
   } = useQuery(EVENT_QUERY, {
     variables: { id },
   });
+
+
+  throw new Error('aadsasd');
 
   if (loadingEvent) {
     return <h1>loading</h1>;

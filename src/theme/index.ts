@@ -192,7 +192,7 @@ const theme: any = {
   fonts: {
     body: 'system-ui, sans-serif',
     heading: 'Titillium Web',
-    monospace: `'Anonymous Pro', monospace`,
+    monospace: `'Share Tech Mono', monospace`,
   },
   forms: {
     primary: primaryForm,

@@ -78,14 +78,21 @@ const EyeBtn = styled(Eye)`
   margin-right: 5px;
 `;
 
-const DownArrow = styled(CaretDownCircle)`
-  ${common};
+interface IArrowProps {
+  pointDown: boolean;
+}
 
-  margin-right: 5px;
+const DownArrow = styled(CaretDownCircle)<IArrowProps>`
+  ${common};
+  margin-left: 3px;
+  margin-right: 10px;
+  transform: rotate( ${(props: IArrowProps) => props.pointDown ? '0' : '180deg'});            
+  transition: transform ${ANIM_TIME}ms ease;
 `;
 
 const UpArrow = styled(CaretUpCircle)`
   ${common};
+  margin-left: 3px;
   margin-right: 5px;
 `;
 
@@ -98,7 +105,6 @@ const Pill = (props: any) => (
     }}
   />
 );
-
 
 const renderPill = (username: string) => (participant: IParticipant) => {
   const { username: usr, id } = participant;
@@ -160,11 +166,11 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
 
   const [showDetails, setShowDetails] = useState(stayOpened);
   const [disableDelete, setDisableDelete] = useState(true);
-  const ExposeArrow = showDetails ? UpArrow : DownArrow;
+  // const ExposeArrow = showDetails ? UpArrow : DownArrow;
 
   const eyeButton = onViewClick ? <EyeBtn onClick={viewClick} /> : null;
   const toggleOpenButton = !stayOpened ? (
-    <ExposeArrow onClick={exposeDetails} />
+    <DownArrow pointDown={!showDetails} onClick={exposeDetails} />
   ) : null;
 
   return (
@@ -210,8 +216,8 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
                     }}
                   >
                     <Flex ml={2}>
-                      {eyeButton}
                       {toggleOpenButton}
+                      {eyeButton}
                     </Flex>
                     <EditBtn onClick={openPortal} />
                   </Flex>
