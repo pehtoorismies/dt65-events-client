@@ -58,8 +58,6 @@ const NumberDisplay = (props: any) => (
   />
 );
 
-const zeroPad = (time: number): string => (time < 10 ? `0${time}` : `${time}`);
-
 const TimeSet: FunctionComponent<IProps> = (props: IProps) => {
   const { time = { minute: 0, hour: 0 }, setTime, disabled } = props;
 

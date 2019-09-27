@@ -18,13 +18,14 @@ const Dt65Route = (props: IPrivateRouteProps) => {
     <Route
       {...rest}
       // tslint:disable-next-line: jsx-no-lambda
-      render={(props: any) => {
+      render={(innerProps: any) => {
+        // TODO: fix this
         const { valid, errorMessage } = isAuthenticated();
 
         if (!privateRoute) {
           return (
             <Fragment>
-              <Component {...props} />
+              <Component {...innerProps} />
             </Fragment>
           );
         }
@@ -33,11 +34,14 @@ const Dt65Route = (props: IPrivateRouteProps) => {
           return (
             <Fragment>
               <FooterMenuContainer />
-              <Component {...props} />
+              <Component {...innerProps} />
             </Fragment>
           );
         }
 
+        if (errorMessage) {
+          console.error(errorMessage);
+        }
         logout();
 
         return (

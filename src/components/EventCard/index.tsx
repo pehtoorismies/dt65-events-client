@@ -9,11 +9,10 @@ import Switch from 'react-switch';
 import { Box, Card, Flex, Heading, Text } from 'rebass';
 import { Edit } from 'styled-icons/boxicons-regular/Edit';
 import { CaretDownCircle } from 'styled-icons/boxicons-solid/CaretDownCircle';
-import { CaretUpCircle } from 'styled-icons/boxicons-solid/CaretUpCircle';
 import { Eye } from 'styled-icons/fa-solid/Eye';
 import { Medal } from 'styled-icons/fa-solid/Medal';
 
-import { ID, IEvent, IParticipant } from '../../types';
+import { ID, IEvent, ISimpleUser } from '../../types';
 import { isParticipating } from '../../util/general';
 import { Button, PortalOverlay } from '../Common';
 import HeadCountButton from '../HeadCountButton';
@@ -90,12 +89,6 @@ const DownArrow = styled(CaretDownCircle)<IArrowProps>`
   transition: transform ${ANIM_TIME}ms ease;
 `;
 
-const UpArrow = styled(CaretUpCircle)`
-  ${common};
-  margin-left: 3px;
-  margin-right: 5px;
-`;
-
 const Pill = (props: any) => (
   <Flex
     {...props}
@@ -106,7 +99,7 @@ const Pill = (props: any) => (
   />
 );
 
-const renderPill = (username: string) => (participant: IParticipant) => {
+const renderPill = (username: string) => (participant: ISimpleUser) => {
   const { username: usr, id } = participant;
   const color = username === usr ? 'pink' : 'blue';
 

@@ -2,8 +2,8 @@ import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import React, { FunctionComponent } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
-import { Box, Button, Text } from 'rebass';
 
+import { Button } from '../components/Common';
 import InfoMessage from '../components/InfoMessage';
 import { ROUTES } from '../constants';
 
@@ -12,19 +12,6 @@ const GET_REGISTER_EMAIL = gql`
     registerEmail @client
   }
 `;
-
-const renderError = (errorMessage?: string) => {
-  if (!errorMessage) {
-    return null;
-  }
-  return (
-    <Box p={2} my={1} width="100%" alignSelf="center">
-      <Text textAlign="center" color="red">
-        {errorMessage}
-      </Text>
-    </Box>
-  );
-};
 
 const RegisterSuccessContainer: FunctionComponent<RouteComponentProps> = (
   props: RouteComponentProps

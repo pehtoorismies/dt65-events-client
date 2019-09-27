@@ -10,11 +10,6 @@ import { ROUTES } from '../constants';
 import withUser, { IUserProps } from '../hoc/withUser';
 import { logout } from '../util/auth';
 
-
-interface IProps {
-  id: number;
-}
-
 const ProfileContainer: FunctionComponent<
   WithApolloClient<RouteComponentProps & IUserProps>
 > = (props: WithApolloClient<RouteComponentProps & IUserProps>) => {
@@ -24,9 +19,9 @@ const ProfileContainer: FunctionComponent<
     user: { username },
   } = props;
 
-  const go = (route: string) => () => {
-    history.push(route);
-  };
+  // const go = (route: string) => () => {
+  //   history.push(route);
+  // };
 
   const buttons = [
     {

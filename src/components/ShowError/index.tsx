@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { FunctionComponent } from 'react';
 import { FallbackProps } from 'react-error-boundary';
 import { Flex, Text } from 'rebass';
 import { Button } from '../Common';

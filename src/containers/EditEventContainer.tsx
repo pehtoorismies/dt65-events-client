@@ -1,6 +1,5 @@
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import compose from '@shopify/react-compose';
-import gql from 'graphql-tag';
 import path from 'ramda/es/path';
 import React, { FunctionComponent } from 'react';
 import { RouteComponentProps } from 'react-router';
@@ -12,8 +11,6 @@ import { EVENT_QUERY, UPDATE_EVENT } from '../gql';
 import withUser, { IUserProps } from '../hoc/withUser';
 import { IEventReq } from '../types';
 import { toEventState, fromUrlFromQueryString } from '../util/general';
-
-
 
 const EditEventContainer: FunctionComponent<
   RouteComponentProps & IUserProps
@@ -39,7 +36,12 @@ const EditEventContainer: FunctionComponent<
     variables: { id },
   });
 
-  const [updateEventQuery] = useMutation(UPDATE_EVENT);
+  const [updateEventQuery] = useMutation(UPDATE_EVENT, {
+    onCompleted: () => {
+      history.push(redirectTo);
+      toast(`Tapahtuma päivitetty`);
+    },
+  });
 
   if (loadingEvent) {
     return <h1>loading</h1>;
@@ -59,9 +61,6 @@ const EditEventContainer: FunctionComponent<
           id,
         },
       });
-
-      toast(`Tapahtuma päivitetty`);
-      history.push(redirectTo);
     } catch (error) {
       console.error(error);
     }

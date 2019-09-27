@@ -11,7 +11,6 @@ import imgSwimming from './images/events-swimming.jpg';
 import imgTrackRunning from './images/events-track-running.jpg';
 import imgTriathlon from './images/events-triathlon.jpg';
 import imgUltras from './images/events-ultras.jpg';
-import { from } from 'zen-observable';
 
 const FI_LOCAL = {
   months: [

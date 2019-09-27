@@ -41,9 +41,10 @@ export interface IAuthFormProps {
   children?: ReactNode;
 }
 
-export interface IParticipant {
+export interface ISimpleUser {
   username: string;
   id: string | number;
+  __typename?: string;
 }
 
 export interface ITime {
@@ -60,7 +61,7 @@ export interface IEventState {
   timeEnabled: boolean;
   title?: string;
   type?: EventType;
-  participants?: IParticipant[];
+  participants?: ISimpleUser[];
 }
 
 export interface IEventStep {
@@ -73,7 +74,7 @@ export interface IEventBase {
   description?: string;
   race: boolean;
   subtitle?: string;
-  time?: string;
+  
   title: string;
 }
 
@@ -81,20 +82,26 @@ export interface IEventReq extends IEventBase {
   date: string;
   type: string;
   creatorJoining: boolean;
+  exactTime: boolean;
 }
 
 export interface IEventResp extends IEventBase {
   id: ID,
   date: string;
+  exactTime: boolean;
   type: string;
-  participants: IParticipant[];
-  creator: IParticipant;
+  participants: ISimpleUser[];
+  creator: ISimpleUser;
+  updatedAt?: string;
+  createdAt?: string;
+  __typename?: string;
 }
 
 export interface IEvent extends IEventBase {
   id: ID;
   date: string;
-  participants: IParticipant[];
+  time: string;
+  participants: ISimpleUser[];
   type: IEventType;
   creator: string;
 }
@@ -109,3 +116,5 @@ interface IResponse {
 export interface ICreateEventResponse extends IResponse {
   event?: IEvent;
 }
+
+

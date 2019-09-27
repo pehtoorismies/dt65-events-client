@@ -8,7 +8,7 @@ import { PortalWithState } from 'react-portal';
 import { EVENT_TYPES } from '../../constants';
 import { IEventReq, IEventState } from '../../types';
 import { Button, PortalOverlay } from '../Common';
-import { timeToString, toApiType } from '../../util/general';
+import { toISODate, toApiType } from '../../util/general';
 import StepCounter from '../StepCounter';
 import getStep from './stepGetter';
 import styled from '@emotion/styled';
@@ -55,11 +55,9 @@ const EventWizard: FunctionComponent<IProps> = (props: IProps) => {
       console.error(eventState);
       throw new Error('Unpossible state'); // TODO: fix
     }
-    const date = eventState.date.toISOString();
-    const time = eventState.timeEnabled
-      ? timeToString(eventState.time)
-      : undefined;
 
+    const exactTime = eventState.timeEnabled;
+    const date = exactTime ? toISODate(eventState.date, eventState.time) : toISODate(eventState.date);
     const creatorJoining = eventState.creatorJoining;
     const description = eventState.description;
     const race = eventState.race || false;
@@ -68,6 +66,7 @@ const EventWizard: FunctionComponent<IProps> = (props: IProps) => {
     const type: string = toApiType(eventState.type, EVENT_TYPES);
 
     const mandatory = {
+      exactTime,
       date,
       type,
       title,
@@ -75,7 +74,6 @@ const EventWizard: FunctionComponent<IProps> = (props: IProps) => {
       creatorJoining,
     };
     const optional = {
-      time,
       description,
       subtitle,
     };

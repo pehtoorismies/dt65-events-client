@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { FunctionComponent } from 'react';
 import { Flex, Text, Image } from 'rebass';
 import { Button } from '../Common';
 import notFoundImg from '../../images/404.jpg';

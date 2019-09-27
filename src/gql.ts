@@ -1,15 +1,20 @@
 import gql from 'graphql-tag';
 
-const EventFragment = gql`
-  fragment AllEvent on Event {
+const EventMutablePropsFragment = gql`
+  fragment MutableProps on Event {
+    id
+    exactTime
     date
     description
     race
     subtitle
-    time
     title
     type
-    id
+  }
+`;
+
+const EventAllFragment = gql`
+  fragment AllEvent on Event {
     updatedAt
     participants {
       username
@@ -19,7 +24,9 @@ const EventFragment = gql`
       username
       id
     }
+    ...MutableProps
   }
+  ${EventMutablePropsFragment}
 `;
 
 export const GET_LOCALUSER = gql`
@@ -37,7 +44,7 @@ export const EVENTS_QUERY = gql`
       ...AllEvent
     }
   }
-  ${EventFragment}
+  ${EventAllFragment}
 `;
 
 export const EVENT_QUERY = gql`
@@ -46,7 +53,7 @@ export const EVENT_QUERY = gql`
       ...AllEvent
     }
   }
-  ${EventFragment}
+  ${EventAllFragment}
 `;
 
 export const DELETE_EVENT_MUTATION = gql`
@@ -73,7 +80,7 @@ export const CREATE_EVENT = gql`
     $date: String!
     $description: String
     $race: Boolean!
-    $time: String
+    $exactTime: Boolean!
     $subtitle: String
     $title: String!
     $type: String!
@@ -85,7 +92,7 @@ export const CREATE_EVENT = gql`
         description: $description
         race: $race
         subtitle: $subtitle
-        time: $time
+        exactTime: $exactTime
         title: $title
         type: $type
       }
@@ -93,7 +100,7 @@ export const CREATE_EVENT = gql`
       ...AllEvent
     }
   }
-  ${EventFragment}
+  ${EventAllFragment}
 `;
 
 export const UPDATE_EVENT = gql`
@@ -102,7 +109,7 @@ export const UPDATE_EVENT = gql`
     $date: String!
     $description: String
     $race: Boolean!
-    $time: String
+    $exactTime: Boolean!
     $subtitle: String
     $title: String!
     $type: String!
@@ -114,13 +121,13 @@ export const UPDATE_EVENT = gql`
         description: $description
         race: $race
         subtitle: $subtitle
-        time: $time
+        exactTime: $exactTime
         title: $title
         type: $type
       }
     ) {
-      ...AllEvent
+      ...MutableProps
     }
   }
-  ${EventFragment}
+  ${EventMutablePropsFragment}
 `;
