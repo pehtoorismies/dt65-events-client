@@ -74,7 +74,7 @@ export interface IEventBase {
   description?: string;
   race: boolean;
   subtitle?: string;
-  
+
   title: string;
 }
 
@@ -86,7 +86,7 @@ export interface IEventReq extends IEventBase {
 }
 
 export interface IEventResp extends IEventBase {
-  id: ID,
+  id: ID;
   date: string;
   exactTime: boolean;
   type: string;
@@ -117,4 +117,7 @@ export interface ICreateEventResponse extends IResponse {
   event?: IEvent;
 }
 
-
+export interface IPreferences {
+  subscribeEventCreationEmail: boolean;
+  subscribeWeeklyEmail: boolean;
+}

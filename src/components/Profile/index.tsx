@@ -1,8 +1,4 @@
-import React, {
-  Fragment,
-  FunctionComponent,
-  ReactNode,
-} from 'react';
+import React, { Fragment, FunctionComponent, ReactNode } from 'react';
 import { Box, Flex, Text } from 'rebass';
 import styled from 'styled-components';
 import { UserInjured } from 'styled-icons/fa-solid/UserInjured';
@@ -43,8 +39,9 @@ const Profile: FunctionComponent<IProps> = (props: IProps) => {
   const Icon = getProfileCmp(profileUrl);
 
   return (
-    <Fragment>
+    <Box width="100%" sx={{ maxWidth: '500px'}}>
       <Flex
+        width="100%"
         p={3}
         bg="lightestgray"
         flexDirection="column"
@@ -62,12 +59,17 @@ const Profile: FunctionComponent<IProps> = (props: IProps) => {
           {username}
         </Text>
       </Flex>
-      <Box>
+      <Box width="100%" >
         {buttons.map((b: IButton) => (
-          <ArrowButton key={b.id} title={b.title} onClick={b.onClick} icon={b.icon} />
+          <ArrowButton
+            key={b.id}
+            title={b.title}
+            onClick={b.onClick}
+            icon={b.icon}
+          />
         ))}
       </Box>
-    </Fragment>
+    </Box>
   );
 };
 

@@ -2,13 +2,17 @@ import Color from 'color';
 
 const redColor = Color('#FF5471');
 const pinkColor = Color('#FF80EA');
+const blueColor = Color('#07c');
 
-const blue = '#07c';
+// TODO: fix colors
+const blue = blueColor.hex();
+const lightBlue = blueColor.lighten(0.4).hex();
 const red = redColor.hex();
 const lightRed = redColor.lighten(0.4).hex();
 const lightgray = '#9a9a9a';
 const lightergray = '#E6E6E6';
 const lightestgray = '#e9e9e9';
+const darkGray = '#1f1f1f';
 const darkWhite = '#f4f4f5';
 const black = '#140D33';
 const lightBlack = '#404035';
@@ -172,8 +176,10 @@ const theme: any = {
   },
   colors: {
     black,
+    lightBlue,
     blue,
     darkWhite,
+    darkGray,
     faintBg,
     lightBlack,
     lightergray,

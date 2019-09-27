@@ -101,7 +101,7 @@ const EventsContainer: FunctionComponent<RouteComponentProps & IUserProps> = (
   };
 
   return (
-    <Fragment>
+    <Flex flexDirection="column" alignItems="center" width="100%" >
       {events.map((evt: IEventResp) => {
         const e = {
           ...parseEvent(evt),
@@ -120,7 +120,7 @@ const EventsContainer: FunctionComponent<RouteComponentProps & IUserProps> = (
           />
         );
       })}
-    </Fragment>
+    </Flex>
   );
 };
 

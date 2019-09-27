@@ -4,6 +4,7 @@ import { withApollo, WithApolloClient } from 'react-apollo';
 import { RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { User } from 'styled-icons/boxicons-regular/User';
+import { Subscriptions } from 'styled-icons/material/Subscriptions'
 
 import Profile from '../components/Profile';
 import { ROUTES } from '../constants';
@@ -33,6 +34,14 @@ const ProfileContainer: FunctionComponent<
         history.push(ROUTES.login);
       },
       icon: User,
+    },
+    {
+      id: 2,
+      title: 'Sähköpostiasetukset',
+      onClick: () => {
+        history.push(ROUTES.preferences);
+      },
+      icon: Subscriptions,
     },
   ];
 

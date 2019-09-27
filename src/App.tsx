@@ -6,25 +6,26 @@ import { ApolloProvider } from 'react-apollo';
 import ErrorBoundary from 'react-error-boundary';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { Box } from 'rebass';
+import { Flex } from 'rebass';
 
 import { ROUTES } from './constants';
-import CreateEventContainer from './containers/CreateEventContainer'
+import CreateEventContainer from './containers/CreateEventContainer';
 import EditEventContainer from './containers/EditEventContainer';
 import EventsContainer from './containers/EventsContainer';
 import ForgotPasswordContainer from './containers/ForgotPasswordContainer';
 import HeaderMenuContainer from './containers/HeaderMenuContainer';
 import LoginContainer from './containers/LoginContainer';
 import NotFoundContainer from './containers/NotFoundContainer';
+import PreferencesContainer from './containers/PreferencesContainer';
 import ProfileContainer from './containers/ProfileContainer';
 import RegisterContainer from './containers/RegisterContainer';
 import RegisterSuccessContainer from './containers/RegisterSuccessContainer';
+import ShowErrorContainer from './containers/ShowErrorContainer';
 import ViewEventContainer from './containers/ViewEventContainer';
 import Dt65Route from './Dt65Route';
 import GlobalStyle from './GlobalStyle';
 import { theme } from './theme';
 import apolloClient from './util/apolloClient';
-import ShowErrorContainer from './containers/ShowErrorContainer';
 
 const myErrorHandler = (error: Error, componentStack: string) => {
   console.log(error);
@@ -37,7 +38,13 @@ const App = () => (
     <ThemeProvider theme={theme}>
       <ToastContainer />
       <ApolloProvider client={apolloClient}>
-        <Box py={40} px={2}>
+        <Flex
+          py={40}
+          px={2}
+          alignItems="center"
+          flexDirection="column"
+          width="100%"
+        >
           <Router>
             <ErrorBoundary
               onError={myErrorHandler}
@@ -77,6 +84,12 @@ const App = () => (
                 />
                 <Dt65Route
                   exact={true}
+                  path={ROUTES.preferences}
+                  component={PreferencesContainer}
+                  privateRoute={true}
+                />
+                <Dt65Route
+                  exact={true}
                   path={ROUTES.login}
                   component={LoginContainer}
                 />
@@ -99,7 +112,7 @@ const App = () => (
               </Switch>
             </ErrorBoundary>
           </Router>
-        </Box>
+        </Flex>
       </ApolloProvider>
     </ThemeProvider>
   </Fragment>

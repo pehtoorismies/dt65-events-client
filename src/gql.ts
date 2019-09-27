@@ -29,6 +29,16 @@ const EventAllFragment = gql`
   ${EventMutablePropsFragment}
 `;
 
+const PreferencesFragment = gql`
+  fragment AllPreferences on UserDetails {
+    id
+    preferences {
+      subscribeEventCreationEmail
+      subscribeWeeklyEmail
+    }
+  }
+`;
+
 export const GET_LOCALUSER = gql`
   query LocalUser {
     localUser @client {
@@ -36,6 +46,30 @@ export const GET_LOCALUSER = gql`
       username
     }
   }
+`;
+
+export const UPDATE_PREFERENCES_MUTATION = gql`
+  mutation UpdatePreferences(
+    $subscribeEventCreationEmail: Boolean
+    $subscribeWeeklyEmail: Boolean
+  ) {
+    updateMyPreferences(
+      subscribeEventCreationEmail: $subscribeEventCreationEmail
+      subscribeWeeklyEmail: $subscribeWeeklyEmail
+    ) {
+      ...AllPreferences
+    }
+  }
+  ${PreferencesFragment}
+`;
+
+export const PREFERENCES_QUERY = gql`
+  query MyPreferences {
+    myUserDetails {
+      ...AllPreferences
+    }
+  }
+  ${PreferencesFragment}
 `;
 
 export const EVENTS_QUERY = gql`

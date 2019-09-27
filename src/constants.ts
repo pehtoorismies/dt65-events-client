@@ -154,6 +154,7 @@ const ROUTES = {
   profileSubscriptions: `${PROFILE_PATH}/subscriptions`,
   register: '/register',
   registerSuccess: '/registerSuccess',
+  preferences: '/preferences'
 };
 
 export { FI_LOCAL, EVENT_TYPES, WEEK_DAYS, ROUTES, GRAPHQL_TYPES, QUERY_PARAMS };
