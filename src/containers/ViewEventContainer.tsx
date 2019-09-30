@@ -30,11 +30,12 @@ const ViewEventContainer: FunctionComponent<
   const [deleteEventMutation, { loading: loadingDelete }] = useMutation(
     DELETE_EVENT_MUTATION
   );
-  
+
   const joinEvent = async (eventId: ID) => {
     try {
       await toggleJoinEventMutation({ variables: { id: eventId } });
     } catch (error) {
+      toast.error('Toiminto ei onnistunut');
       console.error(error);
     }
   };

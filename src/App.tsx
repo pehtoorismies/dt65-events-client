@@ -7,6 +7,7 @@ import ErrorBoundary from 'react-error-boundary';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { Flex } from 'rebass';
+import {isArray} from 'ramda-adjunct'
 
 import { ROUTES } from './constants';
 import CreateEventContainer from './containers/CreateEventContainer';
@@ -27,8 +28,18 @@ import GlobalStyle from './GlobalStyle';
 import { theme } from './theme';
 import apolloClient from './util/apolloClient';
 
-const myErrorHandler = (error: Error, componentStack: string) => {
-  console.log(error);
+
+const myErrorHandler = (error: any, componentStack: string) => {
+  // const { graphQLErrors, networkError } = error;
+  // if (graphQLErrors) {
+  //   console.log(graphQLErrors)
+  // }
+  // if (networkError) {
+  //   console.log(networkError)
+  // }
+
+
+  
   // E.g. log to an error logging client here
 };
 

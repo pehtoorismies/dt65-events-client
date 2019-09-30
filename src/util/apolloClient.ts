@@ -1,5 +1,6 @@
 import ApolloClient from 'apollo-boost';
 import { getAccessToken, getIdToken, getLocalUser, logout } from './auth';
+import { toast } from 'react-toastify';
 
 const getAuthHeaders = () => {
   const accessToken = getAccessToken();
@@ -10,6 +11,8 @@ const getAuthHeaders = () => {
     Authorization: `Bearer ${accessToken}`,
   };
 };
+
+
 
 const client = new ApolloClient({
   headers: getAuthHeaders(),
@@ -54,6 +57,7 @@ const client = new ApolloClient({
     operation.setContext({ headers: getAuthHeaders() });
   },
   uri: process.env.REACT_APP_GRAPHQL_SERVER,
+  
 });
 
 export default client;

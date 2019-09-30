@@ -29,6 +29,7 @@ const isAuthenticated = (): IAuthResponse => {
       errorMessage: 'Käyttäjä ei ole kirjautunut sisään',
     };
   }
+
   const decoded = jwtDecode(token || '');
 
   const expiration: number = path(['exp'], decoded) || 0;
