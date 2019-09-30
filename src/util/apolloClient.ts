@@ -50,6 +50,7 @@ const client = new ApolloClient({
   `,
   },
   request: operation => {
+    // console.log('OPERATION', operation);
     operation.setContext({ headers: getAuthHeaders() });
   },
   uri: process.env.REACT_APP_GRAPHQL_SERVER,

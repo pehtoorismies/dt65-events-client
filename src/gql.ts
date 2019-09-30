@@ -30,7 +30,7 @@ const EventAllFragment = gql`
 `;
 
 const PreferencesFragment = gql`
-  fragment AllPreferences on UserDetails {
+  fragment AllPreferences on User {
     id
     preferences {
       subscribeEventCreationEmail
@@ -65,7 +65,7 @@ export const UPDATE_PREFERENCES_MUTATION = gql`
 
 export const PREFERENCES_QUERY = gql`
   query MyPreferences {
-    myUserDetails {
+    me {
       ...AllPreferences
     }
   }

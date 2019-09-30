@@ -41,7 +41,7 @@ const PreferencesContainer: FunctionComponent<RouteComponentProps> = (
   }
 
   const {
-    myUserDetails: { preferences },
+    me: { preferences },
   } = dataPreferences;
 
   const onUpdate = async (prefs: IPreferences) => {
