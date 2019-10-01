@@ -20,13 +20,6 @@ const Dt65Route = (props: IPrivateRouteProps) => {
       {...rest}
       // tslint:disable-next-line: jsx-no-lambda
       render={(innerProps: any) => {
-        // TODO: fix this
-        const { valid, errorMessage } = isAuthenticated();
-        
-        if (!valid) {
-          toast.warn(errorMessage);
-        }
-
         if (!privateRoute) {
           return (
             <Fragment>
@@ -34,6 +27,8 @@ const Dt65Route = (props: IPrivateRouteProps) => {
             </Fragment>
           );
         }
+
+        const valid = isAuthenticated();
 
         if (valid) {
           return (
@@ -44,10 +39,9 @@ const Dt65Route = (props: IPrivateRouteProps) => {
           );
         }
 
-        if (errorMessage) {
-          console.error(errorMessage);
-        }
-        logout();
+        // toast.warn(errorMessage);
+        // console.error(errorMessage);
+        // logout();
 
         return (
           <Redirect

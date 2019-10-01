@@ -8,47 +8,57 @@ const ID_TOKEN = 'dt65IdToken';
 const ACCESS_TOKEN = 'dt65AccessToken';
 const EXPIRES_IN = 'dt65ExpiresIn';
 
+const logout = () => {
+  localStorage.removeItem(ID_TOKEN);
+  localStorage.removeItem(ACCESS_TOKEN);
+  localStorage.removeItem(EXPIRES_IN);
+};
 const getLocalUser = (idToken: string) => {
   if (!idToken) {
     return null;
   }
-  const decoded: any = jwtDecode(idToken);
+  try {
+    const decoded: any = jwtDecode(idToken);
 
-  return {
-    __typename: GRAPHQL_TYPES.LOCAL_USER,
-    id: decoded.sub,
-    username: decoded.nickname,
-  };
+    return {
+      __typename: GRAPHQL_TYPES.LOCAL_USER,
+      id: decoded.sub,
+      username: decoded.nickname,
+    };
+  } catch (error) {
+    console.error(error);
+    logout();
+  }
 };
 
-const isAuthenticated = (): IAuthResponse => {
-  const token = localStorage.getItem(ACCESS_TOKEN);
-  if (isNullOrUndefined(token)) {
-    return {
-      valid: false,
-      errorMessage: 'Käyttäjä ei ole kirjautunut sisään',
-    };
-  }
+const isAuthenticated = (): boolean => {
+  return !!localStorage.getItem(ACCESS_TOKEN);
+  // if (isNullOrUndefined(token)) {
+  //   return {
+  //     valid: false,
+  //     errorMessage: 'Käyttäjä ei ole kirjautunut sisään',
+  //   };
+  // }
 
-  const decoded = jwtDecode(token || '');
+  // const decoded = jwtDecode(token || '');
 
-  const expiration: number = path(['exp'], decoded) || 0;
+  // const expiration: number = path(['exp'], decoded) || 0;
 
-  if (expiration === 0) {
-    return {
-      valid: false,
-      errorMessage: 'Väärä jwt token',
-    };
-  }
-  if (expiration < Date.now() / 1000) {
-    return {
-      valid: false,
-      errorMessage: 'Token vanhentunut',
-    };
-  }
-  return {
-    valid: true,
-  };
+  // if (expiration === 0) {
+  //   return {
+  //     valid: false,
+  //     errorMessage: 'Väärä jwt token',
+  //   };
+  // }
+  // if (expiration < Date.now() / 1000) {
+  //   return {
+  //     valid: false,
+  //     errorMessage: 'Token vanhentunut',
+  //   };
+  // }
+  // return {
+  //   valid: true,
+  // };
 };
 
 const login = (idToken: string, accessToken: string, expiresIn: number) => {
@@ -70,11 +80,6 @@ const getIdToken = () => {
     return JSON.parse(value);
   }
   return null;
-};
-const logout = () => {
-  localStorage.removeItem(ID_TOKEN);
-  localStorage.removeItem(ACCESS_TOKEN);
-  localStorage.removeItem(EXPIRES_IN);
 };
 
 export {

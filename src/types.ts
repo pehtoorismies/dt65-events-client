@@ -15,8 +15,19 @@ export enum EventType {
   Ultras,
 }
 
+export enum ErrorType {
+  Redirect = 1,
+  Network,
+  Severe,
+}
+
 // tslint:disable-next-line: interface-over-type-literal
 export type ID = number | string;
+
+export interface IHandleError {
+  type: ErrorType;
+  message: string;
+}
 
 export interface IAuthResponse {
   valid: boolean;

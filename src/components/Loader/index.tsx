@@ -22,7 +22,7 @@ const Loader: FunctionComponent = () => {
   return (
     <ClipLoader
       sizeUnit={'px'}
-      size={150}
+      size={100}
       color={colors.pink}
       loading={loading}
     />

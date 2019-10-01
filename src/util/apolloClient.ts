@@ -12,8 +12,6 @@ const getAuthHeaders = () => {
   };
 };
 
-
-
 const client = new ApolloClient({
   headers: getAuthHeaders(),
 
@@ -57,7 +55,6 @@ const client = new ApolloClient({
     operation.setContext({ headers: getAuthHeaders() });
   },
   uri: process.env.REACT_APP_GRAPHQL_SERVER,
-  
 });
 
 export default client;

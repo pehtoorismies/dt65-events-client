@@ -53,7 +53,8 @@ const EventsContainer: FunctionComponent<RouteComponentProps & IUserProps> = (
     return <Loader />  
   }
   if (eventsError) {
-    return <h1>error</h1>
+    handleError(eventsError)
+    throw eventsError;
   }
 
   const toCreateEvent = () => history.push(ROUTES.createEvent);
