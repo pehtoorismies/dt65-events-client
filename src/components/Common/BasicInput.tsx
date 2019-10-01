@@ -7,6 +7,7 @@ import { ErrorText } from '../Common';
 type CustomInput = FieldConfig &
   FieldProps & {
     placeholder: string;
+    autocomplete?: string;
   };
 
 const BasicInput: FunctionComponent<CustomInput> = (props: CustomInput) => {
@@ -15,8 +16,9 @@ const BasicInput: FunctionComponent<CustomInput> = (props: CustomInput) => {
     form: { touched, errors },
     type,
     placeholder,
+    autocomplete,
   } = props;
-
+  
   const hasError = touched[field.name] && errors[field.name];
   const style = hasError ? 'primary-error' : 'primary';
   return (
@@ -27,6 +29,7 @@ const BasicInput: FunctionComponent<CustomInput> = (props: CustomInput) => {
         my={1}
         variant={style}
         type={type}
+        autocomplete={autocomplete}
       />
       {touched[field.name] && errors[field.name] && (
         <ErrorText my={1}>{errors[field.name]}</ErrorText>

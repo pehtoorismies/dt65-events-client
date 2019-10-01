@@ -3,22 +3,23 @@ import compose from '@shopify/react-compose';
 import append from 'ramda/es/append';
 import equals from 'ramda/es/equals';
 import findIndex from 'ramda/es/findIndex';
+import propEq from 'ramda/es/propEq';
 import remove from 'ramda/es/remove';
 import replace from 'ramda/es/replace';
-import React, {  FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Button, Flex, Text } from 'rebass';
 
-import Loader from '../components/Loader';
+import ErrorPage from '../components/ErrorPage';
 import EventCard from '../components/EventCard';
+import Loader from '../components/Loader';
 import { QUERY_PARAMS, ROUTES } from '../constants';
 import { DELETE_EVENT_MUTATION, EVENTS_QUERY, TOGGLE_JOIN_EVENT } from '../gql';
 import withUser, { IUserProps } from '../hoc/withUser';
 import { ID, IEventResp } from '../types';
 import { parseEvent, queryParamsFrom } from '../util/general';
-import { handleError } from '../util/graphqlErrors';
 
 const findLoading = (id: ID, loadingEvents: ID[]): boolean => {
   const idx = findIndex(equals(id))(loadingEvents);
@@ -37,24 +38,55 @@ const EventsContainer: FunctionComponent<RouteComponentProps & IUserProps> = (
     loading: eventsLoading,
     error: eventsError,
     data: eventsData,
+    refetch: refetchEvents,
   } = useQuery(EVENTS_QUERY);
 
-  const [
-    toggleJoinEventMutation,
-    { error: errorJoin, loading: loadingJoin },
-  ] = useMutation(TOGGLE_JOIN_EVENT);
-
-  const [deleteEventMutation, { loading: loadingDelete }] = useMutation(
-    DELETE_EVENT_MUTATION
+  const [toggleJoinEventMutation, { error: errorJoin }] = useMutation(
+    TOGGLE_JOIN_EVENT
   );
 
+  const [deleteEventMutation] = useMutation(DELETE_EVENT_MUTATION, {
+    onError: () => {
+      toast.warn('Poisto epäonnistui. Tapahtumaa ei löytynyt');
+      // tslint:disable-next-line: no-floating-promises
+      refetchEvents();
+    },
+    onCompleted: () => {
+      toast.warn('Poisto onnistui.');
+    },
+    update: (
+      cache,
+      {
+        data: {
+          deleteEvent: { id },
+        },
+      }
+    ) => {
+      const resp: any = cache.readQuery({ query: EVENTS_QUERY });
+      const cachedEvents = resp.findManyEvents;
+      const idx = findIndex(propEq('id', id))(cachedEvents);
+      const removed = remove(idx, 1, cachedEvents);
+
+      cache.writeQuery({
+        query: EVENTS_QUERY,
+        data: { findManyEvents: removed },
+      });
+    },
+  });
 
   if (eventsLoading) {
-    return <Loader />  
+    return <Loader />;
   }
   if (eventsError) {
-    handleError(eventsError)
-    throw eventsError;
+    const refresh = () => window.location.reload();
+    return (
+      <ErrorPage
+        title="Virhe"
+        buttonTitle="Lataa uudelleen"
+        message="Tapahtumien latauksessa tapahtui virhe"
+        onGetMeOut={refresh}
+      />
+    );
   }
 
   const toCreateEvent = () => history.push(ROUTES.createEvent);
@@ -65,10 +97,10 @@ const EventsContainer: FunctionComponent<RouteComponentProps & IUserProps> = (
       await toggleJoinEventMutation({ variables: { id: eventId } });
     } catch (error) {
       console.error(error);
-      toast.error('Toiminto ei onnistunut')
+      toast.error('Toiminto ei onnistunut');
     } finally {
       const idx = findIndex(equals(eventId))(loadingEventsList);
-      const removed = remove(1, idx, loadingEventsList);
+      const removed = remove(idx, 1, loadingEventsList);
       setLoadingEventsList(removed);
     }
   };
@@ -93,12 +125,8 @@ const EventsContainer: FunctionComponent<RouteComponentProps & IUserProps> = (
   };
 
   const onDeleteEvent = async (eventID: ID) => {
-    try {
-      await deleteEventMutation({ variables: { id: eventID } });
-      toast(`Tapahtuma poistettu`);
-    } catch (error) {
-      console.error(error);
-    }
+    // tslint:disable-next-line: no-floating-promises
+    deleteEventMutation({ variables: { id: eventID } });
   };
   const onEditEvent = (eventId: ID) => {
     const url = replace(/:id/g, String(eventId), ROUTES.editEvent);

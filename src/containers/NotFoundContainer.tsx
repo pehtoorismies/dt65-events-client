@@ -3,7 +3,7 @@ import React, { FunctionComponent } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 
-import NotFound from '../components/NotFound';
+import ErrorPage from '../components/ErrorPage';
 import { ROUTES } from '../constants';
 
 interface IProps {
@@ -17,7 +17,7 @@ const NotFoundContainer: FunctionComponent<RouteComponentProps> = (
 
   const goHome = () => history.push(ROUTES.home);
 
-  return <NotFound onGetMeOut={goHome} />;
+  return <ErrorPage onGetMeOut={goHome} />;
 };
 
 export default compose(

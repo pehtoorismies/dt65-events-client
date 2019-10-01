@@ -92,7 +92,9 @@ export const EVENT_QUERY = gql`
 
 export const DELETE_EVENT_MUTATION = gql`
   mutation DeleteEvent($id: ID!) {
-    deleteEvent(id: $id)
+    deleteEvent(id: $id) {
+      id
+    }
   }
 `;
 

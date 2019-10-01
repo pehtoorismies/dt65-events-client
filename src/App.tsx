@@ -2,13 +2,12 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { ThemeProvider } from 'emotion-theming';
 import React, { Fragment } from 'react';
-import { ApolloProvider } from 'react-apollo';
 import ErrorBoundary from 'react-error-boundary';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { Flex } from 'rebass';
-import {isArray} from 'ramda-adjunct'
 
+import ApolloProvider from './ApolloProviderWithHistory';
 import { ROUTES } from './constants';
 import CreateEventContainer from './containers/CreateEventContainer';
 import EditEventContainer from './containers/EditEventContainer';
@@ -26,21 +25,9 @@ import ViewEventContainer from './containers/ViewEventContainer';
 import Dt65Route from './Dt65Route';
 import GlobalStyle from './GlobalStyle';
 import { theme } from './theme';
-import apolloClient from './util/apolloClient';
-
 
 const myErrorHandler = (error: any, componentStack: string) => {
-  // const { graphQLErrors, networkError } = error;
-  // if (graphQLErrors) {
-  //   console.log(graphQLErrors)
-  // }
-  // if (networkError) {
-  //   console.log(networkError)
-  // }
-
-
-  
-  // E.g. log to an error logging client here
+  // TODO: log errors
 };
 
 const App = () => (
@@ -48,18 +35,18 @@ const App = () => (
     <GlobalStyle />
     <ThemeProvider theme={theme}>
       <ToastContainer />
-      <ApolloProvider client={apolloClient}>
-        <Flex
-          py={40}
-          px={2}
-          alignItems="center"
-          flexDirection="column"
-          width="100%"
-        >
-          <Router>
+      <Router>
+        <ApolloProvider>
+          <Flex
+            py={40}
+            px={2}
+            alignItems="center"
+            flexDirection="column"
+            width="100%"
+          >
             <ErrorBoundary
-              onError={myErrorHandler}
               FallbackComponent={ShowErrorContainer}
+              onError={myErrorHandler}
             >
               <HeaderMenuContainer />
               <Switch>
@@ -122,9 +109,9 @@ const App = () => (
                 <Dt65Route path="/*" component={NotFoundContainer} />
               </Switch>
             </ErrorBoundary>
-          </Router>
-        </Flex>
-      </ApolloProvider>
+          </Flex>
+        </ApolloProvider>
+      </Router>
     </ThemeProvider>
   </Fragment>
 );

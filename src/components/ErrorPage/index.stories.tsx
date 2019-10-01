@@ -1,8 +1,8 @@
 import { storiesOf } from '@storybook/react';
 import React from 'react';
-import NotFound from './';
+import ErrorPage from '.';
 import { action } from '@storybook/addon-actions';
 
-storiesOf('NotFound', module).add('story', () => (
-  <NotFound  onGetMeOut={action('Exit')} />
+storiesOf('ErrorPage', module).add('story', () => (
+  <ErrorPage onGetMeOut={action('Exit')} />
 ));
