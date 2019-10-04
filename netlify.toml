@@ -1,0 +1,12 @@
+[build]
+  command = "yarn build"
+  publish = "build"
+
+
+[context.production]
+  # Get from .env.production
+  environment = { }
+
+
+[context.master]
+  environment = { REACT_APP_GRAPHQL_SERVER = "https://graphql-api-dev.downtown65.com/graphql"}
