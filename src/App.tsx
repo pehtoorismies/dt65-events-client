@@ -30,7 +30,7 @@ const myErrorHandler = (error: any, componentStack: string) => {
   // TODO: log errors
 };
 console.log('******')
-console.log(process.env.REACT_APP_TOML_ENV_VAR);
+console.log(process.env.REACT_APP_GRAPHQL_SERVER);
 console.log('/******')
 
 const App = () => (
