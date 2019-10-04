@@ -6,6 +6,7 @@ export interface IUserProps {
   user: {
     username: string;
     id: string;
+    picture?: string;
   };
 }
 

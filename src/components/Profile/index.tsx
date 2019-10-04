@@ -3,6 +3,7 @@ import { Box, Flex, Text } from 'rebass';
 import styled from 'styled-components';
 import { UserInjured } from 'styled-icons/fa-solid/UserInjured';
 import { ArrowButton } from '../Common';
+import { colors } from '../../theme';
 
 interface IButton {
   id: string | number;
@@ -26,11 +27,18 @@ const ProfileIcon = styled(UserInjured)`
   border-radius: 15px;
 `;
 
+const PictureIcon = styled.img`
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  border: 1px solid ${colors.pink};
+`;
+
 const getProfileCmp = (profileUrl?: string) => {
   if (!profileUrl) {
     return <ProfileIcon />;
   }
-  return <ProfileIcon />;
+  return <PictureIcon src={profileUrl} />;
 };
 
 const Profile: FunctionComponent<IProps> = (props: IProps) => {
