@@ -4,7 +4,7 @@ import { withApollo, WithApolloClient } from 'react-apollo';
 import { RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { User } from 'styled-icons/boxicons-regular/User';
-import { Subscriptions } from 'styled-icons/material/Subscriptions'
+import { Subscriptions } from 'styled-icons/material/Subscriptions';
 
 import Profile from '../components/Profile';
 import { ROUTES } from '../constants';
@@ -17,7 +17,7 @@ const ProfileContainer: FunctionComponent<
   const {
     history,
     client,
-    user: { username },
+    user: { username, picture },
   } = props;
 
   // const go = (route: string) => () => {
@@ -49,7 +49,13 @@ const ProfileContainer: FunctionComponent<
     throw new Error('No user present');
   }
 
-  return <Profile username={String(username)} buttons={buttons} />;
+  return (
+    <Profile
+      username={String(username)}
+      buttons={buttons}
+      profileUrl={picture}
+    />
+  );
 };
 
 export default compose(

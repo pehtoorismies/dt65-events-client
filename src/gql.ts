@@ -44,6 +44,7 @@ export const GET_LOCALUSER = gql`
     localUser @client {
       id
       username
+      picture
     }
   }
 `;

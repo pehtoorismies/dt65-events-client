@@ -1,0 +1,11 @@
+[build]
+  command = "yarn build"
+  publish = "build"
+
+
+[context.production]
+  environment = { REACT_APP_TOML_ENV_VAR = "production env!"}
+
+
+[context.master]
+  environment = { REACT_APP_TOML_ENV_VAR = "development env!"}
