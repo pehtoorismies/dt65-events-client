@@ -63,6 +63,7 @@ const Race = styled(Medal)`
 const common = css`
   color: white;
   height: 20px;
+  padding: 5px;
   &:hover {
     cursor: pointer;
   }
@@ -145,7 +146,8 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
   };
   const raceElem = race ? <Race /> : null;
 
-  const exposeDetails = () => {
+  const exposeDetails = (e: any) => {
+    e.stopPropagation();
     if (!stayOpened) {
       setShowDetails(!showDetails);
     }
@@ -159,7 +161,6 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
 
   const [showDetails, setShowDetails] = useState(stayOpened);
   const [disableDelete, setDisableDelete] = useState(true);
-  // const ExposeArrow = showDetails ? UpArrow : DownArrow;
 
   const eyeButton = onViewClick ? <EyeBtn onClick={viewClick} /> : null;
   const toggleOpenButton = !stayOpened ? (
@@ -193,8 +194,8 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
                 position: 'relative',
               }}
             >
-              <Card width="100%" mx="auto" variant="shadow">
-                <ImageBox bgImage={eventImage || type.defaultImage}>
+              <Card width="100%" mx="auto" variant="shadow"  >
+                <ImageBox bgImage={eventImage || type.defaultImage} onClick={viewClick}>
                   <Flex
                     width="100%"
                     alignItems="center"
@@ -210,7 +211,6 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
                   >
                     <Flex ml={2}>
                       {toggleOpenButton}
-                      {eyeButton}
                     </Flex>
                     <EditBtn onClick={openPortal} />
                   </Flex>
