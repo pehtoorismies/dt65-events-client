@@ -2,6 +2,30 @@ import forEach from 'ramda/es/forEach';
 import path from 'ramda/es/path';
 import { toast } from 'react-toastify';
 
+type jsonFunc = (str: string) => number | undefined;
+
+const parseJson: jsonFunc = (str: string) => {
+  
+  try {
+    return JSON.parse(str);
+  } catch (e) {
+    return undefined;
+  }
+};
+
+const getMessage = (maybeJsonMsg?: string) : string => {
+  if (!maybeJsonMsg) {
+    return 'Joku virhe tuli nyt sitten';
+  }
+  const msg = parseJson(maybeJsonMsg);
+
+  if (msg) {
+    return path(['error_description'], msg) || 'Virhe kirjautumisessa';
+  } else {
+    return maybeJsonMsg;
+  }
+};
+
 const setGraphQLErrors = (
   setFieldError: any,
   setGeneralError: any,
@@ -14,11 +38,14 @@ const setGraphQLErrors = (
       setFieldError(field, message);
     }
     if (name === 'Auth0Error') {
-      const internalMsg = path(
+      const maybeJsonMsg : string | undefined = path(
         ['data', 'internalData', 'error', 'message'],
         err
       );
-      setGeneralError(internalMsg);
+      
+      const msg = getMessage(maybeJsonMsg);
+
+      setGeneralError(msg);
     }
   }, errors);
 };
