@@ -22,6 +22,7 @@ import {
   IEventType,
   ISimpleUser,
   ITime,
+  ICalEvent,
 } from '../types';
 
 export const isNullOrUndefined = (a: any) => isNull(a) || isUndefined(a);
@@ -115,6 +116,17 @@ export const parseEvent = (evt: IEventResp): IEvent => {
     type: fromApiType(evt.type, EVENT_TYPES),
   };
 };
+
+export const formatICalEvent = (evt: IEventResp): ICalEvent => {
+  const date = parseISO(evt.date);
+ 
+  return {
+    date,
+    type: fromApiType(evt.type, EVENT_TYPES).id,
+  };
+};
+
+
 
 export const toEventState = (evt: IEventResp): IEventState => {
   const date = parseISO(evt.date);

@@ -21,6 +21,11 @@ export enum ErrorType {
   Severe,
 }
 
+export enum VIEW {
+  CALENDAR = 1,
+  LIST = 2,
+}
+
 // tslint:disable-next-line: interface-over-type-literal
 export type ID = number | string;
 
@@ -131,4 +136,14 @@ export interface ICreateEventResponse extends IResponse {
 export interface IPreferences {
   subscribeEventCreationEmail: boolean;
   subscribeWeeklyEmail: boolean;
+}
+
+export interface IYearMonth {
+  year: number;
+  monthIndex: number;
+}
+
+export interface ICalEvent {
+  date: Date;
+  type: EventType,
 }

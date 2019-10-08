@@ -4,13 +4,14 @@ import append from 'ramda/es/append';
 import equals from 'ramda/es/equals';
 import findIndex from 'ramda/es/findIndex';
 import propEq from 'ramda/es/propEq';
+import map from 'ramda/es/map';
 import remove from 'ramda/es/remove';
 import replace from 'ramda/es/replace';
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, Fragment } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Button, Flex, Text } from 'rebass';
+import { Button, Flex, Text, Box } from 'rebass';
 
 import ErrorPage from '../components/ErrorPage';
 import EventCard from '../components/EventCard';
@@ -18,8 +19,12 @@ import Loader from '../components/Loader';
 import { QUERY_PARAMS, ROUTES } from '../constants';
 import { DELETE_EVENT_MUTATION, EVENTS_QUERY, TOGGLE_JOIN_EVENT } from '../gql';
 import withUser, { IUserProps } from '../hoc/withUser';
-import { ID, IEventResp } from '../types';
-import { parseEvent, queryParamsFrom } from '../util/general';
+import { ID, IEventResp, VIEW, IYearMonth, ICalEvent } from '../types';
+import { parseEvent, queryParamsFrom, formatICalEvent } from '../util/general';
+import ViewChooser from '../components/ViewChooser';
+import EventCalendar from '../components/EventCalendar';
+import { getYear, getMonth } from 'date-fns/fp';
+import parseISO from 'date-fns/parseISO';
 
 const findLoading = (id: ID, loadingEvents: ID[]): boolean => {
   const idx = findIndex(equals(id))(loadingEvents);
@@ -34,6 +39,8 @@ const EventsContainer: FunctionComponent<RouteComponentProps & IUserProps> = (
     user: { username },
   } = props;
   const [loadingEventsList, setLoadingEventsList] = useState<ID[]>([]);
+  const [view, setView] = useState<VIEW>(VIEW.LIST);
+
   const {
     loading: eventsLoading,
     error: eventsError,
@@ -133,27 +140,59 @@ const EventsContainer: FunctionComponent<RouteComponentProps & IUserProps> = (
     history.push(`${url}?${queryParamsFrom(QUERY_PARAMS.VALUES.FROM.HOME)}`);
   };
 
-  return (
-    <Flex flexDirection="column" alignItems="center" width="100%">
-      {events.map((evt: IEventResp) => {
-        const e = {
-          ...parseEvent(evt),
-          isJoining: findLoading(evt.id, loadingEventsList),
-        };
+  const swapSelected = (viewType: VIEW) => {
+    setView(viewType);
+  };
 
-        return (
-          <EventCard
-            key={evt.id}
-            {...e}
-            username={username}
-            joinEvent={joinEvent}
-            onViewClick={onViewEvent}
-            onDeleteClick={onDeleteEvent}
-            onEditClick={onEditEvent}
-          />
-        );
-      })}
-    </Flex>
+  // TODO: parse events
+
+  const renderList = () => {
+    return (
+      <Flex mt={40} flexDirection="column" alignItems="center" width="100%">
+        {events.map((evt: IEventResp) => {
+          const e = {
+            ...parseEvent(evt),
+            isJoining: findLoading(evt.id, loadingEventsList),
+          };
+
+          return (
+            <EventCard
+              key={evt.id}
+              {...e}
+              username={username}
+              joinEvent={joinEvent}
+              onViewClick={onViewEvent}
+              onDeleteClick={onDeleteEvent}
+              onEditClick={onEditEvent}
+            />
+          );
+        })}
+      </Flex>
+    );
+  };
+
+  const renderCalendar = () => {
+    const now = new Date();
+    const start: IYearMonth = {
+      year: getYear(now),
+      monthIndex: getMonth(now),
+    };
+    const evts = map(formatICalEvent, events);
+    return (
+      <Box width="100%" mt={40}>
+        <EventCalendar start={start} monthCount={12} events={evts} />
+      </Box>
+    );
+  };
+
+  return (
+    <Fragment>
+      <Box sx={{ position: 'fixed', top: 40, left: 0, right: 0, zIndex: 2}}>
+        <ViewChooser onChooseType={swapSelected} selectedView={view} />
+      </Box>
+
+      {view === VIEW.LIST ? renderList() : renderCalendar()}
+    </Fragment>
   );
 };
 

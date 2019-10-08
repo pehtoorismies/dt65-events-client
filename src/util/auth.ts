@@ -1,8 +1,5 @@
 import jwtDecode from 'jwt-decode';
 import { GRAPHQL_TYPES } from '../constants';
-import { IAuthResponse } from '../types';
-import { isNullOrUndefined } from '../util/general';
-import path from 'ramda/es/path';
 
 const ID_TOKEN = 'dt65IdToken';
 const ACCESS_TOKEN = 'dt65AccessToken';
@@ -32,35 +29,7 @@ const getLocalUser = (idToken: string) => {
   }
 };
 
-const isAuthenticated = (): boolean => {
-  return !!localStorage.getItem(ACCESS_TOKEN);
-  // if (isNullOrUndefined(token)) {
-  //   return {
-  //     valid: false,
-  //     errorMessage: 'Käyttäjä ei ole kirjautunut sisään',
-  //   };
-  // }
-
-  // const decoded = jwtDecode(token || '');
-
-  // const expiration: number = path(['exp'], decoded) || 0;
-
-  // if (expiration === 0) {
-  //   return {
-  //     valid: false,
-  //     errorMessage: 'Väärä jwt token',
-  //   };
-  // }
-  // if (expiration < Date.now() / 1000) {
-  //   return {
-  //     valid: false,
-  //     errorMessage: 'Token vanhentunut',
-  //   };
-  // }
-  // return {
-  //   valid: true,
-  // };
-};
+const isAuthenticated = (): boolean => !!localStorage.getItem(ACCESS_TOKEN);
 
 const login = (idToken: string, accessToken: string, expiresIn: number) => {
   localStorage.setItem(ID_TOKEN, JSON.stringify(idToken));

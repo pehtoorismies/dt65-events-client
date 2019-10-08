@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 import { ROUTES } from './constants';
 import FooterMenuContainer from './containers/FooterMenuContainer';

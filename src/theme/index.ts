@@ -15,6 +15,7 @@ const lightestgray = '#e9e9e9';
 const darkGray = '#1f1f1f';
 const darkWhite = '#f4f4f5';
 const black = '#140D33';
+const standardBlack = '#000';
 const lightBlack = '#404035';
 const pink = pinkColor.hex();
 const lightPink = pinkColor.lighten(0.2).hex();
@@ -176,6 +177,7 @@ const theme: any = {
   },
   colors: {
     black,
+    standardBlack,
     lightBlue,
     blue,
     darkWhite,
@@ -198,7 +200,7 @@ const theme: any = {
   fonts: {
     body: 'system-ui, sans-serif',
     heading: 'Titillium Web',
-    monospace: `'Share Tech Mono', monospace`,
+    monospace: `'Ubuntu Mono', monospace`,
   },
   forms: {
     primary: primaryForm,
