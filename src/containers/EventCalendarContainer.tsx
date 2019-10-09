@@ -3,26 +3,25 @@ import { getMonth, getYear } from 'date-fns/fp';
 import map from 'ramda/es/map';
 import replace from 'ramda/es/replace';
 import React, { Fragment, FunctionComponent, useState } from 'react';
-import { RouteComponentProps } from 'react-router';
-import { withRouter } from 'react-router-dom';
 import { Box } from 'rebass';
+import useReactRouter from 'use-react-router';
 
 import EventCalendar from '../components/EventCalendar';
 import { ROUTES } from '../constants';
 import withEvents, { IEventProps } from '../hoc/withEvents';
 import withUser, { IUserProps } from '../hoc/withUser';
-import withViewChooser from '../hoc/withViewChooser';
 import { ID, IYearMonth } from '../types';
 import { formatICalEvent } from '../util/general';
 
-const EventsCalendarContainer: FunctionComponent<
-  RouteComponentProps & IUserProps & IEventProps
-> = (props: RouteComponentProps & IUserProps & IEventProps) => {
+const EventCalendarContainer: FunctionComponent<IUserProps & IEventProps> = (
+  props: IUserProps & IEventProps
+) => {
   const {
-    history,
     user: { username },
     events,
   } = props;
+
+  const { history } = useReactRouter();
 
   const toCreateEvent = () => history.push(ROUTES.createEvent);
 
@@ -39,16 +38,15 @@ const EventsCalendarContainer: FunctionComponent<
   const iCalEvents = map(formatICalEvent, events);
 
   return (
-    <Box width="100%" mt="5px">
-      <EventCalendar start={start} monthCount={12} events={iCalEvents} />
-    </Box>
+    <Fragment>
+      <Box width="100%" mt="5px">
+        <EventCalendar start={start} monthCount={12} events={iCalEvents} />
+      </Box>
+    </Fragment>
   );
 };
 
 export default compose(
   withUser,
-  withEvents,
-  withViewChooser,
-  // @ts-ignore
-  withRouter
-)(EventsCalendarContainer);
+  withEvents
+)(EventCalendarContainer);

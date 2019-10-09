@@ -8,10 +8,9 @@ import propEq from 'ramda/es/propEq';
 import remove from 'ramda/es/remove';
 import replace from 'ramda/es/replace';
 import React, { Fragment, FunctionComponent, useState } from 'react';
-import { RouteComponentProps } from 'react-router';
-import { withRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Button, Flex, Text } from 'rebass';
+import useReactRouter from 'use-react-router';
 
 import EventCard from '../components/EventCard';
 import { QUERY_PARAMS, ROUTES } from '../constants';
@@ -26,15 +25,16 @@ const findLoading = (id: ID, loadingEvents: ID[]): boolean => {
   return idx >= 0;
 };
 
-const EventsListContainer: FunctionComponent<
-  RouteComponentProps & IUserProps & IEventProps
-> = (props: RouteComponentProps & IUserProps & IEventProps) => {
+const EventListContainer: FunctionComponent<IUserProps & IEventProps> = (
+  props: IUserProps & IEventProps
+) => {
   const {
-    history,
     user: { username },
     events,
     refetchEvents,
   } = props;
+
+  const { history } = useReactRouter();
 
   const [loadingEventsList, setLoadingEventsList] = useState<ID[]>([]);
 
@@ -141,7 +141,5 @@ const EventsListContainer: FunctionComponent<
 
 export default compose(
   withUser,
-  withEvents,
-  // @ts-ignore
-  withRouter
-)(EventsListContainer);
+  withEvents
+)(EventListContainer);

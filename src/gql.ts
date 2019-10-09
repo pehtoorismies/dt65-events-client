@@ -50,8 +50,8 @@ export const GET_LOCALUSER = gql`
 `;
 
 export const GET_EVENT_VIEW = gql`
-  query EventView {
-    eventView @client
+  query EventsView {
+    eventsView @client
   }
 `;
 

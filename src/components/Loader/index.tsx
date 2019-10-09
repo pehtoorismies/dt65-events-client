@@ -15,7 +15,7 @@ const Loader: FunctionComponent = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(true);
-    }, 1000);
+    }, 400);
     return () => clearTimeout(timer);
   }, []);
 

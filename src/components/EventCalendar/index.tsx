@@ -15,12 +15,22 @@ import pipe from 'ramda/es/pipe';
 import times from 'ramda/es/times';
 import filter from 'ramda/es/filter';
 import React, { Fragment, FunctionComponent } from 'react';
-import { Box, Flex, Text } from 'rebass';
+import { Box, Flex, Text, Image } from 'rebass';
 import uuidv4 from 'uuid/v4';
 
 import { WEEK_DAYS } from '../../constants';
 import { colors } from '../../theme';
 import { IYearMonth, ICalEvent, EventType } from '../../types';
+
+import logo_running from '../../images/calendar-logos/running.png';
+import logo_swimming from '../../images/calendar-logos/swimming.png';
+import logo_orienteering from '../../images/calendar-logos/orienteering.png';
+import logo_cycling from '../../images/calendar-logos/cycling.png';
+import logo_party from '../../images/calendar-logos/party.png';
+import logo_other from '../../images/calendar-logos/other.png';
+import logo_skiing from '../../images/calendar-logos/skiing.png';
+import logo_triathlon from '../../images/calendar-logos/triathlon.png';
+import logo_kickoff from '../../images/calendar-logos/kickoff.png';
 
 interface IProps {
   start: IYearMonth;
@@ -68,31 +78,30 @@ const renderBlank = () => {
 };
 
 const icons = {
-  [EventType.Cycling]: 'PY',
-  [EventType.Karonkka]: 'KA',
-  [EventType.Meeting]: 'KO',
-  [EventType.Orienteering]: 'SU',
-  [EventType.Other]: 'MU',
-  [EventType.Running]: 'JU',
-  [EventType.Skiing]: 'HI',
-  [EventType.Spinning]: 'SP',
-  [EventType.Swimming]: 'UI',
-  [EventType.TrackRunning]: 'RJ',
-  [EventType.Triathlon]: 'TR',
-  [EventType.Ultras]: 'UL',
+  [EventType.Cycling]: logo_cycling,
+  [EventType.Karonkka]: logo_party,
+  [EventType.Meeting]: logo_kickoff,
+  [EventType.Orienteering]: logo_orienteering,
+  [EventType.Other]: logo_other,
+  [EventType.Running]: logo_running,
+  [EventType.Skiing]: logo_skiing,
+  [EventType.Spinning]: logo_cycling,
+  [EventType.Swimming]: logo_swimming,
+  [EventType.TrackRunning]: logo_running,
+  [EventType.Triathlon]: logo_triathlon,
+  [EventType.Ultras]: logo_kickoff,
 };
 
 const renderEventIcon = (evt: ICalEvent) => {
   return (
-    <Text
-      p={1}
-      key={uuidv4()}
-      color="blue"
-      fontFamily="monospace"
-      fontSize={12}
-    >
-      {icons[evt.type]}
-    </Text>
+    <Image
+      m={1}
+      src={icons[evt.type]}
+      sx={{
+        width: '18px',
+        height: '18px',
+      }}
+    />
   );
 };
 
