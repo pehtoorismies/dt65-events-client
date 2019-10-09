@@ -34,7 +34,8 @@ const EventListContainer: FunctionComponent<IUserProps & IEventProps> = (
     refetchEvents,
   } = props;
 
-  const { history } = useReactRouter();
+  const { history, location } = useReactRouter();
+  console.log(location)
 
   const [loadingEventsList, setLoadingEventsList] = useState<ID[]>([]);
 

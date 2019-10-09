@@ -14,6 +14,7 @@ import map from 'ramda/es/map';
 import pipe from 'ramda/es/pipe';
 import times from 'ramda/es/times';
 import filter from 'ramda/es/filter';
+import head from 'ramda/es/head';
 import React, { Fragment, FunctionComponent } from 'react';
 import { Box, Flex, Text, Image } from 'rebass';
 import uuidv4 from 'uuid/v4';
@@ -31,12 +32,13 @@ import logo_other from '../../images/calendar-logos/other.png';
 import logo_skiing from '../../images/calendar-logos/skiing.png';
 import logo_triathlon from '../../images/calendar-logos/triathlon.png';
 import logo_kickoff from '../../images/calendar-logos/kickoff.png';
+import { format } from 'date-fns';
 
 interface IProps {
   start: IYearMonth;
   monthCount: number;
   events: ICalEvent[];
-  topOffset?: number;
+  onSelectDay?: (date: string) => void;
 }
 
 const Grid = styled.div`
@@ -95,11 +97,12 @@ const icons = {
 const renderEventIcon = (evt: ICalEvent) => {
   return (
     <Image
+      key={uuidv4()}
       m={1}
       src={icons[evt.type]}
       sx={{
-        width: '18px',
-        height: '18px',
+        width: '16px',
+        height: '16px',
       }}
     />
   );
@@ -113,6 +116,14 @@ const renderDay = (monthEvents: ICalEvent[]) => (index: number) => {
   const currentDayEvents = filter(filterByDay, monthEvents);
   const hasEvents = currentDayEvents.length > 0;
 
+  const onSelect = () => {
+    const evt: ICalEvent | undefined = head(currentDayEvents);
+    if (evt) {
+      const f = format(evt.date, 'yyyy-MM-dd');
+      
+    }
+  };
+
   return (
     <Flex
       p={1}
@@ -122,6 +133,7 @@ const renderDay = (monthEvents: ICalEvent[]) => (index: number) => {
       justifyContent="flex-start"
       bg={hasEvents ? 'lightPink' : 'white'}
       sx={{ borderBottom: `1px solid ${colors.lightergray}` }}
+      onClick={onSelect}
     >
       <Text
         color={hasEvents ? 'standardBlack' : 'grey'}
@@ -196,7 +208,7 @@ const createCalendarMonths = (start: IYearMonth, count: number) => {
 };
 
 const EventCalendar: FunctionComponent<IProps> = (props: IProps) => {
-  const { start, monthCount, events, topOffset = 0 } = props;
+  const { start, monthCount, events, onSelectDay } = props;
 
   const nextMonths = createCalendarMonths(start, monthCount);
 

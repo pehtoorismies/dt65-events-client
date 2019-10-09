@@ -28,7 +28,7 @@ const ViewChooser: FunctionComponent<IProps> = (props: IProps) => {
 
   return (
     <Flex width="100%" bg="white" py={1}>
-      <Box width="50%">
+      <Box width="50%" mr="2px">
         <Button
           p={1}
           variant={selectedView === VIEW.LIST ? 'primary' : 'secondary'}
