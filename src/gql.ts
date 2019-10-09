@@ -49,6 +49,12 @@ export const GET_LOCALUSER = gql`
   }
 `;
 
+export const GET_EVENT_VIEW = gql`
+  query EventView {
+    eventView @client
+  }
+`;
+
 export const UPDATE_PREFERENCES_MUTATION = gql`
   mutation UpdatePreferences(
     $subscribeEventCreationEmail: Boolean

@@ -122,6 +122,10 @@ export interface IEvent extends IEventBase {
   creator: string;
 }
 
+export interface IEventExtended extends IEvent {
+  isoDate: string
+}
+
 interface IResponse {
   error?: {
     name: string;

@@ -29,7 +29,7 @@ const getLocalUser = (idToken: string) => {
   }
 };
 
-const isAuthenticated = (): boolean => !!localStorage.getItem(ACCESS_TOKEN);
+const hasAccessToken = (): boolean => !!localStorage.getItem(ACCESS_TOKEN);
 
 const login = (idToken: string, accessToken: string, expiresIn: number) => {
   localStorage.setItem(ID_TOKEN, JSON.stringify(idToken));
@@ -58,5 +58,5 @@ export {
   getAccessToken,
   getIdToken,
   getLocalUser,
-  isAuthenticated,
+  hasAccessToken,
 };

@@ -23,6 +23,7 @@ import {
   ISimpleUser,
   ITime,
   ICalEvent,
+  IEventExtended,
 } from '../types';
 
 export const isNullOrUndefined = (a: any) => isNull(a) || isUndefined(a);
@@ -104,7 +105,7 @@ export const toISODate = (date: Date, time?: ITime): string => {
   return updated.toISOString();
 };
 
-export const parseEvent = (evt: IEventResp): IEvent => {
+export const parseEvent = (evt: IEventResp): IEventExtended => {
   const date = parseISO(evt.date);
   const time = evt.exactTime ? format(date, 'HH:mm') : '';
 
@@ -114,19 +115,18 @@ export const parseEvent = (evt: IEventResp): IEvent => {
     creator: evt.creator.username,
     date: dateToString(date),
     type: fromApiType(evt.type, EVENT_TYPES),
+    isoDate: evt.date,
   };
 };
 
-export const formatICalEvent = (evt: IEventResp): ICalEvent => {
-  const date = parseISO(evt.date);
- 
+export const formatICalEvent = (evt: IEventExtended): ICalEvent => {
+  const date = parseISO(evt.isoDate);
+
   return {
     date,
-    type: fromApiType(evt.type, EVENT_TYPES).id,
+    type: evt.type.id,
   };
 };
-
-
 
 export const toEventState = (evt: IEventResp): IEventState => {
   const date = parseISO(evt.date);

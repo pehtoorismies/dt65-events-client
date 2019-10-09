@@ -146,6 +146,7 @@ const ROUTES = {
   viewEvent: `${EVENTS_PATH}/:id`,
   events: EVENTS_PATH,
   forgotPassword: '/forgot-password',
+  calendar: '/calendar',
   home: '/',
   login: '/login',
   logout: '/logout',

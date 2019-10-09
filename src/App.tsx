@@ -11,7 +11,8 @@ import ApolloProvider from './ApolloProviderWithHistory';
 import { ROUTES } from './constants';
 import CreateEventContainer from './containers/CreateEventContainer';
 import EditEventContainer from './containers/EditEventContainer';
-import EventsContainer from './containers/EventsContainer';
+import EventsCalendarContainer from './containers/EventsCalendarContainer';
+import EventsListContainer from './containers/EventsListContainer';
 import ForgotPasswordContainer from './containers/ForgotPasswordContainer';
 import HeaderMenuContainer from './containers/HeaderMenuContainer';
 import LoginContainer from './containers/LoginContainer';
@@ -53,7 +54,13 @@ const App = () => (
                 <Dt65Route
                   exact={true}
                   path={ROUTES.home}
-                  component={EventsContainer}
+                  component={EventsListContainer}
+                  privateRoute={true}
+                />
+                <Dt65Route
+                  exact={true}
+                  path={ROUTES.calendar}
+                  component={EventsCalendarContainer}
                   privateRoute={true}
                 />
                 <Dt65Route
