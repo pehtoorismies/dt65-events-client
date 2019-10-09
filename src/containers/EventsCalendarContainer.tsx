@@ -11,6 +11,7 @@ import EventCalendar from '../components/EventCalendar';
 import { ROUTES } from '../constants';
 import withEvents, { IEventProps } from '../hoc/withEvents';
 import withUser, { IUserProps } from '../hoc/withUser';
+import withViewChooser from '../hoc/withViewChooser';
 import { ID, IYearMonth } from '../types';
 import { formatICalEvent } from '../util/general';
 
@@ -47,6 +48,7 @@ const EventsCalendarContainer: FunctionComponent<
 export default compose(
   withUser,
   withEvents,
+  withViewChooser,
   // @ts-ignore
   withRouter
 )(EventsCalendarContainer);
