@@ -18,7 +18,7 @@ const FilterIcon = styled(Filter)`
 
 const CloseIcon = styled(CloseCircle)`
   color: ${colors.white};
-  height: 14px;
+  height: 20px;
   margin-left: 5px;
 `;
 
@@ -40,7 +40,7 @@ const DateFilter: FunctionComponent<IProps> = (props: IProps) => {
       </Flex>
 
       <Flex
-        p={1}
+        p={2}
         bg="blue"
         sx={{
           borderRadius: '10px',

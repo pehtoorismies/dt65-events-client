@@ -122,7 +122,7 @@ const theme: any = {
     },
     primary: primaryButton,
     greyed: {
-      backgroundColor: 'darkwhite',
+      backgroundColor: 'lightergray',
     },
     mini: {
       ...primaryButton,
