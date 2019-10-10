@@ -36,7 +36,7 @@ const EditEventContainer: FunctionComponent<
     variables: { id },
   });
 
-  const [updateEventQuery] = useMutation(UPDATE_EVENT, {
+  const [updateEventMutation] = useMutation(UPDATE_EVENT, {
     onCompleted: () => {
       history.push(redirectTo);
       toast(`Tapahtuma päivitetty`);
@@ -55,7 +55,7 @@ const EditEventContainer: FunctionComponent<
 
   const applyEvent = async (evt: IEventReq) => {
     try {
-      await updateEventQuery({
+      await updateEventMutation({
         variables: {
           ...evt,
           id,

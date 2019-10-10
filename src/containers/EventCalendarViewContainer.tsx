@@ -6,6 +6,7 @@ import ViewChooser from '../components/ViewChooser';
 import { ROUTES } from '../constants';
 import { VIEW } from '../types';
 import Loader from '../components/Loader';
+import withSetHeaderTitle from '../hoc/withSetHeaderTitle'
 
 const EventCalendarContainer = React.lazy(() => import('./EventCalendarContainer'));
 
@@ -31,4 +32,5 @@ const EventCalendarViewContainer: FunctionComponent = () => {
   );
 };
 
-export default EventCalendarViewContainer;
+
+export default withSetHeaderTitle('kalenteri')(EventCalendarViewContainer);

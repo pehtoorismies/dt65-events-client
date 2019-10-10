@@ -1,37 +1,39 @@
 import { useMutation } from '@apollo/react-hooks';
 import compose from '@shopify/react-compose';
 import { isBefore } from 'date-fns';
+import parseISO from 'date-fns/parseISO';
 import findIndex from 'ramda/es/findIndex';
+import insert from 'ramda/es/insert';
 import replace from 'ramda/es/replace';
 import React, { FunctionComponent } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { withRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import useReactRouter from 'use-react-router';
 
 import EventWizard from '../components/EventWizard';
 import { ROUTES } from '../constants';
 import { CREATE_EVENT, EVENTS_QUERY } from '../gql';
+import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
 import withUser, { IUserProps } from '../hoc/withUser';
 import { IEventReq, IEventResp } from '../types';
-import insert from 'ramda/es/insert';
-import parseISO from 'date-fns/parseISO'
 
 const CreateEventContainer: FunctionComponent<
   RouteComponentProps & IUserProps
 > = (props: RouteComponentProps & IUserProps) => {
   const {
-    history,
     user: { username },
   } = props;
+
+  const { history } = useReactRouter();
 
   const [createEventQuery] = useMutation(CREATE_EVENT, {
     update: (cache, { data: { createEvent } }) => {
       const resp: any = cache.readQuery({ query: EVENTS_QUERY });
       const cachedEvents = resp.findManyEvents;
-      const createdDate : Date = parseISO(createEvent.date);
-      
+      const createdDate: Date = parseISO(createEvent.date);
+
       const comparison = (cachedEvt: any) => {
-        const cachedDate : Date = parseISO(cachedEvt.date);
+        const cachedDate: Date = parseISO(cachedEvt.date);
         return isBefore(createdDate, cachedDate);
       };
       const idx = findIndex(comparison)(cachedEvents);
@@ -78,6 +80,5 @@ const CreateEventContainer: FunctionComponent<
 
 export default compose(
   withUser,
-  // @ts-ignore
-  withRouter
+  withSetHeaderTitle('luo')
 )(CreateEventContainer);

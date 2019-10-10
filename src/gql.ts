@@ -39,6 +39,18 @@ const PreferencesFragment = gql`
   }
 `;
 
+export const GET_HEADER_TITLE = gql`
+  query HeaderTitle {
+    headerTitle @client
+  }
+`;
+
+export const SET_HEADER_TITLE = gql`
+  mutation HeaderTitle($headerTitle: String!) {
+    headerTitle(headerTitle: $headerTitle) @client
+  }
+`;
+
 export const GET_LOCALUSER = gql`
   query LocalUser {
     localUser @client {
