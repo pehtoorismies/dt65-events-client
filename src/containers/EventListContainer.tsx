@@ -7,6 +7,7 @@ import map from 'ramda/es/map';
 import propEq from 'ramda/es/propEq';
 import remove from 'ramda/es/remove';
 import replace from 'ramda/es/replace';
+import isValid from 'date-fns/isValid';
 import React, { Fragment, FunctionComponent, useState } from 'react';
 import { toast } from 'react-toastify';
 import { Button, Flex, Text } from 'rebass';
@@ -18,7 +19,11 @@ import { DELETE_EVENT_MUTATION, EVENTS_QUERY, TOGGLE_JOIN_EVENT } from '../gql';
 import withEvents, { IEventProps } from '../hoc/withEvents';
 import withUser, { IUserProps } from '../hoc/withUser';
 import { ID, IEvent } from '../types';
-import { queryParamsFrom, fromDateQueryFilter, filterByDate } from '../util/general';
+import {
+  queryParamsFrom,
+  fromDateQueryFilter,
+  filterByDate,
+} from '../util/general';
 
 const findLoading = (id: ID, loadingEvents: ID[]): boolean => {
   const idx = findIndex(equals(id))(loadingEvents);
@@ -34,13 +39,12 @@ const EventListContainer: FunctionComponent<IUserProps & IEventProps> = (
     refetchEvents,
   } = props;
 
-  const { history, location: {search} } = useReactRouter();
+  const {
+    history,
+    location: { search },
+  } = useReactRouter();
 
-
-  const date = fromDateQueryFilter(search)
-  const filteredEvents = filterByDate(events, date);
-
-
+  // HOOKS
   const [loadingEventsList, setLoadingEventsList] = useState<ID[]>([]);
 
   const [toggleJoinEventMutation, { error: errorJoin }] = useMutation(
@@ -76,6 +80,26 @@ const EventListContainer: FunctionComponent<IUserProps & IEventProps> = (
     },
   });
 
+  // END HOOKS
+
+  const date = fromDateQueryFilter(search);
+
+  if (date && !isValid(date)) {
+    const toEvents = () => history.push(ROUTES.home);
+    return (
+      <Flex flexDirection="column" alignItems="center">
+        <Text mt={4} textAlign="center">
+          Väärä päivämäärä-filtteri
+        </Text>
+        <Button onClick={toEvents} my={4}>
+          Tapahtumiin
+        </Button>
+      </Flex>
+    );
+  }
+
+  const filteredEvents = filterByDate(events, date);
+
   const toCreateEvent = () => history.push(ROUTES.createEvent);
   const joinEvent = async (eventId: ID) => {
     try {
@@ -91,9 +115,6 @@ const EventListContainer: FunctionComponent<IUserProps & IEventProps> = (
       setLoadingEventsList(removed);
     }
   };
-
-
-
 
   if (filteredEvents.length === 0) {
     return (
@@ -140,6 +161,10 @@ const EventListContainer: FunctionComponent<IUserProps & IEventProps> = (
 
   return (
     <Fragment>
+      <Flex>
+
+        
+      </Flex>
       <Flex flexDirection="column" alignItems="center" width="100%">
         {eventCards}
       </Flex>
