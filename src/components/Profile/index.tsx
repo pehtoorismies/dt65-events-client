@@ -1,4 +1,4 @@
-import React, { Fragment, FunctionComponent, ReactNode } from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 import { Box, Flex, Text } from 'rebass';
 import styled from 'styled-components';
 import { UserInjured } from 'styled-icons/fa-solid/UserInjured';

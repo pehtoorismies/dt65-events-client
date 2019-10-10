@@ -1,20 +1,20 @@
 import React, { FunctionComponent, ReactNode } from 'react';
 import { ApolloProvider } from 'react-apollo';
-import { RouteComponentProps } from 'react-router';
-import { withRouter } from 'react-router-dom';
+import useReactRouter from 'use-react-router';
 
 import createClient from './util/apolloClient';
 
-interface IProps  {
+interface IProps {
   children: ReactNode;
 }
 
-const ApolloProdiverWithHistory: FunctionComponent<RouteComponentProps & IProps> = (
-  props: RouteComponentProps & IProps
+const ApolloProdiverWithHistory: FunctionComponent<IProps> = (
+  props: IProps
 ) => {
-  const { children, history } = props;
+  const { children } = props;
+  const { history } = useReactRouter();
   const client = createClient(history);
-  return <ApolloProvider client={client}>{children}</ApolloProvider>
+  return <ApolloProvider client={client}>{children}</ApolloProvider>;
 };
 
-export default withRouter(ApolloProdiverWithHistory);
+export default ApolloProdiverWithHistory;

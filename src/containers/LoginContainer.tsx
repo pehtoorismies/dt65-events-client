@@ -1,8 +1,9 @@
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import React, { FunctionComponent, useState } from 'react';
-import { Redirect, RouteComponentProps } from 'react-router';
+import { Redirect } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import useReactRouter from 'use-react-router';
 
 import { TextLink } from '../components/Common';
 import { Login } from '../components/Forms/Auth';
@@ -21,10 +22,8 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-const LoginContainer: FunctionComponent<RouteComponentProps> = (
-  props: RouteComponentProps
-) => {
-  const { history } = props;
+const LoginContainer: FunctionComponent = () => {
+  const { history, location } = useReactRouter();
   const toForgotPassword = () => history.push(ROUTES.forgotPassword);
   const toRegister = () => history.push(ROUTES.register);
   const [generalError, setGeneralError] = useState('');
@@ -57,7 +56,7 @@ const LoginContainer: FunctionComponent<RouteComponentProps> = (
       const { graphQLErrors, networkError } = e;
       if (graphQLErrors) {
         console.error('gQL', graphQLErrors);
-        
+
         setGraphQLErrors(actions.setFieldError, setGeneralError, graphQLErrors);
       } else if (networkError) {
         console.error('networkError', networkError);
@@ -73,7 +72,7 @@ const LoginContainer: FunctionComponent<RouteComponentProps> = (
       <Redirect
         to={{
           pathname: ROUTES.home,
-          state: { from: props.location },
+          state: { from: location.pathname },
         }}
       />
     );

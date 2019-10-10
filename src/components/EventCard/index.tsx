@@ -9,7 +9,6 @@ import Switch from 'react-switch';
 import { Box, Card, Flex, Heading, Text } from 'rebass';
 import { Edit } from 'styled-icons/boxicons-regular/Edit';
 import { CaretDownCircle } from 'styled-icons/boxicons-solid/CaretDownCircle';
-import { Eye } from 'styled-icons/fa-solid/Eye';
 import { Medal } from 'styled-icons/fa-solid/Medal';
 
 import { ID, IEvent, ISimpleUser } from '../../types';
@@ -71,11 +70,6 @@ const common = css`
 
 const EditBtn = styled(Edit)`
   ${common};
-`;
-
-const EyeBtn = styled(Eye)`
-  ${common};
-  margin-right: 5px;
 `;
 
 interface IArrowProps {
@@ -162,7 +156,6 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
   const [showDetails, setShowDetails] = useState(stayOpened);
   const [disableDelete, setDisableDelete] = useState(true);
 
-  const eyeButton = onViewClick ? <EyeBtn onClick={viewClick} /> : null;
   const toggleOpenButton = !stayOpened ? (
     <DownArrow pointDown={!showDetails} onClick={exposeDetails} />
   ) : null;

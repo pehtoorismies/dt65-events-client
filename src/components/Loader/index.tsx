@@ -1,5 +1,5 @@
 // import { css } from '@emotion/core';
-import React, { FunctionComponent, useState, useEffect, useRef } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
 
 import { colors } from '../../theme';
@@ -15,7 +15,7 @@ const Loader: FunctionComponent = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(true);
-    }, 1000);
+    }, 400);
     return () => clearTimeout(timer);
   }, []);
 

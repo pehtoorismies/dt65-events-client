@@ -1,11 +1,21 @@
 import React, { FunctionComponent } from 'react';
-import { Text } from 'rebass';
+import { Flex, Text } from 'rebass';
 import MenuBar from './MenuBar';
 
-const Header: FunctionComponent = () => {
+interface IProps {
+  pageTitle?: string;
+}
+
+const Header: FunctionComponent<IProps> = (props: IProps) => {
+  const { pageTitle } = props;
   return (
     <MenuBar isFixedTop={true}>
-      <Text fontWeight="bold">Downtown65.events</Text>
+      <Flex width="100%">
+        <Text ml={3} width="60%" fontWeight="bold">Downtown65.events</Text>
+        <Text mr={3} textAlign="right" width="40%" color="grey" fontFamily="monospace" fontSize={1}>
+          /{pageTitle}
+        </Text>
+      </Flex>
     </MenuBar>
   );
 };
