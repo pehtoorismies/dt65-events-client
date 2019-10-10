@@ -119,7 +119,7 @@ const createClient = (history: any) => {
     data: {
       localUser: getLocalUser(getIdToken()),
       eventsView: 'LIST',
-      headerTitle: 'tapahtumat',
+      headerTitle: '',
     },
   });
 

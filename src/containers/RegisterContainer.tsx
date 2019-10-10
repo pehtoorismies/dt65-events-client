@@ -8,6 +8,7 @@ import useReactRouter from 'use-react-router';
 import { TextLink } from '../components/Common';
 import { Register } from '../components/Forms/Auth';
 import { ROUTES } from '../constants';
+import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
 import { setGraphQLErrors } from '../util/graphqlErrors';
 
 const SIGNUP_MUTATION = gql`
@@ -84,4 +85,4 @@ const RegisterContainer: FunctionComponent = () => {
   );
 };
 
-export default RegisterContainer;
+export default withSetHeaderTitle('rekisteröidy')(RegisterContainer);

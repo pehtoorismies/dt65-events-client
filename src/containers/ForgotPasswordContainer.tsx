@@ -1,13 +1,13 @@
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import React, { FunctionComponent } from 'react';
-import { withRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import useReactRouter from 'use-react-router';
 
 import { TextLink } from '../components/Common';
 import { ForgotPassword } from '../components/Forms/Auth';
 import { ROUTES } from '../constants';
+import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
 
 const FORGOT_PASSWORD_MUTATION = gql`
   mutation ForgotPassword($email: String!) {
@@ -35,4 +35,4 @@ const ForgotPasswordContainer: FunctionComponent = () => {
   );
 };
 
-export default withRouter(ForgotPasswordContainer);
+export default withSetHeaderTitle('salasana')(ForgotPasswordContainer);

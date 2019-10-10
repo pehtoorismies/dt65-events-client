@@ -2,13 +2,13 @@ import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import React, { FunctionComponent, useState } from 'react';
 import { Redirect } from 'react-router';
-import { withRouter } from 'react-router-dom';
 import useReactRouter from 'use-react-router';
 
 import { TextLink } from '../components/Common';
 import { Login } from '../components/Forms/Auth';
 import { ROUTES } from '../constants';
 import { GET_LOCALUSER } from '../gql';
+import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
 import { getLocalUser, login as authLogin } from '../util/auth';
 import { setGraphQLErrors } from '../util/graphqlErrors';
 
@@ -90,4 +90,4 @@ const LoginContainer: FunctionComponent = () => {
   );
 };
 
-export default withRouter(LoginContainer);
+export default withSetHeaderTitle('kirjaudu')(LoginContainer);
