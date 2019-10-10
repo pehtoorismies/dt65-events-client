@@ -10,6 +10,7 @@ import { Register } from '../components/Forms/Auth';
 import { ROUTES } from '../constants';
 import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
 import { setGraphQLErrors } from '../util/graphqlErrors';
+import toLower from 'ramda/es/toLower';
 
 const SIGNUP_MUTATION = gql`
   mutation Signup(
@@ -41,12 +42,18 @@ const RegisterContainer: FunctionComponent = () => {
   const [registerSuccess, setRegisterSuccess] = useState(false);
 
   const onSubmit = async (values: any, actions: any) => {
+    
     try {
+      const lowerCaseValues = {
+        ...values,
+        email: toLower(values.email)
+      };
+
       const {
         data: {
           signup: { email },
         },
-      } = await signupAction({ variables: values });
+      } = await signupAction({ variables: lowerCaseValues });
 
       client.writeData({ data: { registerEmail: email } });
       setRegisterSuccess(true);
