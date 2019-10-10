@@ -6,7 +6,6 @@ import findIndex from 'ramda/es/findIndex';
 import insert from 'ramda/es/insert';
 import replace from 'ramda/es/replace';
 import React, { FunctionComponent } from 'react';
-import { RouteComponentProps } from 'react-router';
 import { toast } from 'react-toastify';
 import useReactRouter from 'use-react-router';
 
@@ -17,9 +16,9 @@ import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
 import withUser, { IUserProps } from '../hoc/withUser';
 import { IEventReq, IEventResp } from '../types';
 
-const CreateEventContainer: FunctionComponent<
-  RouteComponentProps & IUserProps
-> = (props: RouteComponentProps & IUserProps) => {
+const CreateEventContainer: FunctionComponent<IUserProps> = (
+  props: IUserProps
+) => {
   const {
     user: { username },
   } = props;

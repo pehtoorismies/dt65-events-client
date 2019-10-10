@@ -2,8 +2,8 @@ import { useApolloClient, useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import React, { FunctionComponent, useState } from 'react';
 import { BallBeat } from 'react-pure-loaders';
-import { Redirect, RouteComponentProps } from 'react-router';
-import { withRouter } from 'react-router-dom';
+import { Redirect } from 'react-router';
+import useReactRouter from 'use-react-router';
 
 import { TextLink } from '../components/Common';
 import { Register } from '../components/Forms/Auth';
@@ -30,16 +30,12 @@ const SIGNUP_MUTATION = gql`
   }
 `;
 
-const RegisterContainer: FunctionComponent<RouteComponentProps> = (
-  props: RouteComponentProps
-) => {
-  const { history } = props;
+const RegisterContainer: FunctionComponent = () => {
+  const { history, location } = useReactRouter();
   const toLogin = () => history.push(ROUTES.login);
   const client = useApolloClient();
 
-  const [signupAction, { loading }] = useMutation(
-    SIGNUP_MUTATION
-  );
+  const [signupAction, { loading }] = useMutation(SIGNUP_MUTATION);
   const [generalError, setGeneralError] = useState('');
   const [registerSuccess, setRegisterSuccess] = useState(false);
 
@@ -50,15 +46,15 @@ const RegisterContainer: FunctionComponent<RouteComponentProps> = (
           signup: { email },
         },
       } = await signupAction({ variables: values });
-      
-      client.writeData({ data: { registerEmail: email } })
+
+      client.writeData({ data: { registerEmail: email } });
       setRegisterSuccess(true);
     } catch (error) {
       const { graphQLErrors, networkError } = error;
 
       if (graphQLErrors) {
         console.error('ERRORS', graphQLErrors);
-        
+
         setGraphQLErrors(actions.setFieldError, setGeneralError, graphQLErrors);
       } else if (networkError) {
         setGeneralError('Network problems');
@@ -69,13 +65,14 @@ const RegisterContainer: FunctionComponent<RouteComponentProps> = (
   };
 
   if (registerSuccess) {
-    return <Redirect
-    to={{
-      pathname: ROUTES.registerSuccess,
-      state: { from: props.location },
-    }}
-  />
-  
+    return (
+      <Redirect
+        to={{
+          pathname: ROUTES.registerSuccess,
+          state: { from: location.pathname },
+        }}
+      />
+    );
   }
   return (
     <Register onSubmit={onSubmit} errorMessage={generalError}>
@@ -87,4 +84,4 @@ const RegisterContainer: FunctionComponent<RouteComponentProps> = (
   );
 };
 
-export default withRouter(RegisterContainer);
+export default RegisterContainer;

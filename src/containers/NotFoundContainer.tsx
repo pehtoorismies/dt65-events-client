@@ -1,19 +1,14 @@
 import compose from '@shopify/react-compose';
 import React, { FunctionComponent } from 'react';
-import { RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import useReactRouter from 'use-react-router';
 
 import ErrorPage from '../components/ErrorPage';
 import { ROUTES } from '../constants';
 
-interface IProps {
-  id: number;
-}
 
-const NotFoundContainer: FunctionComponent<RouteComponentProps> = (
-  props: RouteComponentProps
-) => {
-  const { history } = props;
+const NotFoundContainer: FunctionComponent = () => {
+  const { history } = useReactRouter();
 
   const goHome = () => history.push(ROUTES.home);
 

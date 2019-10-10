@@ -1,20 +1,15 @@
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import compose from '@shopify/react-compose';
 import React, { FunctionComponent, useState } from 'react';
-import { RouteComponentProps } from 'react-router';
-import { withRouter } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import Preferences from '../components/Profile/Preferences';
 import { PREFERENCES_QUERY, UPDATE_PREFERENCES_MUTATION } from '../gql';
+import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
 import withUser from '../hoc/withUser';
 import { IPreferences } from '../types';
-import { toast } from 'react-toastify';
 
-const PreferencesContainer: FunctionComponent<RouteComponentProps> = (
-  props: RouteComponentProps
-) => {
-  const { history } = props;
-
+const PreferencesContainer: FunctionComponent = () => {
   const {
     loading: loadingPreferences,
     error: errorPreferences,
@@ -66,7 +61,6 @@ const PreferencesContainer: FunctionComponent<RouteComponentProps> = (
 };
 
 export default compose(
-  // @ts-ignore
-  withRouter,
-  withUser
+  withUser,
+  withSetHeaderTitle('tilaukset')
 )(PreferencesContainer);

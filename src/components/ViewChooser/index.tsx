@@ -6,12 +6,16 @@ import { ListUl } from 'styled-icons/boxicons-regular/ListUl';
 import { Calendar } from 'styled-icons/boxicons-regular/Calendar';
 import { VIEW } from '../../types';
 
-const Cal = styled(Calendar)`
-  color: white;
+interface IColor {
+  color: string;
+}
+
+const Cal = styled(Calendar)<IColor>`
+  color: ${(props: IColor) => props.color};
   height: 20px;
 `;
-const List = styled(ListUl)`
-  color: white;
+const List = styled(ListUl)<IColor>`
+  color: ${(props: IColor) => props.color};
   height: 20px;
 `;
 
@@ -31,21 +35,23 @@ const ViewChooser: FunctionComponent<IProps> = (props: IProps) => {
       <Box width="50%" mr="2px">
         <Button
           p={1}
-          variant={selectedView === VIEW.LIST ? 'primary' : 'secondary'}
+          variant={selectedView === VIEW.LIST ? 'primary' : 'greyed'}
           onClick={selectList}
           width="100%"
         >
-          <List />
+          <List color='white' />
         </Button>
       </Box>
       <Box width="50%">
         <Button
           p={1}
-          variant={selectedView === VIEW.CALENDAR ? 'primary' : 'secondary'}
+          variant={
+            selectedView === VIEW.CALENDAR ? 'primary' : 'greyed'
+          }
           onClick={selectCal}
           width="100%"
         >
-          <Cal />
+          <Cal color='white' />
         </Button>
       </Box>
     </Flex>

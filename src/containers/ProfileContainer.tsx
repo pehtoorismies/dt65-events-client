@@ -1,24 +1,25 @@
 import compose from '@shopify/react-compose';
 import React, { FunctionComponent } from 'react';
 import { withApollo, WithApolloClient } from 'react-apollo';
-import { RouteComponentProps } from 'react-router';
-import { withRouter } from 'react-router-dom';
 import { User } from 'styled-icons/boxicons-regular/User';
 import { Subscriptions } from 'styled-icons/material/Subscriptions';
+import useReactRouter from 'use-react-router';
 
 import Profile from '../components/Profile';
 import { ROUTES } from '../constants';
+import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
 import withUser, { IUserProps } from '../hoc/withUser';
 import { logout } from '../util/auth';
 
-const ProfileContainer: FunctionComponent<
-  WithApolloClient<RouteComponentProps & IUserProps>
-> = (props: WithApolloClient<RouteComponentProps & IUserProps>) => {
+const ProfileContainer: FunctionComponent<WithApolloClient<IUserProps>> = (
+  props: WithApolloClient<IUserProps>
+) => {
   const {
-    history,
     client,
     user: { username, picture },
   } = props;
+
+  const { history } = useReactRouter();
 
   // const go = (route: string) => () => {
   //   history.push(route);
@@ -60,7 +61,6 @@ const ProfileContainer: FunctionComponent<
 
 export default compose(
   withApollo,
-  // @ts-ignore
-  withRouter,
-  withUser
+  withUser,
+  withSetHeaderTitle('asetukset')
 )(ProfileContainer);

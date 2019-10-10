@@ -2,10 +2,11 @@ import React, { Fragment, FunctionComponent, Suspense } from 'react';
 import { Box, Flex } from 'rebass';
 import useReactRouter from 'use-react-router';
 
+import Loader from '../components/Loader';
 import ViewChooser from '../components/ViewChooser';
 import { ROUTES } from '../constants';
+import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
 import { VIEW } from '../types';
-import Loader from '../components/Loader';
 
 const EventListContainer = React.lazy(() => import('./EventListContainer'));
 
@@ -31,4 +32,4 @@ const EventListViewContainer: FunctionComponent = () => {
   );
 };
 
-export default EventListViewContainer;
+export default withSetHeaderTitle('tapahtumat')(EventListViewContainer);

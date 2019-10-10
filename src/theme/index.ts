@@ -121,6 +121,9 @@ const theme: any = {
       },
     },
     primary: primaryButton,
+    greyed: {
+      backgroundColor: 'darkwhite',
+    },
     mini: {
       ...primaryButton,
       backgroundColor: 'transparent',
