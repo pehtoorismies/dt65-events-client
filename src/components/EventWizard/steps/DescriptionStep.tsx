@@ -2,7 +2,7 @@ import React, { Fragment, FunctionComponent, useState } from 'react';
 import { Box, Flex } from 'rebass';
 import 'react-quill/dist/quill.snow.css';
 import ReactQuill from 'react-quill';
-import Helmet from 'react-helmet';
+// import Helmet from 'react-helmet';
 import BaseStep from './BaseStep';
 import { RightArrowButton, LeftArrowButton } from '../../Common';
 import { IEventStep } from '../../../types';
@@ -59,20 +59,6 @@ const DescriptionStep: FunctionComponent<IProps> = (props: IProps) => {
 
   return (
     <Fragment>
-      <Helmet>
-        <style>{`
-          .ql-editor {
-            min-height: 250px;
-          }
-          .ql-editor strong {
-            font-weight:bold;
-          }
-          .ql-editor em {
-            font-style: italic;
-          }
-          `}</style>
-      </Helmet>
-
       <BaseStep title="Tarkempi kuvaus">
         <Box p={2}>
           <ReactQuill

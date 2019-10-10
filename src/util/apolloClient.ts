@@ -25,9 +25,9 @@ const errorLinkWithHistory = (history: any) =>
   onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
       graphQLErrors.forEach((gqlError: any) => {
-        const { message, locations, path, name } = gqlError;
+        const { message, locations, path: errorPath, name } = gqlError;
         console.error(
-          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${errorPath}`
         );
 
         if (name === 'JWTError') {
@@ -68,19 +68,26 @@ const createClient = (history: any) => {
     ]),
     cache: inMemCache,
     typeDefs: `
+      enum EventsView {
+        CALENDAR
+        LIST
+      }
       type LocalUser {
         id: String!
-        username: String!return null null
+        username: String!
       }
       type Popup {
         visible: Boolean!
       }
-
       type Query {
         localUser: LocalUser
+        eventsView: EventsView
+        headerTitle: String
       }
+      
       type Mutation {
         logoutLocalUser: Boolean!
+        headerTitle(header: String!) : String! 
       }
   `,
     resolvers: {
@@ -95,6 +102,15 @@ const createClient = (history: any) => {
 
           return null;
         },
+        headerTitle: (_root, variables, { cache }) => {
+          const { headerTitle } = variables;
+
+          cache.writeData({
+            data: {
+              headerTitle,
+            },
+          });
+        },
       },
     },
   });
@@ -102,6 +118,8 @@ const createClient = (history: any) => {
   inMemCache.writeData({
     data: {
       localUser: getLocalUser(getIdToken()),
+      eventsView: 'LIST',
+      headerTitle: '',
     },
   });
 

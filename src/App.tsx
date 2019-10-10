@@ -11,7 +11,8 @@ import ApolloProvider from './ApolloProviderWithHistory';
 import { ROUTES } from './constants';
 import CreateEventContainer from './containers/CreateEventContainer';
 import EditEventContainer from './containers/EditEventContainer';
-import EventsContainer from './containers/EventsContainer';
+import EventCalendarViewContainer from './containers/EventCalendarViewContainer';
+import EventListViewContainer from './containers/EventListViewContainer';
 import ForgotPasswordContainer from './containers/ForgotPasswordContainer';
 import HeaderMenuContainer from './containers/HeaderMenuContainer';
 import LoginContainer from './containers/LoginContainer';
@@ -29,9 +30,6 @@ import { theme } from './theme';
 const myErrorHandler = (error: any, componentStack: string) => {
   // TODO: log errors
 };
-console.log('******')
-console.log(process.env.REACT_APP_GRAPHQL_SERVER);
-console.log('/******')
 
 const App = () => (
   <Fragment>
@@ -56,7 +54,13 @@ const App = () => (
                 <Dt65Route
                   exact={true}
                   path={ROUTES.home}
-                  component={EventsContainer}
+                  component={EventListViewContainer}
+                  privateRoute={true}
+                />
+                <Dt65Route
+                  exact={true}
+                  path={ROUTES.calendar}
+                  component={EventCalendarViewContainer}
                   privateRoute={true}
                 />
                 <Dt65Route

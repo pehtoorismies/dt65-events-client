@@ -1,10 +1,9 @@
 import React, { Fragment } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 import { ROUTES } from './constants';
 import FooterMenuContainer from './containers/FooterMenuContainer';
-import { isAuthenticated, logout } from './util/auth';
+import { hasAccessToken, logout } from './util/auth';
 
 interface IPrivateRouteProps extends RouteProps {
   // tslint:disable-next-line:no-any
@@ -28,9 +27,9 @@ const Dt65Route = (props: IPrivateRouteProps) => {
           );
         }
 
-        const valid = isAuthenticated();
-
-        if (valid) {
+        const hasToken = hasAccessToken();
+        // TOOO: check expiration
+        if (hasToken) {
           return (
             <Fragment>
               <FooterMenuContainer />
@@ -38,10 +37,6 @@ const Dt65Route = (props: IPrivateRouteProps) => {
             </Fragment>
           );
         }
-
-        // toast.warn(errorMessage);
-        // console.error(errorMessage);
-        // logout();
 
         return (
           <Redirect

@@ -28,7 +28,6 @@ const MenuBar = (props: any) => (
     color="pink"
     bg="white"
     width="100%"
-    justifyContent="space-around"
     alignItems="center"
     height={40}
     sx={getFixStyles(props.isFixedTop)}

@@ -1,7 +1,6 @@
 import React, { FunctionComponent, Fragment } from 'react';
 import { Flex, Text } from 'rebass';
 import DayPicker from 'react-day-picker';
-import Helmet from 'react-helmet';
 import 'react-day-picker/lib/style.css';
 import dateFnsFormat from 'date-fns/format';
 import startOfToday from 'date-fns/startOfToday'
@@ -37,11 +36,6 @@ const DateStep: FunctionComponent<IProps> = (props: IProps) => {
 
   return (
     <Fragment>
-      <Helmet>
-        <style>{`
-          
-          `}</style>
-      </Helmet>
       <BaseStep title="Päivämäärä">
         <Flex
           width="100%"

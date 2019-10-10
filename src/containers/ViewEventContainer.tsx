@@ -1,29 +1,28 @@
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import compose from '@shopify/react-compose';
 import path from 'ramda/es/path';
+import replace from 'ramda/es/replace';
 import React, { FunctionComponent } from 'react';
-import { RouteComponentProps } from 'react-router';
-import { withRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import useReactRouter from 'use-react-router';
 
 import EventCard from '../components/EventCard';
-import { ROUTES, QUERY_PARAMS } from '../constants';
+import { QUERY_PARAMS, ROUTES } from '../constants';
 import { DELETE_EVENT_MUTATION, EVENT_QUERY, TOGGLE_JOIN_EVENT } from '../gql';
+import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
 import withUser, { IUserProps } from '../hoc/withUser';
 import { ID } from '../types';
 import { parseEvent, queryParamsFrom } from '../util/general';
-import replace from 'ramda/es/replace';
 
-const ViewEventContainer: FunctionComponent<
-  RouteComponentProps & IUserProps
-> = (props: RouteComponentProps & IUserProps) => {
+const ViewEventContainer: FunctionComponent<IUserProps> = (
+  props: IUserProps
+) => {
   const {
-    history,
-    match,
     user: { username },
   } = props;
-  const id = path(['params', 'id'], match);
 
+  const { history, match } = useReactRouter();
+  const id = path(['params', 'id'], match);
   const [toggleJoinEventMutation, { loading: loadingJoin }] = useMutation(
     TOGGLE_JOIN_EVENT
   );
@@ -87,6 +86,5 @@ const ViewEventContainer: FunctionComponent<
 
 export default compose(
   withUser,
-  // @ts-ignore
-  withRouter
+  withSetHeaderTitle('tapahtuma')
 )(ViewEventContainer);

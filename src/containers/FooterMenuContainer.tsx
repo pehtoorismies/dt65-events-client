@@ -1,14 +1,11 @@
 import React, { FunctionComponent } from 'react';
-import { RouteComponentProps } from 'react-router';
-import { withRouter } from 'react-router-dom';
+import useReactRouter from 'use-react-router';
 
 import { MenuFooter } from '../components/Menu';
 import { ROUTES } from '../constants';
 
-const FooterMenuContainer: FunctionComponent<RouteComponentProps> = (
-  props: RouteComponentProps
-) => {
-  const { history } = props;
+const FooterMenuContainer: FunctionComponent = () => {
+  const { history } = useReactRouter();
 
   const go = (route: string) => () => {
     history.push(route);
@@ -27,4 +24,4 @@ const FooterMenuContainer: FunctionComponent<RouteComponentProps> = (
   );
 };
 
-export default withRouter(FooterMenuContainer);
+export default FooterMenuContainer;

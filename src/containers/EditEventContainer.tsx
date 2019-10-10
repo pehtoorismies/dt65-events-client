@@ -2,25 +2,28 @@ import { useMutation, useQuery } from '@apollo/react-hooks';
 import compose from '@shopify/react-compose';
 import path from 'ramda/es/path';
 import React, { FunctionComponent } from 'react';
-import { RouteComponentProps } from 'react-router';
-import { withRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import useReactRouter from 'use-react-router';
 
 import EventWizard from '../components/EventWizard';
 import { EVENT_QUERY, UPDATE_EVENT } from '../gql';
+import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
 import withUser, { IUserProps } from '../hoc/withUser';
 import { IEventReq } from '../types';
-import { toEventState, fromUrlFromQueryString } from '../util/general';
+import { fromUrlFromQueryString, toEventState } from '../util/general';
 
-const EditEventContainer: FunctionComponent<
-  RouteComponentProps & IUserProps
-> = (props: RouteComponentProps & IUserProps) => {
+const EditEventContainer: FunctionComponent<IUserProps> = (
+  props: IUserProps
+) => {
+  const {
+    user: { username },
+  } = props;
+
   const {
     history,
     match,
     location: { search },
-    user: { username },
-  } = props;
+  } = useReactRouter();
 
   const id = path(['params', 'id'], match);
   const redirectTo = fromUrlFromQueryString(search, String(id));
@@ -36,7 +39,7 @@ const EditEventContainer: FunctionComponent<
     variables: { id },
   });
 
-  const [updateEventQuery] = useMutation(UPDATE_EVENT, {
+  const [updateEventMutation] = useMutation(UPDATE_EVENT, {
     onCompleted: () => {
       history.push(redirectTo);
       toast(`Tapahtuma päivitetty`);
@@ -55,7 +58,7 @@ const EditEventContainer: FunctionComponent<
 
   const applyEvent = async (evt: IEventReq) => {
     try {
-      await updateEventQuery({
+      await updateEventMutation({
         variables: {
           ...evt,
           id,
@@ -78,6 +81,5 @@ const EditEventContainer: FunctionComponent<
 
 export default compose(
   withUser,
-  // @ts-ignore
-  withRouter
+  withSetHeaderTitle('edit')
 )(EditEventContainer);

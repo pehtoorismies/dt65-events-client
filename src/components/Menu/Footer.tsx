@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/core';
+import { Flex } from 'rebass';
 import { Home } from 'styled-icons/boxicons-solid/Home';
 import { PlusSquare } from 'styled-icons/boxicons-solid/PlusSquare';
 import { User } from 'styled-icons/boxicons-solid/User';
@@ -38,9 +39,11 @@ const Footer: FunctionComponent<IProps> = (props: IProps) => {
 
   return (
     <MenuBar isFixedTop={false}>
-      <HomeIcon {...dimensions} onClick={onHomeClick} />
-      <AddIcon {...dimensions} onClick={onAddEventClick} />
-      <ProfileIcon {...dimensions} onClick={onProfileClick} />
+      <Flex justifyContent="space-between" width="100%" mx={3}>
+        <HomeIcon {...dimensions} onClick={onHomeClick} />
+        <AddIcon {...dimensions} onClick={onAddEventClick} />
+        <ProfileIcon {...dimensions} onClick={onProfileClick} />
+      </Flex>
     </MenuBar>
   );
 };
