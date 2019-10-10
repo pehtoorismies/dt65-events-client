@@ -34,11 +34,13 @@ import logo_triathlon from '../../images/calendar-logos/triathlon.png';
 import logo_kickoff from '../../images/calendar-logos/kickoff.png';
 import { format } from 'date-fns';
 
+type DaySelect = (date: string) => void; 
+
 interface IProps {
   start: IYearMonth;
   monthCount: number;
   events: ICalEvent[];
-  onSelectDay?: (date: string) => void;
+  onSelectDay: DaySelect;
 }
 
 const Grid = styled.div`
@@ -108,7 +110,7 @@ const renderEventIcon = (evt: ICalEvent) => {
   );
 };
 
-const renderDay = (monthEvents: ICalEvent[]) => (index: number) => {
+const renderDay = (monthEvents: ICalEvent[], onSelectDay: DaySelect) => (index: number) => {
   const filterByDay = (e: ICalEvent) => {
     return index + 1 === getDate(e.date);
   };
@@ -120,7 +122,7 @@ const renderDay = (monthEvents: ICalEvent[]) => (index: number) => {
     const evt: ICalEvent | undefined = head(currentDayEvents);
     if (evt) {
       const f = format(evt.date, 'yyyy-MM-dd');
-      
+      onSelectDay(f);
     }
   };
 
@@ -154,7 +156,7 @@ const startOfMonthDay = pipe(
   getDay
 );
 
-const renderMonth = (events: ICalEvent[]) => (yearMonth: IYearMonth) => {
+const renderMonth = (events: ICalEvent[], onSelectDay: DaySelect) => (yearMonth: IYearMonth) => {
   const { year, monthIndex } = yearMonth;
   const now = new Date(year, monthIndex);
   const d = startOfMonthDay(now);
@@ -179,7 +181,7 @@ const renderMonth = (events: ICalEvent[]) => (yearMonth: IYearMonth) => {
       </Flex>
       <Grid>
         {times(renderBlank, startBlanksCount)}
-        {times(renderDay(currentMonthEvents), daysInMonth)}
+        {times(renderDay(currentMonthEvents, onSelectDay), daysInMonth)}
         {times(renderBlank, endBlanksCount)}
       </Grid>
     </Fragment>
@@ -215,7 +217,7 @@ const EventCalendar: FunctionComponent<IProps> = (props: IProps) => {
   return (
     <div>
       <Header>{map(renderHeader, WEEK_DAYS)}</Header>
-      <Box>{map(renderMonth(events), nextMonths)}</Box>
+      <Box>{map(renderMonth(events, onSelectDay), nextMonths)}</Box>
     </div>
   );
 };

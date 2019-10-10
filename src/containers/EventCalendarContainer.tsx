@@ -12,6 +12,7 @@ import withEvents, { IEventProps } from '../hoc/withEvents';
 import withUser, { IUserProps } from '../hoc/withUser';
 import { ID, IYearMonth } from '../types';
 import { formatICalEvent } from '../util/general';
+import { height } from 'styled-system';
 
 const EventCalendarContainer: FunctionComponent<IUserProps & IEventProps> = (
   props: IUserProps & IEventProps
@@ -37,10 +38,19 @@ const EventCalendarContainer: FunctionComponent<IUserProps & IEventProps> = (
   };
   const iCalEvents = map(formatICalEvent, events);
 
+  const selectDay = (formattedDate: string) => {
+    history.push(`${ROUTES.home}?datefilter=${formattedDate}`)
+  };
+
   return (
     <Fragment>
       <Box width="100%" mt="5px">
-        <EventCalendar start={start} monthCount={12} events={iCalEvents} />
+        <EventCalendar
+          start={start}
+          monthCount={6}
+          events={iCalEvents}
+          onSelectDay={selectDay}
+        />
       </Box>
     </Fragment>
   );

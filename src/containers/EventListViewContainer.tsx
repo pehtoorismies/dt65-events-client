@@ -11,7 +11,11 @@ const EventListContainer = React.lazy(() => import('./EventListContainer'));
 
 const EventListViewContainer: FunctionComponent = () => {
   const { history } = useReactRouter();
-  const toCalendarView = () => history.push(ROUTES.calendar);
+  const toCalendarView = (type: VIEW) => {
+    if (type === VIEW.CALENDAR) {
+      history.push(ROUTES.calendar);
+    }
+  };
 
   return (
     <Fragment>

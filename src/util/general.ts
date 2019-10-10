@@ -1,5 +1,5 @@
 import format from 'date-fns/format';
-import { setHours, setMinutes } from 'date-fns/fp';
+import { endOfDay, setHours, setMinutes, startOfDay } from 'date-fns/fp';
 import getHours from 'date-fns/getHours';
 import getMinutes from 'date-fns/getMinutes';
 import { fi } from 'date-fns/locale';
@@ -7,8 +7,10 @@ import parseISO from 'date-fns/parseISO';
 import qs from 'qs';
 import { isNull, isUndefined } from 'ramda-adjunct';
 import compose from 'ramda/es/compose';
+import filter from 'ramda/es/filter';
 import find from 'ramda/es/find';
 import findIndex from 'ramda/es/findIndex';
+import path from 'ramda/es/path';
 import prop from 'ramda/es/prop';
 import propEq from 'ramda/es/propEq';
 import replace from 'ramda/es/replace';
@@ -16,14 +18,13 @@ import replace from 'ramda/es/replace';
 import { EVENT_TYPES, QUERY_PARAMS, ROUTES } from '../constants';
 import {
   EventType,
-  IEvent,
+  ICalEvent,
+  IEventExtended,
   IEventResp,
   IEventState,
   IEventType,
   ISimpleUser,
   ITime,
-  ICalEvent,
-  IEventExtended,
 } from '../types';
 
 export const isNullOrUndefined = (a: any) => isNull(a) || isUndefined(a);
@@ -161,4 +162,34 @@ export const fromUrlFromQueryString = (
     return replace(/:id/g, String(eventId), ROUTES.viewEvent);
   }
   return ROUTES.home;
+};
+
+export const fromDateQueryFilter = (qString: string): Date | undefined => {
+  const params = qs.parse(qString, { ignoreQueryPrefix: true });
+
+  const dateString: string | undefined = path(['datefilter'], params);
+  if (!dateString) {
+    return;
+  }
+
+  return parseISO(dateString);
+};
+
+export const filterByDate = (
+  events: IEventExtended[],
+  date?: Date
+): IEventExtended[] => {
+  if (!date) {
+    return events;
+  }
+
+  const start = startOfDay(date).getTime();
+  const end = endOfDay(date).getTime();
+
+  const dateFilter = (e: IEventExtended): boolean => {
+    const eventDate = parseISO(e.isoDate).getTime();
+    return eventDate >= start && eventDate <= end;
+  };
+
+  return filter(dateFilter, events);
 };

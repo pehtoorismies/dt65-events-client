@@ -30,5 +30,10 @@ const events: ICalEvent[] = [
 ];
 
 storiesOf('EventCalendar', module).add('story', () => (
-  <EventCalendar start={start} monthCount={12} events={events} />
+  <EventCalendar
+    start={start}
+    monthCount={12}
+    events={events}
+    onSelectDay={action('Select')}
+  />
 ));

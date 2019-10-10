@@ -18,7 +18,7 @@ import { DELETE_EVENT_MUTATION, EVENTS_QUERY, TOGGLE_JOIN_EVENT } from '../gql';
 import withEvents, { IEventProps } from '../hoc/withEvents';
 import withUser, { IUserProps } from '../hoc/withUser';
 import { ID, IEvent } from '../types';
-import { queryParamsFrom } from '../util/general';
+import { queryParamsFrom, fromDateQueryFilter, filterByDate } from '../util/general';
 
 const findLoading = (id: ID, loadingEvents: ID[]): boolean => {
   const idx = findIndex(equals(id))(loadingEvents);
@@ -34,8 +34,12 @@ const EventListContainer: FunctionComponent<IUserProps & IEventProps> = (
     refetchEvents,
   } = props;
 
-  const { history, location } = useReactRouter();
-  console.log(location)
+  const { history, location: {search} } = useReactRouter();
+
+
+  const date = fromDateQueryFilter(search)
+  const filteredEvents = filterByDate(events, date);
+
 
   const [loadingEventsList, setLoadingEventsList] = useState<ID[]>([]);
 
@@ -88,7 +92,10 @@ const EventListContainer: FunctionComponent<IUserProps & IEventProps> = (
     }
   };
 
-  if (events.length === 0) {
+
+
+
+  if (filteredEvents.length === 0) {
     return (
       <Flex flexDirection="column" alignItems="center">
         <Text mt={4} textAlign="center">
@@ -129,7 +136,7 @@ const EventListContainer: FunctionComponent<IUserProps & IEventProps> = (
         onEditClick={onEditEvent}
       />
     );
-  }, events);
+  }, filteredEvents);
 
   return (
     <Fragment>
