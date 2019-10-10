@@ -4,5 +4,5 @@ import DateFilter from '.';
 import { action } from '@storybook/addon-actions';
 
 storiesOf('DateFilter', module).add('story', () => (
-  <DateFilter />
+  <DateFilter date={new Date()} onClearDate={action('Clear')} />
 ));

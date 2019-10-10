@@ -18,7 +18,15 @@ body {
 p {
   line-height: 1.3;
 }
-
+.ql-editor {
+  min-height: 250px;
+}
+.ql-editor strong {
+  font-weight:bold;
+}
+.ql-editor em {
+  font-style: italic;
+}
 `;
 
 export default GlobalStyle;

@@ -14,6 +14,7 @@ import { Button, Flex, Text } from 'rebass';
 import useReactRouter from 'use-react-router';
 
 import EventCard from '../components/EventCard';
+import DateFilter from '../components/DateFilter';
 import { QUERY_PARAMS, ROUTES } from '../constants';
 import { DELETE_EVENT_MUTATION, EVENTS_QUERY, TOGGLE_JOIN_EVENT } from '../gql';
 import withEvents, { IEventProps } from '../hoc/withEvents';
@@ -159,12 +160,11 @@ const EventListContainer: FunctionComponent<IUserProps & IEventProps> = (
     );
   }, filteredEvents);
 
+  const gotoEvents = () => history.push(ROUTES.home);
+
   return (
     <Fragment>
-      <Flex>
-
-        
-      </Flex>
+      <DateFilter date={date} onClearDate={gotoEvents} />
       <Flex flexDirection="column" alignItems="center" width="100%">
         {eventCards}
       </Flex>
