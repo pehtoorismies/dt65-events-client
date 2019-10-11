@@ -2,7 +2,9 @@ import compose from '@shopify/react-compose';
 import React, { FunctionComponent } from 'react';
 import { withApollo, WithApolloClient } from 'react-apollo';
 import { User } from 'styled-icons/boxicons-regular/User';
+import { LogOut } from 'styled-icons/boxicons-regular/LogOut';
 import { Subscriptions } from 'styled-icons/material/Subscriptions';
+import { Profile as ProfileIcon } from 'styled-icons/icomoon/Profile';
 import useReactRouter from 'use-react-router';
 
 import Profile from '../components/Profile';
@@ -27,22 +29,30 @@ const ProfileContainer: FunctionComponent<WithApolloClient<IUserProps>> = (
 
   const buttons = [
     {
-      id: 1,
+      id: 2,
+      title: 'Profiili',
+      onClick: () => {
+        history.push(ROUTES.profileInfo);
+      },
+      icon: ProfileIcon,
+    },
+    {
+      id: 3,
+      title: 'Sähköpostiasetukset',
+      onClick: () => {
+        history.push(ROUTES.preferences);
+      },
+      icon: Subscriptions,
+    },
+    {
+      id: 21,
       title: 'Logout',
       onClick: async () => {
         logout();
         await client.clearStore();
         history.push(ROUTES.login);
       },
-      icon: User,
-    },
-    {
-      id: 2,
-      title: 'Sähköpostiasetukset',
-      onClick: () => {
-        history.push(ROUTES.preferences);
-      },
-      icon: Subscriptions,
+      icon: LogOut,
     },
   ];
 

@@ -151,3 +151,10 @@ export interface ICalEvent {
   date: Date;
   type: EventType,
 }
+export interface IUserInfo {
+  id: string;
+  username: string;
+  email: string;
+  name: string;
+  avatar?: string;
+}

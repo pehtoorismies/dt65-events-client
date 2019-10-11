@@ -8,7 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import { Flex } from 'rebass';
 
 import ApolloProvider from './ApolloProviderWithHistory';
-import { ROUTES } from './constants';
+import { MEASURES, ROUTES } from './constants';
 import CreateEventContainer from './containers/CreateEventContainer';
 import EditEventContainer from './containers/EditEventContainer';
 import EventCalendarViewContainer from './containers/EventCalendarViewContainer';
@@ -22,6 +22,7 @@ import ProfileContainer from './containers/ProfileContainer';
 import RegisterContainer from './containers/RegisterContainer';
 import RegisterSuccessContainer from './containers/RegisterSuccessContainer';
 import ShowErrorContainer from './containers/ShowErrorContainer';
+import UserInfoContainer from './containers/UserInfoContainer';
 import ViewEventContainer from './containers/ViewEventContainer';
 import Dt65Route from './Dt65Route';
 import GlobalStyle from './GlobalStyle';
@@ -39,7 +40,7 @@ const App = () => (
       <Router>
         <ApolloProvider>
           <Flex
-            py={40}
+            py={MEASURES.headerHeight}
             px={2}
             alignItems="center"
             flexDirection="column"
@@ -91,6 +92,12 @@ const App = () => (
                   exact={true}
                   path={ROUTES.preferences}
                   component={PreferencesContainer}
+                  privateRoute={true}
+                />
+                <Dt65Route
+                  exact={true}
+                  path={ROUTES.profileInfo}
+                  component={UserInfoContainer}
                   privateRoute={true}
                 />
                 <Dt65Route

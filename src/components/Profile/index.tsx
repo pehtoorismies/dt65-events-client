@@ -2,8 +2,9 @@ import React, { FunctionComponent, ReactNode } from 'react';
 import { Box, Flex, Text } from 'rebass';
 import styled from 'styled-components';
 import { UserInjured } from 'styled-icons/fa-solid/UserInjured';
-import { ArrowButton } from '../Common';
+
 import { colors } from '../../theme';
+import { ArrowButton } from '../Common';
 
 interface IButton {
   id: string | number;
@@ -47,7 +48,7 @@ const Profile: FunctionComponent<IProps> = (props: IProps) => {
   const Icon = getProfileCmp(profileUrl);
 
   return (
-    <Box width="100%" sx={{ maxWidth: '500px'}}>
+    <Box width="100%" sx={{ maxWidth: '500px' }}>
       <Flex
         width="100%"
         p={3}
@@ -67,7 +68,7 @@ const Profile: FunctionComponent<IProps> = (props: IProps) => {
           {username}
         </Text>
       </Flex>
-      <Box width="100%" >
+      <Box width="100%">
         {buttons.map((b: IButton) => (
           <ArrowButton
             key={b.id}

@@ -91,6 +91,28 @@ export const PREFERENCES_QUERY = gql`
   ${PreferencesFragment}
 `;
 
+export const ME_QUERY = gql`
+  query Me {
+    me {
+      id
+      name
+      email
+      username
+    }
+  }
+`;
+
+export const ME_MUTATION = gql`
+  mutation UpdateMe($name: String!) {
+    updateMe(name: $name) {
+      id
+      name
+      email
+      username
+    }
+  }
+`;
+
 export const EVENTS_QUERY = gql`
   query FindEvents($limit: Int) {
     findManyEvents(limit: $limit) {
