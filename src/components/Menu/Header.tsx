@@ -8,6 +8,7 @@ import { colors } from '../../theme';
 interface IProps {
   pageTitle?: string;
   onBack: () => void;
+  backDisabled?: boolean;
 }
 
 const BackIcon = styled(ArrowBack)`
@@ -16,15 +17,21 @@ const BackIcon = styled(ArrowBack)`
 `;
 
 const Header: FunctionComponent<IProps> = (props: IProps) => {
-  const { pageTitle, onBack } = props;
+  const { pageTitle, onBack, backDisabled } = props;
+
+  const backButton = backDisabled ? (
+    undefined
+  ) : (
+    <Flex sx={{ borderRadius: '50%' }} bg="darkWhite" p={1}>
+      <BackIcon onClick={onBack} />
+    </Flex>
+  );
+
   return (
     <MenuBar isFixedTop={true}>
       <Flex width="100%" justifyContent="space-between" alignItems="center">
         <Flex alignItems="center" ml={2}>
-          <Flex sx={{ borderRadius: "50%"}} bg="darkWhite" p={1}>
-            <BackIcon onClick={onBack}  />
-          </Flex>
-          
+          {backButton}
           <Text ml={3} fontWeight="bold">
             Downtown65.events
           </Text>
@@ -33,7 +40,6 @@ const Header: FunctionComponent<IProps> = (props: IProps) => {
         <Text
           mr={3}
           textAlign="right"
-          
           color="grey"
           fontFamily="monospace"
           fontSize={1}
