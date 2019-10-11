@@ -24,6 +24,7 @@ import RegisterSuccessContainer from './containers/RegisterSuccessContainer';
 import ShowErrorContainer from './containers/ShowErrorContainer';
 import UserInfoContainer from './containers/UserInfoContainer';
 import ViewEventContainer from './containers/ViewEventContainer';
+import UserListContainer from './containers/UserListContainer';
 import Dt65Route from './Dt65Route';
 import GlobalStyle from './GlobalStyle';
 import { theme } from './theme';
@@ -98,6 +99,12 @@ const App = () => (
                   exact={true}
                   path={ROUTES.profileInfo}
                   component={UserInfoContainer}
+                  privateRoute={true}
+                />
+                 <Dt65Route
+                  exact={true}
+                  path={ROUTES.userList}
+                  component={UserListContainer}
                   privateRoute={true}
                 />
                 <Dt65Route

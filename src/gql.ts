@@ -61,6 +61,16 @@ export const GET_LOCALUSER = gql`
   }
 `;
 
+export const USERS_QUERY = gql`
+  query Users {
+    users {
+      id
+      username
+      name
+    }
+  }
+`;
+
 export const GET_EVENT_VIEW = gql`
   query EventsView {
     eventsView @client

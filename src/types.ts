@@ -123,7 +123,7 @@ export interface IEvent extends IEventBase {
 }
 
 export interface IEventExtended extends IEvent {
-  isoDate: string
+  isoDate: string;
 }
 
 interface IResponse {
@@ -149,12 +149,16 @@ export interface IYearMonth {
 
 export interface ICalEvent {
   date: Date;
-  type: EventType,
+  type: EventType;
 }
-export interface IUserInfo {
-  id: string;
+
+export interface IBaseUserInfo {
+  id: ID;
   username: string;
-  email: string;
   name: string;
   avatar?: string;
+}
+
+export interface IUserInfo extends IBaseUserInfo {
+  email: string;
 }
