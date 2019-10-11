@@ -1217,7 +1217,7 @@
   dependencies:
     tslib "^1.9.3"
 
-"@storybook/addon-actions@^5.1.11":
+"@storybook/addon-actions@^5.2.3":
   version "5.2.3"
   resolved "https://registry.yarnpkg.com/@storybook/addon-actions/-/addon-actions-5.2.3.tgz#40675f1258428074eebd363e5f9468adeec79046"
   dependencies:
@@ -1293,7 +1293,7 @@
     prop-types "^15.7.2"
     qs "^6.6.0"
 
-"@storybook/addon-viewport@^5.1.11":
+"@storybook/addon-viewport@^5.2.3":
   version "5.2.3"
   resolved "https://registry.yarnpkg.com/@storybook/addon-viewport/-/addon-viewport-5.2.3.tgz#09bbed5d06297eb58272a065d6c68fc71e22a79b"
   dependencies:
@@ -1990,7 +1990,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@16.10.2":
+"@types/react@*":
   version "16.9.5"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.5.tgz#079dabd918b19b32118c25fd00a786bb6d0d5e51"
   dependencies:

@@ -153,9 +153,23 @@ const ROUTES = {
   notFound: '/404',
   profile: PROFILE_PATH,
   profileSubscriptions: `${PROFILE_PATH}/subscriptions`,
+  profileInfo: `${PROFILE_PATH}/info`,
   register: '/register',
   registerSuccess: '/registerSuccess',
-  preferences: '/preferences'
+  preferences: '/preferences',
 };
 
-export { FI_LOCAL, EVENT_TYPES, WEEK_DAYS, ROUTES, GRAPHQL_TYPES, QUERY_PARAMS };
+const MEASURES = {
+  headerHeight: 50,
+  footerHeight: 40,
+};
+
+export {
+  FI_LOCAL,
+  EVENT_TYPES,
+  WEEK_DAYS,
+  ROUTES,
+  GRAPHQL_TYPES,
+  QUERY_PARAMS,
+  MEASURES,
+};

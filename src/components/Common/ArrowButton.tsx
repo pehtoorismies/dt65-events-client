@@ -20,8 +20,8 @@ const ArrowButton: FunctionComponent<IProps> = (props: IProps) => {
 
   const Icn = styled(icon)`
     color: white;
-    height: 15px;
-    width: 15px;
+    height: 18px;
+    width: 18px;
     margin-right: 6px;
   `;
 

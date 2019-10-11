@@ -1,4 +1,5 @@
 import { addDecorator, addParameters, configure } from '@storybook/react';
+import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import { ThemeProvider } from 'emotion-theming';
 import React from 'react';
 
@@ -22,7 +23,12 @@ const withGlobalStyles = storyFn => (
   </React.Fragment>
 );
 
-addParameters({ viewport: { defaultViewport: 'iphone5' } });
+addParameters({
+  viewport: {
+    viewports: INITIAL_VIEWPORTS,
+    defaultViewport: 'iphone5'
+  },
+});
 addDecorator(withGlobalStyles);
 
 // automatically import all files ending in *.stories.tsx
