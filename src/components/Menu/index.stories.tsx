@@ -11,5 +11,6 @@ storiesOf('Menus', module)
       onAddEventClick={action('Add event')}
       onHomeClick={action('Go home')}
       onProfileClick={action('Show profile')}
+      onUserListClick={action('Show user list')}
     />
   ));

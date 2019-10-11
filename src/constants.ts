@@ -157,6 +157,7 @@ const ROUTES = {
   register: '/register',
   registerSuccess: '/registerSuccess',
   preferences: '/preferences',
+  userList: '/user-list',
 };
 
 const MEASURES = {

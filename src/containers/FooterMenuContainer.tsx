@@ -14,12 +14,14 @@ const FooterMenuContainer: FunctionComponent = () => {
   const goHome = go(ROUTES.home);
   const goProfile = go(ROUTES.profile);
   const goAddEvent = go(ROUTES.createEvent);
+  const goUserList = go(ROUTES.userList);
 
   return (
     <MenuFooter
       onAddEventClick={goAddEvent}
       onHomeClick={goHome}
       onProfileClick={goProfile}
+      onUserListClick={goUserList}
     />
   );
 };

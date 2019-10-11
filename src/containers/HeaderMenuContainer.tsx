@@ -18,7 +18,7 @@ const disabledPaths: string[] = [
 ];
 
 const HeaderMenuContainer = () => {
-  const { loading, error, data } = useQuery(GET_HEADER_TITLE);
+  const { data } = useQuery(GET_HEADER_TITLE);
 
   const title: string | undefined = path(['headerTitle'], data);
   const { history, location } = useReactRouter();
