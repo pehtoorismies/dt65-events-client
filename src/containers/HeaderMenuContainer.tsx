@@ -15,6 +15,8 @@ const disabledPaths: string[] = [
   ROUTES.register,
   ROUTES.registerSuccess,
   ROUTES.forgotPassword,
+  ROUTES.calendar,
+  ROUTES.home,
 ];
 
 const HeaderMenuContainer = () => {
