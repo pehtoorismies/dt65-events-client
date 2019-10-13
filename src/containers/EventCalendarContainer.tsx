@@ -47,7 +47,7 @@ const EventCalendarContainer: FunctionComponent<IUserProps & IEventProps> = (
       <Box width="100%" mt="5px">
         <EventCalendar
           start={start}
-          monthCount={6}
+          monthCount={13}
           events={iCalEvents}
           onSelectDay={selectDay}
         />
