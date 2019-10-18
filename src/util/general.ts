@@ -14,6 +14,7 @@ import path from 'ramda/es/path';
 import prop from 'ramda/es/prop';
 import propEq from 'ramda/es/propEq';
 import replace from 'ramda/es/replace';
+import toLower from 'ramda/es/toLower';
 
 import { EVENT_TYPES, QUERY_PARAMS, ROUTES } from '../constants';
 import {
@@ -29,11 +30,18 @@ import {
 
 export const isNullOrUndefined = (a: any) => isNull(a) || isUndefined(a);
 
+// TODO: remove lower case after auth0 username removal
 export const isParticipating = (
   username: string,
   participants: ISimpleUser[]
 ) => {
-  return findIndex(propEq('username', username || ''))(participants || []) >= 0;
+  const lowerUsername = toLower(username || '');
+
+  return (
+    findIndex((p: ISimpleUser) => {
+      return lowerUsername === toLower(p.username);
+    })(participants || []) >= 0
+  );
 };
 
 const zeroPad = (n: number) => {
