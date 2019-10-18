@@ -1,7 +1,7 @@
 import css from '@emotion/css';
 import styled from '@emotion/styled';
 import parse, { DomElement, domToReact } from 'html-react-parser';
-import { map } from 'ramda';
+import { map, toLower } from 'ramda';
 import React, { FunctionComponent, useState } from 'react';
 import AnimateHeight from 'react-animate-height';
 import { PortalWithState } from 'react-portal';
@@ -96,7 +96,7 @@ const Pill = (props: any) => (
 
 const renderPill = (username: string) => (participant: ISimpleUser) => {
   const { username: usr, id } = participant;
-  const color = username === usr ? 'pink' : 'blue';
+  const color = toLower(username) === toLower(usr) ? 'pink' : 'blue';
 
   return (
     <Pill bg={color} justifyContent="center" alignItems="center" p={1} key={id}>
