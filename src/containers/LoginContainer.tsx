@@ -13,8 +13,8 @@ import { getLocalUser, login as authLogin } from '../util/auth';
 import { setGraphQLErrors } from '../util/graphqlErrors';
 
 const LOGIN_MUTATION = gql`
-  mutation Login($usernameOrEmail: String!, $password: String!) {
-    login(usernameOrEmail: $usernameOrEmail, password: $password) {
+  mutation Login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
       accessToken
       idToken
       expiresIn

@@ -82,8 +82,8 @@ export const GET_EVENT_VIEW = gql`
 
 export const UPDATE_PREFERENCES_MUTATION = gql`
   mutation UpdatePreferences(
-    $subscribeEventCreationEmail: Boolean
-    $subscribeWeeklyEmail: Boolean
+    $subscribeEventCreationEmail: Boolean!
+    $subscribeWeeklyEmail: Boolean!
   ) {
     updateMyPreferences(
       subscribeEventCreationEmail: $subscribeEventCreationEmail
