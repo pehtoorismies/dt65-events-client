@@ -16,7 +16,7 @@ import StepType from './steps/TypeStep';
 storiesOf('EventWizard', module).add('Wizard', () => (
   <EventWizard
     applyEvent={action('Create')}
-    username="koira"
+    nickname="koira"
     onCancel={action('Cancel')}
   />
 ));
@@ -96,7 +96,7 @@ storiesOf('EventWizard/steps', module)
   .add('Create', () => (
     <CreateStep
       isEdit={false}
-      username="pertti"
+      nickname="pertti"
       {...commonActions}
       eventState={eventState}
       joinCreator={action('Toggle')}

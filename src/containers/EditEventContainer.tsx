@@ -16,7 +16,7 @@ const EditEventContainer: FunctionComponent<IUserProps> = (
   props: IUserProps
 ) => {
   const {
-    user: { username },
+    user,
   } = props;
 
   const {
@@ -72,7 +72,7 @@ const EditEventContainer: FunctionComponent<IUserProps> = (
   return (
     <EventWizard
       applyEvent={applyEvent}
-      username={username}
+      nickname={user.nickname}
       editState={eventState}
       onCancel={onCancel}
     />

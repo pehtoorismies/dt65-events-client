@@ -17,11 +17,13 @@ const EventAllFragment = gql`
   fragment AllEvent on Event {
     updatedAt
     participants {
-      username
+      sub
+      nickname
       id
     }
     creator {
-      username
+      sub
+      nickname
       id
     }
     ...MutableProps
@@ -54,9 +56,10 @@ export const SET_HEADER_TITLE = gql`
 export const GET_LOCALUSER = gql`
   query LocalUser {
     localUser @client {
-      id
-      username
+      nickname
       picture
+      sub
+      name
     }
   }
 `;
@@ -65,7 +68,7 @@ export const USERS_QUERY = gql`
   query Users {
     users {
       id
-      username
+      nickname
       name
     }
   }
@@ -79,8 +82,8 @@ export const GET_EVENT_VIEW = gql`
 
 export const UPDATE_PREFERENCES_MUTATION = gql`
   mutation UpdatePreferences(
-    $subscribeEventCreationEmail: Boolean
-    $subscribeWeeklyEmail: Boolean
+    $subscribeEventCreationEmail: Boolean!
+    $subscribeWeeklyEmail: Boolean!
   ) {
     updateMyPreferences(
       subscribeEventCreationEmail: $subscribeEventCreationEmail
@@ -108,6 +111,7 @@ export const ME_QUERY = gql`
       name
       email
       username
+      nickname
     }
   }
 `;
@@ -119,6 +123,7 @@ export const ME_MUTATION = gql`
       name
       email
       username
+      nickname
     }
   }
 `;
@@ -154,7 +159,8 @@ export const TOGGLE_JOIN_EVENT = gql`
     toggleJoinEvent(id: $id) {
       id
       participants {
-        username
+        sub
+        nickname
         id
       }
     }

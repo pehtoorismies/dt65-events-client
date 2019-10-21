@@ -3,7 +3,7 @@ import Switch from 'react-switch';
 import { Flex, Text } from 'rebass';
 
 import { EVENT_TYPES } from '../../../constants';
-import { IEventState, IEventStep } from '../../../types';
+import { IEventState, IEventStep, ILocalUser } from '../../../types';
 import {
   dateToString,
   fromEventType,
@@ -14,7 +14,7 @@ import EventCard from '../../EventCard';
 import BaseStep from './BaseStep';
 
 interface IProps extends IEventStep {
-  username: string;
+  nickname: string;
   eventState: IEventState;
   joinCreator: () => void;
   isEdit: boolean;
@@ -24,13 +24,20 @@ const StepCreate: FunctionComponent<IProps> = (props: IProps) => {
   const {
     toPrevStep,
     toNextStep,
-    username,
+    nickname,
     eventState,
     joinCreator,
     isEdit,
   } = props;
 
-  const participants = eventState.creatorJoining ? [{ id: 1, username }] : [];
+  const tmpUser : ILocalUser = {
+    sub: "1",
+    nickname,
+    picture: "empty",
+    name: "dummy",
+  }
+
+  const participants = eventState.creatorJoining ? [{ id: "1", sub: "1", nickname }] : [];
   if (!eventState.type) {
     throw new Error('Eventtype not defined');
   }
@@ -64,8 +71,8 @@ const StepCreate: FunctionComponent<IProps> = (props: IProps) => {
         <EventCard
           stayOpened={true}
           {...previewEvent}
-          username={username}
-          creator={username}
+          user={tmpUser}
+          creator={tmpUser.nickname}
         />
         {iamJoining}
       </Flex>

@@ -58,8 +58,10 @@ export interface IAuthFormProps {
 }
 
 export interface ISimpleUser {
-  username: string;
-  id: string | number;
+  id: string;
+  nickname: string;
+  username?: string;
+  sub: string;
   __typename?: string;
 }
 
@@ -154,9 +156,16 @@ export interface ICalEvent {
 
 export interface IBaseUserInfo {
   id: ID;
-  username: string;
+  nickname: string;
   name: string;
   avatar?: string;
+}
+
+export interface ILocalUser {
+  sub: string;
+  nickname: string;
+  picture: string;
+  name: string;
 }
 
 export interface IUserInfo extends IBaseUserInfo {

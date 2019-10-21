@@ -66,7 +66,7 @@ const render = (formikBag: FormikProps<IFormValues>) => {
 const UserInfo: FunctionComponent<IProps> = (props: IProps) => {
   const { userInfo, onSubmit } = props;
 
-  const { name, email, username } = userInfo;
+  const { name, email, nickname } = userInfo;
 
   const onSubmitEvent = (
     values: IFormValues,
@@ -80,11 +80,11 @@ const UserInfo: FunctionComponent<IProps> = (props: IProps) => {
       <Box m={2} px={2} width="100%">
         <Text>Käyttäjäinfo:</Text>
         <Text fontSize={1} my={1}>
-          Jos haluat muuttaa sähköpostia tai käyttäjätunnusta, lähetä postia
+          Jos haluat muuttaa sähköpostia tai nickiä, lähetä postia
           hello@downtown65.com
         </Text>
         <Row title="Sähköposti" value={email} />
-        <Row title="Käyttäjätunnus" value={username} />
+        <Row title="Nickname" value={nickname} />
       </Box>
       <Box width="100%" px={2}>
         <Formik

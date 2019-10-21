@@ -8,13 +8,13 @@ const users = [
     id: 's',
     name: 'sdaf fds',
     email: 'sdadsfadf adsf',
-    username: 'dsaadsfasdf',
+    nickname: 'dsaadsfasdf',
   },
   {
     id: 's1',
     name: 'sdaf fds',
     email: 'sdadsfadf adsf',
-    username: 'dsaadsfasdf',
+    nickname: 'dsaadsfasdf',
   },
 ];
 

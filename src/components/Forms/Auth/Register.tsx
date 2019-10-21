@@ -29,7 +29,7 @@ const render = (formikBag: FormikProps<IFormValues>) => {
         <Field
           width="100%"
           name="username"
-          placeholder="Käyttäjätunnus*"
+          placeholder="Käyttäjätunnus / Nick*"
           component={BasicInput}
         />
         <Field
