@@ -27,7 +27,7 @@ const getStep = (
   eventState: IEventState,
   setEventState: (eventState: IEventState) => void,
   create: () => void,
-  username: string,
+  nickname: string,
   isEdit: boolean,
 ) => {
   const setType = (eventType: EventType) => {
@@ -146,7 +146,7 @@ const getStep = (
     return (
       <CreateStep
         joinCreator={toggleCreatorJoining}
-        username={username}
+        nickname={nickname}
         eventState={eventState}
         toNextStep={create}
         toPrevStep={toPrev(STEPS.PREVIEW)}

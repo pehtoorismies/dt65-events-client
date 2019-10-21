@@ -73,8 +73,9 @@ const createClient = (history: any) => {
         LIST
       }
       type LocalUser {
-        id: String!
-        username: String!
+        nickname: String!
+        picture: String!
+        sub: String!
       }
       type Popup {
         visible: Boolean!

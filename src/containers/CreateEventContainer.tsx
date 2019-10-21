@@ -20,7 +20,7 @@ const CreateEventContainer: FunctionComponent<IUserProps> = (
   props: IUserProps
 ) => {
   const {
-    user: { username },
+    user: { nickname },
   } = props;
 
   const { history } = useReactRouter();
@@ -71,7 +71,7 @@ const CreateEventContainer: FunctionComponent<IUserProps> = (
   return (
     <EventWizard
       applyEvent={applyEvent}
-      username={username}
+      nickname={nickname}
       onCancel={onCancel}
     />
   );

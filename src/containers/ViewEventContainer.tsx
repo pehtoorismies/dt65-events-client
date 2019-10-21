@@ -18,7 +18,7 @@ const ViewEventContainer: FunctionComponent<IUserProps> = (
   props: IUserProps
 ) => {
   const {
-    user: { username },
+    user,
   } = props;
 
   const { history, match } = useReactRouter();
@@ -74,7 +74,7 @@ const ViewEventContainer: FunctionComponent<IUserProps> = (
     <EventCard
       key={evt.id}
       {...evt}
-      username={username}
+      user={user}
       stayOpened={true}
       joinEvent={joinEvent}
       isJoining={loadingJoin}

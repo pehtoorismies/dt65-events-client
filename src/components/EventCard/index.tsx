@@ -11,7 +11,7 @@ import { Edit } from 'styled-icons/boxicons-regular/Edit';
 import { CaretDownCircle } from 'styled-icons/boxicons-solid/CaretDownCircle';
 import { Medal } from 'styled-icons/fa-solid/Medal';
 
-import { ID, IEvent, ISimpleUser } from '../../types';
+import { ID, IEvent, ISimpleUser, ILocalUser } from '../../types';
 import { isParticipating } from '../../util/general';
 import { Button, PortalOverlay } from '../Common';
 import HeadCountButton from '../HeadCountButton';
@@ -19,7 +19,7 @@ import { colors } from '../../theme';
 
 interface IProps extends IEvent {
   isJoining?: boolean;
-  username: string;
+  user: ILocalUser;
   eventImage?: string;
   joinEvent?: (eventId: ID) => void;
   stayOpened?: boolean;
@@ -80,7 +80,9 @@ const DownArrow = styled(CaretDownCircle)<IArrowProps>`
   ${common};
   margin-left: 3px;
   margin-right: 10px;
-  transform: rotate( ${(props: IArrowProps) => props.pointDown ? '0' : '180deg'});            
+  transform: rotate(
+    ${(props: IArrowProps) => (props.pointDown ? '0' : '180deg')}
+  );
   transition: transform ${ANIM_TIME}ms ease;
 `;
 
@@ -94,14 +96,16 @@ const Pill = (props: any) => (
   />
 );
 
-const renderPill = (username: string) => (participant: ISimpleUser) => {
-  const { username: usr, id } = participant;
-  const color = toLower(username) === toLower(usr) ? 'pink' : 'blue';
+const renderPill = (currentUser: ILocalUser) => (
+  participant: ISimpleUser
+) => {
+  const { sub } = participant;
+  const color = sub === currentUser.sub ? 'pink' : 'blue';
 
   return (
-    <Pill bg={color} justifyContent="center" alignItems="center" p={1} key={id}>
+    <Pill bg={color} justifyContent="center" alignItems="center" p={1} key={participant.id}>
       <Text px={1} fontSize={10} color="white">
-        {usr}
+        {participant.nickname}
       </Text>
     </Pill>
   );
@@ -125,12 +129,12 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
     time,
     title,
     type,
-    username,
+    user,
     race,
     stayOpened,
   } = props;
 
-  const isParticipant = isParticipating(username, participants);
+  const isParticipant = isParticipating(user, participants);
 
   const onJoinClick = (e: any) => {
     e.stopPropagation();
@@ -187,8 +191,11 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
                 position: 'relative',
               }}
             >
-              <Card width="100%" mx="auto" variant="shadow"  >
-                <ImageBox bgImage={eventImage || type.defaultImage} onClick={viewClick}>
+              <Card width="100%" mx="auto" variant="shadow">
+                <ImageBox
+                  bgImage={eventImage || type.defaultImage}
+                  onClick={viewClick}
+                >
                   <Flex
                     width="100%"
                     alignItems="center"
@@ -202,9 +209,7 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
                         'linear-gradient(0deg, rgba(0,0,0,0.0), rgba(0,0,0,0.5))',
                     }}
                   >
-                    <Flex ml={2}>
-                      {toggleOpenButton}
-                    </Flex>
+                    <Flex ml={2}>{toggleOpenButton}</Flex>
                     <EditBtn onClick={openPortal} />
                   </Flex>
 
@@ -303,7 +308,7 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
                       </Text>
                     </Flex>
                     <Flex flexWrap="wrap" py={1}>
-                      {map(renderPill(username), participants)}
+                      {map(renderPill(user), participants)}
                     </Flex>
                     <Text fontWeight="bold" color="lightBlack" width={60}>
                       Kuvaus:

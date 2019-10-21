@@ -18,7 +18,7 @@ const preferences = {
 };
 
 storiesOf('Profile', module)
-  .add('Profile', () => <Profile username="koira88" buttons={buttons} />)
+  .add('Profile', () => <Profile nickname="koira88" buttons={buttons} />)
   .add('Preferences', () => (
     <Preferences
       preferences={preferences}

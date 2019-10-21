@@ -14,7 +14,7 @@ const renderUser = (u: any, idx: number) => {
   const odd = idx % 2 === 1;
   return (
     <Flex key={u.id} bg={odd ? 'white' : '#fbe5f7'} py={3} px={2} color="standardBlack" sx={{borderBottom: '1px solid #eee'}}>
-      <Text fontFamily="monospace" width={150}>{u.username} </Text>
+      <Text fontFamily="monospace" width={150}>{u.nickname} </Text>
       <Text>{u.name}</Text>
     </Flex>
   );
