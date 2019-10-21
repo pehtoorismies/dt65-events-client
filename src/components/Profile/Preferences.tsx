@@ -88,7 +88,6 @@ const Preferences: FunctionComponent<IProps> = (props: IProps) => {
   };
 
   const submit = () => {
-    console.log(prefs);
     onUpdate(prefs);
   };
   
