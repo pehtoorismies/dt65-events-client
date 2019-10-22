@@ -16,7 +16,7 @@ interface IFormValues {
 
 const render = (formikBag: FormikProps<IFormValues>) => {
   const { isSubmitting } = formikBag;
-  
+
   return (
     <Form>
       <Flex flexDirection="column" alignItems="center">
@@ -71,8 +71,8 @@ const validationSchema = Yup.object().shape({
     .email('Tarkista sähköposti')
     .required('Pakollinen kenttä'),
   nickname: Yup.string()
-    .min(3, 'Käyttäjätunnus on liian lyhyt')
-    .max(15, 'Käyttäjätunnus on liian pitkä')
+    .min(3, 'Nick on liian lyhyt')
+    .max(15, 'Nick on liian pitkä')
     .required('Pakollinen kenttä'),
   password: Yup.string()
     .min(8, 'Salasana on liian lyhyt')

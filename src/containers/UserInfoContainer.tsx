@@ -1,4 +1,6 @@
 import { useMutation, useQuery } from '@apollo/react-hooks';
+import compose from '@shopify/react-compose';
+import { withApollo, WithApolloClient } from 'react-apollo';
 import React, { FunctionComponent } from 'react';
 import { FallbackProps } from 'react-error-boundary';
 import { toast } from 'react-toastify';
@@ -9,8 +11,13 @@ import UserInfo from '../components/UserInfo';
 import { ME_MUTATION, ME_QUERY } from '../gql';
 import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
 import { IUpdateableUserInfo } from '../types';
+import { ROUTES } from '../constants';
+import { logout } from '../util/auth';
 
-const UserInfoContainer: FunctionComponent<FallbackProps> = props => {
+const UserInfoContainer: FunctionComponent<WithApolloClient<any>> = (
+  props: WithApolloClient<any>
+) => {
+  const { client } = props;
   const { history } = useReactRouter();
 
   const { loading, error, data } = useQuery(ME_QUERY);
@@ -30,11 +37,25 @@ const UserInfoContainer: FunctionComponent<FallbackProps> = props => {
     setSubmitting: (submitting: boolean) => void
   ) => {
     try {
-      await updateMeMutation({
+      const resp = await updateMeMutation({
         variables: values,
       });
       setSubmitting(false);
       toast.success('Päivitetty');
+
+      const {
+        data: {
+          updateMe: { nickname },
+        },
+      } = resp;
+      const oldNick = me.nickname;
+      const updatedNick = nickname;
+      if (oldNick !== updatedNick) {
+        toast.success('Nickin päivitys vaatii uuden kirjatumisen');
+        logout();
+        await client.clearStore();
+        history.push(ROUTES.login);
+      }
     } catch (error) {
       toast.error('Päivitys epäonnistui');
       console.error(error);
@@ -44,4 +65,7 @@ const UserInfoContainer: FunctionComponent<FallbackProps> = props => {
   return <UserInfo userInfo={me} onSubmit={updateValues} />;
 };
 
-export default withSetHeaderTitle('profiili/tiedot')(UserInfoContainer);
+export default compose(
+  withApollo,
+  withSetHeaderTitle('profiili/tiedot')
+)(UserInfoContainer);
