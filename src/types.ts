@@ -171,3 +171,8 @@ export interface ILocalUser {
 export interface IUserInfo extends IBaseUserInfo {
   email: string;
 }
+
+export interface IUpdateableUserInfo {
+  nickname: string;
+  name: string;
+}

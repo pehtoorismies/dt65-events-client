@@ -34,7 +34,7 @@ const PreferencesContainer: FunctionComponent = () => {
   if (mutationError) {
     throw mutationError;
   }
-
+  
   const {
     me: { preferences },
   } = dataPreferences;

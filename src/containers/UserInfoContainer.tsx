@@ -8,6 +8,7 @@ import Loader from '../components/Loader';
 import UserInfo from '../components/UserInfo';
 import { ME_MUTATION, ME_QUERY } from '../gql';
 import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
+import { IUpdateableUserInfo } from '../types';
 
 const UserInfoContainer: FunctionComponent<FallbackProps> = props => {
   const { history } = useReactRouter();
@@ -24,15 +25,13 @@ const UserInfoContainer: FunctionComponent<FallbackProps> = props => {
 
   const { me } = data;
 
-  const updateName = async (
-    name: string,
+  const updateValues = async (
+    values: IUpdateableUserInfo,
     setSubmitting: (submitting: boolean) => void
   ) => {
     try {
       await updateMeMutation({
-        variables: {
-          name,
-        },
+        variables: values,
       });
       setSubmitting(false);
       toast.success('Päivitetty');
@@ -42,7 +41,7 @@ const UserInfoContainer: FunctionComponent<FallbackProps> = props => {
     }
   };
 
-  return <UserInfo userInfo={me} onSubmit={updateName} />;
+  return <UserInfo userInfo={me} onSubmit={updateValues} />;
 };
 
 export default withSetHeaderTitle('profiili/tiedot')(UserInfoContainer);

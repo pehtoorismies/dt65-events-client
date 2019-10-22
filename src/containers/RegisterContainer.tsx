@@ -15,14 +15,14 @@ import toLower from 'ramda/es/toLower';
 const SIGNUP_MUTATION = gql`
   mutation Signup(
     $email: String!
-    $username: String!
+    $nickname: String!
     $name: String!
     $password: String!
     $registerSecret: String!
   ) {
     signup(
       email: $email
-      username: $username
+      nickname: $nickname
       name: $name
       registerSecret: $registerSecret
       password: $password
@@ -42,7 +42,6 @@ const RegisterContainer: FunctionComponent = () => {
   const [registerSuccess, setRegisterSuccess] = useState(false);
 
   const onSubmit = async (values: any, actions: any) => {
-    
     try {
       const lowerCaseValues = {
         ...values,
@@ -54,10 +53,12 @@ const RegisterContainer: FunctionComponent = () => {
           signup: { email },
         },
       } = await signupAction({ variables: lowerCaseValues });
-
+      console.log('Success')
       client.writeData({ data: { registerEmail: email } });
       setRegisterSuccess(true);
     } catch (error) {
+      console.log('Errorroo');
+      console.log(error);
       const { graphQLErrors, networkError } = error;
 
       if (graphQLErrors) {

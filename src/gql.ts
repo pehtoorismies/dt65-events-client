@@ -110,19 +110,17 @@ export const ME_QUERY = gql`
       id
       name
       email
-      username
       nickname
     }
   }
 `;
 
 export const ME_MUTATION = gql`
-  mutation UpdateMe($name: String!) {
-    updateMe(name: $name) {
+  mutation UpdateMe($name: String, $nickname: String) {
+    updateMe(name: $name, nickname: $nickname) {
       id
       name
       email
-      username
       nickname
     }
   }

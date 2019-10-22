@@ -1,17 +1,17 @@
-import React, { FunctionComponent, Fragment } from 'react';
-import { IUserInfo } from '../../types';
-import { Flex, Box, Text } from 'rebass';
-import { Field, Form, FormikProps, Formik, FormikActions } from 'formik';
-import { BasicInput, Button } from '../Common';
+import { Field, Form, Formik, FormikActions, FormikProps } from 'formik';
+import React, { Fragment, FunctionComponent } from 'react';
+import { Box, Flex, Text } from 'rebass';
 import * as Yup from 'yup';
 
-interface IFormValues {
-  name: string;
-}
+import { IUpdateableUserInfo, IUserInfo } from '../../types';
+import { BasicInput, Button } from '../Common';
 
 interface IProps {
   userInfo: IUserInfo;
-  onSubmit: (name: string, setSubmitting: (submitting: boolean) => void) => void;
+  onSubmit: (
+    values: IUpdateableUserInfo,
+    setSubmitting: (submitting: boolean) => void
+  ) => void;
 }
 
 interface IRowProps {
@@ -35,7 +35,7 @@ const validationSchema = Yup.object().shape({
   name: Yup.string().required('Pakollinen kenttä'),
 });
 
-const render = (formikBag: FormikProps<IFormValues>) => {
+const render = (formikBag: FormikProps<IUpdateableUserInfo>) => {
   const { isSubmitting } = formikBag;
   return (
     <Form>
@@ -45,6 +45,13 @@ const render = (formikBag: FormikProps<IFormValues>) => {
           width="100%"
           name="name"
           placeholder="Etunimi Sukunimi*"
+          component={BasicInput}
+        />
+        <Text>Nick:</Text>
+        <Field
+          width="100%"
+          name="nickname"
+          placeholder="Nickname*"
           component={BasicInput}
         />
 
@@ -69,10 +76,10 @@ const UserInfo: FunctionComponent<IProps> = (props: IProps) => {
   const { name, email, nickname } = userInfo;
 
   const onSubmitEvent = (
-    values: IFormValues,
-    actions: FormikActions<IFormValues>
+    values: IUpdateableUserInfo,
+    actions: FormikActions<IUpdateableUserInfo>
   ) => {
-    onSubmit(values.name, actions.setSubmitting);
+    onSubmit(values, actions.setSubmitting);
   };
 
   return (
@@ -80,15 +87,13 @@ const UserInfo: FunctionComponent<IProps> = (props: IProps) => {
       <Box m={2} px={2} width="100%">
         <Text>Käyttäjäinfo:</Text>
         <Text fontSize={1} my={1}>
-          Jos haluat muuttaa sähköpostia tai nickiä, lähetä postia
-          hello@downtown65.com
+          Jos haluat muuttaa sähköpostia, lähetä postia hello@downtown65.com
         </Text>
         <Row title="Sähköposti" value={email} />
-        <Row title="Nickname" value={nickname} />
       </Box>
       <Box width="100%" px={2}>
         <Formik
-          initialValues={{ name }}
+          initialValues={{ name, nickname }}
           onSubmit={onSubmitEvent}
           validationSchema={validationSchema}
           render={render}
