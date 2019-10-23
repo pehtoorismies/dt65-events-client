@@ -7,7 +7,7 @@ const userInfo = {
   email: 'test@test.com',
   name: 'Kaleva Kikkinen',
   id: 'a1234',
-  username: 'sikakoirala',
+  nickname: 'sikakoirala',
 };
 
 storiesOf('UserInfo', module).add('story', () => (

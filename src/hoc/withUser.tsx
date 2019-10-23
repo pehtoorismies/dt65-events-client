@@ -1,20 +1,17 @@
 import { useQuery } from '@apollo/react-hooks';
 import React, { ComponentType } from 'react';
+import { ILocalUser } from '../types'
 import { GET_LOCALUSER } from '../gql';
 
 export interface IUserProps {
-  user: {
-    username: string;
-    id: string;
-    picture?: string;
-  };
+  user: ILocalUser;
 }
 
 const withUser = <P extends {}>(
   WrappedComponent: ComponentType<P>
 ): ComponentType<P> => props => {
   const { loading, error, data } = useQuery(GET_LOCALUSER);
-
+  
   if (loading) {
     return <h1>loading</h1>;
   }

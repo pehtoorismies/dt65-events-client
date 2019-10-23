@@ -34,11 +34,7 @@ const findLoading = (id: ID, loadingEvents: ID[]): boolean => {
 const EventListContainer: FunctionComponent<IUserProps & IEventProps> = (
   props: IUserProps & IEventProps
 ) => {
-  const {
-    user: { username },
-    events,
-    refetchEvents,
-  } = props;
+  const { user, events, refetchEvents } = props;
 
   const {
     history,
@@ -151,7 +147,7 @@ const EventListContainer: FunctionComponent<IUserProps & IEventProps> = (
         key={evt.id}
         {...evt}
         isJoining={isJoining}
-        username={username}
+        user={user}
         joinEvent={joinEvent}
         onViewClick={onViewEvent}
         onDeleteClick={onDeleteEvent}

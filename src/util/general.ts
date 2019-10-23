@@ -14,7 +14,7 @@ import path from 'ramda/es/path';
 import prop from 'ramda/es/prop';
 import propEq from 'ramda/es/propEq';
 import replace from 'ramda/es/replace';
-import toLower from 'ramda/es/toLower';
+
 
 import { EVENT_TYPES, QUERY_PARAMS, ROUTES } from '../constants';
 import {
@@ -26,20 +26,18 @@ import {
   IEventType,
   ISimpleUser,
   ITime,
+  ILocalUser,
 } from '../types';
 
 export const isNullOrUndefined = (a: any) => isNull(a) || isUndefined(a);
 
-// TODO: remove lower case after auth0 username removal
 export const isParticipating = (
-  username: string,
+  user: ILocalUser,
   participants: ISimpleUser[]
 ) => {
-  const lowerUsername = toLower(username || '');
-
   return (
     findIndex((p: ISimpleUser) => {
-      return lowerUsername === toLower(p.username);
+      return user.sub === p.sub;
     })(participants || []) >= 0
   );
 };
@@ -121,7 +119,7 @@ export const parseEvent = (evt: IEventResp): IEventExtended => {
   return {
     ...evt,
     time,
-    creator: evt.creator.username,
+    creator: evt.creator.nickname,
     date: dateToString(date),
     type: fromApiType(evt.type, EVENT_TYPES),
     isoDate: evt.date,

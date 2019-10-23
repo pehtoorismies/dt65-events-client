@@ -15,7 +15,7 @@ import styled from '@emotion/styled';
 
 interface IProps {
   applyEvent: (evt: IEventReq) => void;
-  username: string;
+  nickname: string;
   errorMessage?: string;
   editState?: IEventState;
   onCancel: () => void;
@@ -37,7 +37,7 @@ const Cancel = styled(CancelCircle)`
 const MAX_STEP = 7;
 
 const EventWizard: FunctionComponent<IProps> = (props: IProps) => {
-  const { applyEvent, username, editState, onCancel } = props;
+  const { applyEvent, nickname, editState, onCancel } = props;
 
   const [step, setStep] = useState<number>(0);
   const isEdit = !!editState;
@@ -117,7 +117,7 @@ const EventWizard: FunctionComponent<IProps> = (props: IProps) => {
                   eventState,
                   setEventState,
                   create,
-                  username,
+                  nickname,
                   isEdit
                 )}
               </Flex>

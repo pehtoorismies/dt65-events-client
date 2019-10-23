@@ -1,17 +1,18 @@
-import React, { FunctionComponent, Fragment } from 'react';
-import { IUserInfo } from '../../types';
-import { Flex, Box, Text } from 'rebass';
-import { Field, Form, FormikProps, Formik, FormikActions } from 'formik';
-import { BasicInput, Button } from '../Common';
+import { Field, Form, Formik, FormikActions, FormikProps } from 'formik';
+import React, { Fragment, FunctionComponent } from 'react';
+import { Box, Flex, Text } from 'rebass';
 import * as Yup from 'yup';
 
-interface IFormValues {
-  name: string;
-}
+import { IUpdateableUserInfo, IUserInfo } from '../../types';
+import { BasicInput, Button } from '../Common';
+import values from 'ramda/es/values';
 
 interface IProps {
   userInfo: IUserInfo;
-  onSubmit: (name: string, setSubmitting: (submitting: boolean) => void) => void;
+  onSubmit: (
+    values: IUpdateableUserInfo,
+    setSubmitting: (submitting: boolean) => void
+  ) => void;
 }
 
 interface IRowProps {
@@ -33,13 +34,33 @@ const Row: FunctionComponent<IRowProps> = (props: IRowProps) => {
 };
 const validationSchema = Yup.object().shape({
   name: Yup.string().required('Pakollinen kenttä'),
+  nickname: Yup.string()
+    .min(3, 'Nick on liian lyhyt')
+    .max(15, 'Nick on liian pitkä')
+    .required('Pakollinen kenttä'),
 });
 
-const render = (formikBag: FormikProps<IFormValues>) => {
-  const { isSubmitting } = formikBag;
+const render = (formikBag: FormikProps<IUpdateableUserInfo>) => {
+  const {
+    isSubmitting,
+    touched,
+    initialValues,
+    values: formValues,
+    handleReset,
+  } = formikBag;
+
+  const renderWarning =
+    initialValues.nickname !== formValues.nickname ? (
+      <Text fontSize={1} bg="red" color="white" m={2} p={2}>
+        Huom! Nickin vaihto vaatii uloskirjautumisen. Jos vaihdat nickiä sinut
+        kirjataan ulos vaihdon jälkeen.
+      </Text>
+    ) : null;
+
   return (
     <Form>
       <Flex flexDirection="column" width="100%">
+        {renderWarning}
         <Text>Nimi:</Text>
         <Field
           width="100%"
@@ -47,16 +68,32 @@ const render = (formikBag: FormikProps<IFormValues>) => {
           placeholder="Etunimi Sukunimi*"
           component={BasicInput}
         />
+        <Text>Nick:</Text>
+        <Field
+          width="100%"
+          name="nickname"
+          placeholder="Nickname*"
+          component={BasicInput}
+        />
 
         <Button
           width="100%"
           variant="primary"
-          my={2}
+          mt={2}
           type="submit"
           disabled={isSubmitting}
           isLoading={isSubmitting}
         >
           Tallenna muutokset
+        </Button>
+        <Button
+          type="button"
+          variant="secondary"
+          width="100%"
+          my={2}
+          onClick={handleReset}
+        >
+          Peru muutokset
         </Button>
       </Flex>
     </Form>
@@ -66,13 +103,13 @@ const render = (formikBag: FormikProps<IFormValues>) => {
 const UserInfo: FunctionComponent<IProps> = (props: IProps) => {
   const { userInfo, onSubmit } = props;
 
-  const { name, email, username } = userInfo;
+  const { name, email, nickname } = userInfo;
 
   const onSubmitEvent = (
-    values: IFormValues,
-    actions: FormikActions<IFormValues>
+    updatedValues: IUpdateableUserInfo,
+    actions: FormikActions<IUpdateableUserInfo>
   ) => {
-    onSubmit(values.name, actions.setSubmitting);
+    onSubmit(updatedValues, actions.setSubmitting);
   };
 
   return (
@@ -80,15 +117,13 @@ const UserInfo: FunctionComponent<IProps> = (props: IProps) => {
       <Box m={2} px={2} width="100%">
         <Text>Käyttäjäinfo:</Text>
         <Text fontSize={1} my={1}>
-          Jos haluat muuttaa sähköpostia tai käyttäjätunnusta, lähetä postia
-          hello@downtown65.com
+          Jos haluat muuttaa sähköpostia, lähetä postia hello@downtown65.com
         </Text>
         <Row title="Sähköposti" value={email} />
-        <Row title="Käyttäjätunnus" value={username} />
       </Box>
       <Box width="100%" px={2}>
         <Formik
-          initialValues={{ name }}
+          initialValues={{ name, nickname }}
           onSubmit={onSubmitEvent}
           validationSchema={validationSchema}
           render={render}

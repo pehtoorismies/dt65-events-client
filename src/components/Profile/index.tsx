@@ -15,7 +15,7 @@ interface IButton {
 
 interface IProps {
   profileUrl?: string;
-  username: string;
+  nickname: string;
   children?: ReactNode;
   buttons: IButton[];
 }
@@ -43,7 +43,7 @@ const getProfileCmp = (profileUrl?: string) => {
 };
 
 const Profile: FunctionComponent<IProps> = (props: IProps) => {
-  const { buttons, profileUrl, username } = props;
+  const { buttons, profileUrl, nickname } = props;
 
   const Icon = getProfileCmp(profileUrl);
 
@@ -65,7 +65,7 @@ const Profile: FunctionComponent<IProps> = (props: IProps) => {
           lineHeight={1.5}
           p={1}
         >
-          {username}
+          {nickname}
         </Text>
       </Flex>
       <Box width="100%">

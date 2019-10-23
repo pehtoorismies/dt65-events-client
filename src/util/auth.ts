@@ -19,9 +19,10 @@ const getLocalUser = (idToken: string) => {
 
     return {
       __typename: GRAPHQL_TYPES.LOCAL_USER,
-      id: decoded.sub,
-      username: decoded.nickname,
+      nickname: decoded.nickname,
       picture: decoded.picture,
+      sub: decoded.sub,
+      name: decoded.name,
     };
   } catch (error) {
     console.error(error);

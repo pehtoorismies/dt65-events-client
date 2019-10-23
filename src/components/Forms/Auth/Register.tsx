@@ -8,7 +8,7 @@ import BaseForm from './BaseForm';
 
 interface IFormValues {
   email: string;
-  username: string;
+  nickname: string;
   password: string;
   name: string;
   registerSecret: string;
@@ -16,7 +16,7 @@ interface IFormValues {
 
 const render = (formikBag: FormikProps<IFormValues>) => {
   const { isSubmitting } = formikBag;
-  
+
   return (
     <Form>
       <Flex flexDirection="column" alignItems="center">
@@ -28,8 +28,8 @@ const render = (formikBag: FormikProps<IFormValues>) => {
         />
         <Field
           width="100%"
-          name="username"
-          placeholder="Käyttäjätunnus*"
+          name="nickname"
+          placeholder="Käyttäjätunnus / Nick*"
           component={BasicInput}
         />
         <Field
@@ -70,9 +70,9 @@ const validationSchema = Yup.object().shape({
   email: Yup.string()
     .email('Tarkista sähköposti')
     .required('Pakollinen kenttä'),
-  username: Yup.string()
-    .min(3, 'Käyttäjätunnus on liian lyhyt')
-    .max(15, 'Käyttäjätunnus on liian pitkä')
+  nickname: Yup.string()
+    .min(3, 'Nick on liian lyhyt')
+    .max(15, 'Nick on liian pitkä')
     .required('Pakollinen kenttä'),
   password: Yup.string()
     .min(8, 'Salasana on liian lyhyt')
@@ -82,7 +82,7 @@ const validationSchema = Yup.object().shape({
 });
 const initialValues = {
   email: '',
-  username: '',
+  nickname: '',
   password: '',
   name: '',
   registerSecret: '',

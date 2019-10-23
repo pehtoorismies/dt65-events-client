@@ -18,7 +18,7 @@ const ProfileContainer: FunctionComponent<WithApolloClient<IUserProps>> = (
 ) => {
   const {
     client,
-    user: { username, picture },
+    user: { nickname, picture },
   } = props;
 
   const { history } = useReactRouter();
@@ -56,13 +56,13 @@ const ProfileContainer: FunctionComponent<WithApolloClient<IUserProps>> = (
     },
   ];
 
-  if (!username) {
+  if (!nickname) {
     throw new Error('No user present');
   }
 
   return (
     <Profile
-      username={String(username)}
+      nickname={String(nickname)}
       buttons={buttons}
       profileUrl={picture}
     />
