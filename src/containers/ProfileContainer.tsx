@@ -8,16 +8,18 @@ import useReactRouter from 'use-react-router';
 
 import Profile from '../components/Profile';
 import { ROUTES } from '../constants';
-import withUser, { IUserProps } from '../hoc/withUser';
+import { useUser } from '../hooks';
 import { logout } from '../util/auth';
 
-const ProfileContainer: FunctionComponent<WithApolloClient<IUserProps>> = (
-  props: WithApolloClient<IUserProps>
+const ProfileContainer: FunctionComponent<WithApolloClient<{}>> = (
+  props: WithApolloClient<{}>
 ) => {
   const {
     client,
-    user: { nickname, picture },
+    
   } = props;
+
+  const { nickname, picture } = useUser();
 
   const { history } = useReactRouter();
 
@@ -69,5 +71,4 @@ const ProfileContainer: FunctionComponent<WithApolloClient<IUserProps>> = (
 
 export default compose(
   withApollo,
-  withUser,
 )(ProfileContainer);

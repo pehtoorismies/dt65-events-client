@@ -9,19 +9,14 @@ import useReactRouter from 'use-react-router';
 import EventCard from '../components/EventCard';
 import { QUERY_PARAMS, ROUTES } from '../constants';
 import { DELETE_EVENT_MUTATION, EVENT_QUERY, TOGGLE_JOIN_EVENT } from '../gql';
-import { useSetHeaderTitle } from '../hooks'
+import { useUser } from '../hooks'
 
-import withUser, { IUserProps } from '../hoc/withUser';
 import { ID } from '../types';
 import { parseEvent, queryParamsFrom } from '../util';
 
-const ViewEventContainer: FunctionComponent<IUserProps> = (
-  props: IUserProps
-) => {
-  const { user } = props;
-
+const ViewEventContainer: FunctionComponent = () => {
   const { history, match } = useReactRouter();
-  useSetHeaderTitle('tapahtuma');
+  const user = useUser();
   
   const id = path(['params', 'id'], match);
   const [toggleJoinEventMutation, { loading: loadingJoin }] = useMutation(
@@ -83,6 +78,4 @@ const ViewEventContainer: FunctionComponent<IUserProps> = (
   );
 };
 
-export default compose(
-  withUser,
-)(ViewEventContainer);
+export default ViewEventContainer;

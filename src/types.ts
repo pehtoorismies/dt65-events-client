@@ -95,7 +95,6 @@ export interface IEventBase {
   description?: string;
   race: boolean;
   subtitle?: string;
-
   title: string;
 }
 

@@ -1,5 +1,4 @@
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import compose from '@shopify/react-compose';
 import path from 'ramda/es/path';
 import React, { FunctionComponent } from 'react';
 import { toast } from 'react-toastify';
@@ -7,16 +6,12 @@ import useReactRouter from 'use-react-router';
 
 import EventWizard from '../components/EventWizard';
 import { EVENT_QUERY, UPDATE_EVENT } from '../gql';
-import withUser, { IUserProps } from '../hoc/withUser';
+import { useUser } from '../hooks';
 import { IEventReq } from '../types';
 import { routeFromQueryString, toEventState } from '../util';
 
-const EditEventContainer: FunctionComponent<IUserProps> = (
-  props: IUserProps
-) => {
-  const {
-    user,
-  } = props;
+const EditEventContainer: FunctionComponent = () => {
+  const user = useUser();
 
   const {
     history,
@@ -78,6 +73,4 @@ const EditEventContainer: FunctionComponent<IUserProps> = (
   );
 };
 
-export default compose(
-  withUser,
-)(EditEventContainer);
+export default EditEventContainer;

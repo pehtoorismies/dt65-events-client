@@ -1,1 +1,1 @@
-export * from './useHeaderTitle';
+export * from './useUser';

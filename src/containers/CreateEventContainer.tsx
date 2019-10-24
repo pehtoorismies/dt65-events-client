@@ -1,5 +1,4 @@
 import { useMutation } from '@apollo/react-hooks';
-import compose from '@shopify/react-compose';
 import { isBefore } from 'date-fns';
 import parseISO from 'date-fns/parseISO';
 import findIndex from 'ramda/es/findIndex';
@@ -12,15 +11,11 @@ import useReactRouter from 'use-react-router';
 import EventWizard from '../components/EventWizard';
 import { ROUTES } from '../constants';
 import { CREATE_EVENT, EVENTS_QUERY } from '../gql';
-import withUser, { IUserProps } from '../hoc/withUser';
+import { useUser } from '../hooks';
 import { IEventReq, IEventResp } from '../types';
 
-const CreateEventContainer: FunctionComponent<IUserProps> = (
-  props: IUserProps
-) => {
-  const {
-    user: { nickname },
-  } = props;
+const CreateEventContainer: FunctionComponent = () => {
+  const { nickname } = useUser();
 
   const { history } = useReactRouter();
 
@@ -76,6 +71,4 @@ const CreateEventContainer: FunctionComponent<IUserProps> = (
   );
 };
 
-export default compose(
-  withUser,
-)(CreateEventContainer);
+export default CreateEventContainer;

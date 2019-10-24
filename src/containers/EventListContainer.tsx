@@ -18,7 +18,7 @@ import DateFilter from '../components/DateFilter';
 import { QUERY_PARAMS, ROUTES } from '../constants';
 import { DELETE_EVENT_MUTATION, EVENTS_QUERY, TOGGLE_JOIN_EVENT } from '../gql';
 import withEvents, { IEventProps } from '../hoc/withEvents';
-import withUser, { IUserProps } from '../hoc/withUser';
+import { useUser } from '../hooks';
 import { ID, IEvent } from '../types';
 import { queryParamsFrom, dateFromQueryFilter, filterByDate } from '../util';
 
@@ -27,11 +27,11 @@ const findLoading = (id: ID, loadingEvents: ID[]): boolean => {
   return idx >= 0;
 };
 
-const EventListContainer: FunctionComponent<IUserProps & IEventProps> = (
-  props: IUserProps & IEventProps
+const EventListContainer: FunctionComponent<IEventProps> = (
+  props: IEventProps
 ) => {
-  const { user, events, refetchEvents } = props;
-
+  const { events, refetchEvents } = props;
+  const user = useUser();
   const {
     history,
     location: { search },
@@ -40,9 +40,7 @@ const EventListContainer: FunctionComponent<IUserProps & IEventProps> = (
   // HOOKS
   const [loadingEventsList, setLoadingEventsList] = useState<ID[]>([]);
 
-  const [toggleJoinEventMutation] = useMutation(
-    TOGGLE_JOIN_EVENT
-  );
+  const [toggleJoinEventMutation] = useMutation(TOGGLE_JOIN_EVENT);
 
   const [deleteEventMutation] = useMutation(DELETE_EVENT_MUTATION, {
     onError: () => {
@@ -164,7 +162,4 @@ const EventListContainer: FunctionComponent<IUserProps & IEventProps> = (
   );
 };
 
-export default compose(
-  withUser,
-  withEvents
-)(EventListContainer);
+export default compose(withEvents)(EventListContainer);
