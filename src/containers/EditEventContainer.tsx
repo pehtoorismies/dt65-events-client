@@ -7,7 +7,6 @@ import useReactRouter from 'use-react-router';
 
 import EventWizard from '../components/EventWizard';
 import { EVENT_QUERY, UPDATE_EVENT } from '../gql';
-import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
 import withUser, { IUserProps } from '../hoc/withUser';
 import { IEventReq } from '../types';
 import { routeFromQueryString, toEventState } from '../util';
@@ -81,5 +80,4 @@ const EditEventContainer: FunctionComponent<IUserProps> = (
 
 export default compose(
   withUser,
-  withSetHeaderTitle('edit')
 )(EditEventContainer);

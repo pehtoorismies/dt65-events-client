@@ -5,7 +5,6 @@ import { FallbackProps } from 'react-error-boundary';
 import Loader from '../components/Loader';
 import UserList from '../components/UserList';
 import { USERS_QUERY } from '../gql';
-import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
 
 const UserListContainer: FunctionComponent<FallbackProps> = props => {
   const { loading, error, data } = useQuery(USERS_QUERY);
@@ -22,4 +21,4 @@ const UserListContainer: FunctionComponent<FallbackProps> = props => {
   return <UserList users={users} />;
 };
 
-export default withSetHeaderTitle('käyttäjät')(UserListContainer);
+export default UserListContainer;

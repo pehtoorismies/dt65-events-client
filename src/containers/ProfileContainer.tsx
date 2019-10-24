@@ -8,7 +8,6 @@ import useReactRouter from 'use-react-router';
 
 import Profile from '../components/Profile';
 import { ROUTES } from '../constants';
-import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
 import withUser, { IUserProps } from '../hoc/withUser';
 import { logout } from '../util/auth';
 
@@ -71,5 +70,4 @@ const ProfileContainer: FunctionComponent<WithApolloClient<IUserProps>> = (
 export default compose(
   withApollo,
   withUser,
-  withSetHeaderTitle('asetukset')
 )(ProfileContainer);

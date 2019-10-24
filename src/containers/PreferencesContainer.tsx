@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 
 import Preferences from '../components/Profile/Preferences';
 import { PREFERENCES_QUERY, UPDATE_PREFERENCES_MUTATION } from '../gql';
-import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
 import withUser from '../hoc/withUser';
 import { IPreferences } from '../types';
 
@@ -62,5 +61,4 @@ const PreferencesContainer: FunctionComponent = () => {
 
 export default compose(
   withUser,
-  withSetHeaderTitle('tilaukset')
 )(PreferencesContainer);

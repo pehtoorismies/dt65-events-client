@@ -6,7 +6,7 @@ import useReactRouter from 'use-react-router';
 import { Button } from '../components/Common';
 import InfoMessage from '../components/InfoMessage';
 import { ROUTES } from '../constants';
-import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
+
 
 const GET_REGISTER_EMAIL = gql`
   {
@@ -29,4 +29,4 @@ const RegisterSuccessContainer: FunctionComponent = () => {
   );
 };
 
-export default withSetHeaderTitle('/registerSuccess')(RegisterSuccessContainer);
+export default RegisterSuccessContainer;

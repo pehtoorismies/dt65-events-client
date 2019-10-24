@@ -1,10 +1,19 @@
 import format from 'date-fns/format';
 import { endOfDay, startOfDay } from 'date-fns/fp';
 import parseISO from 'date-fns/parseISO';
-import { filter, findIndex } from 'ramda';
+import {
+  filter,
+  findIndex,
+  startsWith,
+  split,
+  pipe,
+  equals,
+  nth,
+  defaultTo,
+} from 'ramda';
 import { isNull, isUndefined } from 'ramda-adjunct';
 
-import { EVENT_TYPES } from '../constants';
+import { EVENT_TYPES, ROUTES, EVENTS_PATH } from '../constants';
 import {
   ICalEvent,
   IEventExtended,
@@ -83,6 +92,40 @@ const filterByDate = (
   return filter(dateFilter, events);
 };
 
+const TITLES = {
+  [ROUTES.home]: 'tapahtumat',
+  [ROUTES.calendar]: 'kalenteri',
+  [ROUTES.createEvent]: 'luo',
+  [ROUTES.profile]: 'asetukset',
+  [ROUTES.viewEvent]: 'tapahtuma',
+  [ROUTES.editEvent]: 'muokkaa',
+  [ROUTES.preferences]: 'tilaukset',
+  [ROUTES.profileInfo]: 'profiili',
+  [ROUTES.userList]: 'käyttäjät',
+  [ROUTES.login]: 'kirjaudu',
+  [ROUTES.forgotPassword]: 'salasana',
+  [ROUTES.register]: 'rekisteröidy',
+  [ROUTES.register]: 'success',
+};
+
+const isEventPath = startsWith(EVENTS_PATH);
+
+const isEdit = pipe(
+  // @ts-ignore
+  defaultTo('//'),
+  split('/'),
+  nth(2),
+  equals('edit')
+);
+
+const getPageHeader = (loc: string): string => {
+  if (isEventPath(loc)) {
+    return isEdit(loc) ? 'edit' : 'tapahtuma';
+  }
+
+  return TITLES[loc] || '';
+};
+
 export {
   isNullOrUndefined,
   isParticipant,
@@ -90,4 +133,5 @@ export {
   parseEvent,
   toEventState,
   formatICalEvent,
+  getPageHeader,
 };

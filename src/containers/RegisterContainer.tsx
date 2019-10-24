@@ -8,7 +8,6 @@ import useReactRouter from 'use-react-router';
 import { TextLink } from '../components/Common';
 import { Register } from '../components/Forms/Auth';
 import { ROUTES } from '../constants';
-import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
 import { setGraphQLErrors } from '../util/graphqlErrors';
 import toLower from 'ramda/es/toLower';
 
@@ -93,4 +92,4 @@ const RegisterContainer: FunctionComponent = () => {
   );
 };
 
-export default withSetHeaderTitle('rekisteröidy')(RegisterContainer);
+export default RegisterContainer;

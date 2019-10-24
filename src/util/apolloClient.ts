@@ -77,18 +77,14 @@ const createClient = (history: any) => {
         picture: String!
         sub: String!
       }
-      type Popup {
-        visible: Boolean!
-      }
       type Query {
         localUser: LocalUser
         eventsView: EventsView
-        headerTitle: String
+        backUrl: String
       }
       
       type Mutation {
         logoutLocalUser: Boolean!
-        headerTitle(header: String!) : String! 
       }
   `,
     resolvers: {
@@ -103,15 +99,6 @@ const createClient = (history: any) => {
 
           return null;
         },
-        headerTitle: (_root, variables, { cache }) => {
-          const { headerTitle } = variables;
-
-          cache.writeData({
-            data: {
-              headerTitle,
-            },
-          });
-        },
       },
     },
   });
@@ -120,7 +107,7 @@ const createClient = (history: any) => {
     data: {
       localUser: getLocalUser(getIdToken()),
       eventsView: 'LIST',
-      headerTitle: '',
+      backUrl: 'tere',
     },
   });
 

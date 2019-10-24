@@ -53,6 +53,12 @@ export const SET_HEADER_TITLE = gql`
   }
 `;
 
+export const GET_BACK_URL = gql`
+  query BackUrl {
+    backUrl @client
+  }
+`;
+
 export const GET_LOCALUSER = gql`
   query LocalUser {
     localUser @client {

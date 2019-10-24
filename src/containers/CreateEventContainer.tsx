@@ -12,7 +12,6 @@ import useReactRouter from 'use-react-router';
 import EventWizard from '../components/EventWizard';
 import { ROUTES } from '../constants';
 import { CREATE_EVENT, EVENTS_QUERY } from '../gql';
-import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
 import withUser, { IUserProps } from '../hoc/withUser';
 import { IEventReq, IEventResp } from '../types';
 
@@ -79,5 +78,4 @@ const CreateEventContainer: FunctionComponent<IUserProps> = (
 
 export default compose(
   withUser,
-  withSetHeaderTitle('luo')
 )(CreateEventContainer);
