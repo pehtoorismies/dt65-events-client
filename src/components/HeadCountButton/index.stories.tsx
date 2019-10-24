@@ -8,14 +8,14 @@ storiesOf('HeadCountButton', module)
     <HeadCountButton
       count={65}
       onClick={action('Click')}
-      isParticipating={true}
+      isParticipant={true}
     />
   ))
   .add('Not participating', () => (
     <HeadCountButton
       count={65}
       onClick={action('Click')}
-      isParticipating={false}
+      isParticipant={false}
     />
   ))
   .add('Loading', () => (
@@ -23,6 +23,6 @@ storiesOf('HeadCountButton', module)
       loading={true}
       count={65}
       onClick={action('Click')}
-      isParticipating={true}
+      isParticipant={true}
     />
   ));

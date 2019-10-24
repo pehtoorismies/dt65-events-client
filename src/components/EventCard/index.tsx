@@ -1,7 +1,7 @@
 import css from '@emotion/css';
 import styled from '@emotion/styled';
 import parse, { DomElement, domToReact } from 'html-react-parser';
-import { map, toLower } from 'ramda';
+import { map } from 'ramda';
 import React, { FunctionComponent, useState } from 'react';
 import AnimateHeight from 'react-animate-height';
 import { PortalWithState } from 'react-portal';
@@ -11,11 +11,11 @@ import { Edit } from 'styled-icons/boxicons-regular/Edit';
 import { CaretDownCircle } from 'styled-icons/boxicons-solid/CaretDownCircle';
 import { Medal } from 'styled-icons/fa-solid/Medal';
 
-import { ID, IEvent, ISimpleUser, ILocalUser } from '../../types';
-import { isParticipating } from '../../util/general';
+import { colors } from '../../theme';
+import { ID, IEvent, ILocalUser, IUser } from '../../types';
+import { isParticipant } from '../../util/general';
 import { Button, PortalOverlay } from '../Common';
 import HeadCountButton from '../HeadCountButton';
-import { colors } from '../../theme';
 
 interface IProps extends IEvent {
   isJoining?: boolean;
@@ -96,14 +96,18 @@ const Pill = (props: any) => (
   />
 );
 
-const renderPill = (currentUser: ILocalUser) => (
-  participant: ISimpleUser
-) => {
+const renderPill = (currentUser: ILocalUser) => (participant: IUser) => {
   const { sub } = participant;
   const color = sub === currentUser.sub ? 'pink' : 'blue';
 
   return (
-    <Pill bg={color} justifyContent="center" alignItems="center" p={1} key={participant.id}>
+    <Pill
+      bg={color}
+      justifyContent="center"
+      alignItems="center"
+      p={1}
+      key={participant.id}
+    >
       <Text px={1} fontSize={10} color="white">
         {participant.nickname}
       </Text>
@@ -134,7 +138,7 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
     stayOpened,
   } = props;
 
-  const isParticipant = isParticipating(user, participants);
+  const userGoesToEvent = isParticipant(user, participants);
 
   const onJoinClick = (e: any) => {
     e.stopPropagation();
@@ -274,7 +278,7 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
                       loading={isJoining}
                       count={participants.length}
                       onClick={onJoinClick}
-                      isParticipating={isParticipant}
+                      isParticipant={userGoesToEvent}
                     />
                   </Flex>
                 </Flex>

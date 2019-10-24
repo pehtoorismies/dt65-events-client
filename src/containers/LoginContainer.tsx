@@ -29,7 +29,7 @@ const LoginContainer: FunctionComponent = () => {
   const [generalError, setGeneralError] = useState('');
   const [loginSuccess, setLoginSuccess] = useState(false);
 
-  const [loginAction, { data, loading, error }] = useMutation(LOGIN_MUTATION, {
+  const [loginAction] = useMutation(LOGIN_MUTATION, {
     update(
       cache,
       {

@@ -1,17 +1,16 @@
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import compose from '@shopify/react-compose';
-import { withApollo, WithApolloClient } from 'react-apollo';
 import React, { FunctionComponent } from 'react';
-import { FallbackProps } from 'react-error-boundary';
+import { withApollo, WithApolloClient } from 'react-apollo';
 import { toast } from 'react-toastify';
 import useReactRouter from 'use-react-router';
 
 import Loader from '../components/Loader';
 import UserInfo from '../components/UserInfo';
+import { ROUTES } from '../constants';
 import { ME_MUTATION, ME_QUERY } from '../gql';
 import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
 import { IUpdateableUserInfo } from '../types';
-import { ROUTES } from '../constants';
 import { logout } from '../util/auth';
 
 const UserInfoContainer: FunctionComponent<WithApolloClient<any>> = (

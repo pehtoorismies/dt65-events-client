@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import compose from '@shopify/react-compose';
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 import { toast } from 'react-toastify';
 
 import Preferences from '../components/Profile/Preferences';

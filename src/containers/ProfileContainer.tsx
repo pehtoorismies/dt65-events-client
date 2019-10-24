@@ -1,10 +1,9 @@
 import compose from '@shopify/react-compose';
 import React, { FunctionComponent } from 'react';
 import { withApollo, WithApolloClient } from 'react-apollo';
-import { User } from 'styled-icons/boxicons-regular/User';
 import { LogOut } from 'styled-icons/boxicons-regular/LogOut';
-import { Subscriptions } from 'styled-icons/material/Subscriptions';
 import { Profile as ProfileIcon } from 'styled-icons/icomoon/Profile';
+import { Subscriptions } from 'styled-icons/material/Subscriptions';
 import useReactRouter from 'use-react-router';
 
 import Profile from '../components/Profile';

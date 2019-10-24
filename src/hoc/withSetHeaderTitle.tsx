@@ -1,5 +1,6 @@
 import { useMutation } from '@apollo/react-hooks';
 import React, { ComponentType, useEffect } from 'react';
+
 import { SET_HEADER_TITLE } from '../gql';
 
 const withSetHeaderTitle = (title: string) => <P extends {}>(

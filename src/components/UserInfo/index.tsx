@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 
 import { IUpdateableUserInfo, IUserInfo } from '../../types';
 import { BasicInput, Button } from '../Common';
-import values from 'ramda/es/values';
 
 interface IProps {
   userInfo: IUserInfo;
@@ -43,7 +42,6 @@ const validationSchema = Yup.object().shape({
 const render = (formikBag: FormikProps<IUpdateableUserInfo>) => {
   const {
     isSubmitting,
-    touched,
     initialValues,
     values: formValues,
     handleReset,

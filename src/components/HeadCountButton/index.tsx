@@ -8,7 +8,7 @@ import { LoaderAlt } from 'styled-icons/boxicons-regular/LoaderAlt';
 interface IProps {
   count: number;
   onClick: any;
-  isParticipating: boolean;
+  isParticipant: boolean;
   loading?: boolean;
 }
 
@@ -64,7 +64,7 @@ const getContent = (count: number, loading?: boolean) => {
 };
 
 const HeadCountButton: FunctionComponent<IProps> = (props: IProps) => {
-  const { count, onClick, isParticipating, loading } = props;
+  const { count, onClick, isParticipant, loading } = props;
 
   const content = getContent(count, loading);
   const clicked = loading ? null : onClick;
@@ -72,7 +72,7 @@ const HeadCountButton: FunctionComponent<IProps> = (props: IProps) => {
   return (
     <Count
       onClick={clicked}
-      bg={isParticipating ? 'pink' : 'blue'}
+      bg={isParticipant ? 'pink' : 'blue'}
       flexDirection="column"
       alignItems="center"
       justifyContent="center"

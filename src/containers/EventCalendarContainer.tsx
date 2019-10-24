@@ -1,7 +1,6 @@
 import compose from '@shopify/react-compose';
 import { getMonth, getYear } from 'date-fns/fp';
 import map from 'ramda/es/map';
-import replace from 'ramda/es/replace';
 import React, { Fragment, FunctionComponent } from 'react';
 import { Box } from 'rebass';
 import useReactRouter from 'use-react-router';
@@ -9,7 +8,7 @@ import useReactRouter from 'use-react-router';
 import EventCalendar from '../components/EventCalendar';
 import { ROUTES } from '../constants';
 import withEvents, { IEventProps } from '../hoc/withEvents';
-import { ID, IYearMonth } from '../types';
+import { IYearMonth } from '../types';
 import { formatICalEvent } from '../util/general';
 
 const EventCalendarContainer: FunctionComponent<IEventProps> = (

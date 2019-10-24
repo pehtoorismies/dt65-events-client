@@ -10,7 +10,7 @@ import { EVENT_QUERY, UPDATE_EVENT } from '../gql';
 import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
 import withUser, { IUserProps } from '../hoc/withUser';
 import { IEventReq } from '../types';
-import { fromUrlFromQueryString, toEventState } from '../util/general';
+import { routeFromQueryString, toEventState } from '../util';
 
 const EditEventContainer: FunctionComponent<IUserProps> = (
   props: IUserProps
@@ -26,7 +26,7 @@ const EditEventContainer: FunctionComponent<IUserProps> = (
   } = useReactRouter();
 
   const id = path(['params', 'id'], match);
-  const redirectTo = fromUrlFromQueryString(search, String(id));
+  const redirectTo = routeFromQueryString(search, String(id));
   const onCancel = () => {
     history.push(redirectTo);
   };

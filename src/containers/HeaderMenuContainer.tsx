@@ -1,14 +1,13 @@
 import { useQuery } from '@apollo/react-hooks';
+import any from 'ramda/es/any';
+import equals from 'ramda/es/equals';
 import path from 'ramda/es/path';
-import React, { ComponentType } from 'react';
+import React from 'react';
 import useReactRouter from 'use-react-router';
 
 import { MenuHeader } from '../components/Menu';
-import { GET_HEADER_TITLE } from '../gql';
 import { ROUTES } from '../constants';
-
-import any from 'ramda/es/any';
-import equals from 'ramda/es/equals';
+import { GET_HEADER_TITLE } from '../gql';
 
 const disabledPaths: string[] = [
   ROUTES.login,

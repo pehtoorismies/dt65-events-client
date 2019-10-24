@@ -12,23 +12,19 @@ import { DELETE_EVENT_MUTATION, EVENT_QUERY, TOGGLE_JOIN_EVENT } from '../gql';
 import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
 import withUser, { IUserProps } from '../hoc/withUser';
 import { ID } from '../types';
-import { parseEvent, queryParamsFrom } from '../util/general';
+import { parseEvent, queryParamsFrom } from '../util';
 
 const ViewEventContainer: FunctionComponent<IUserProps> = (
   props: IUserProps
 ) => {
-  const {
-    user,
-  } = props;
+  const { user } = props;
 
   const { history, match } = useReactRouter();
   const id = path(['params', 'id'], match);
   const [toggleJoinEventMutation, { loading: loadingJoin }] = useMutation(
     TOGGLE_JOIN_EVENT
   );
-  const [deleteEventMutation, { loading: loadingDelete }] = useMutation(
-    DELETE_EVENT_MUTATION
-  );
+  const [deleteEventMutation] = useMutation(DELETE_EVENT_MUTATION);
 
   const joinEvent = async (eventId: ID) => {
     try {

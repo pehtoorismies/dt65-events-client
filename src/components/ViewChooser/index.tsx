@@ -1,9 +1,9 @@
-import React, { FunctionComponent, Fragment } from 'react';
-import { Flex, Box, Button } from 'rebass';
 import styled from '@emotion/styled';
-
-import { ListUl } from 'styled-icons/boxicons-regular/ListUl';
+import React, { FunctionComponent } from 'react';
+import { Box, Button, Flex } from 'rebass';
 import { Calendar } from 'styled-icons/boxicons-regular/Calendar';
+import { ListUl } from 'styled-icons/boxicons-regular/ListUl';
+
 import { VIEW } from '../../types';
 
 interface IColor {
@@ -39,19 +39,17 @@ const ViewChooser: FunctionComponent<IProps> = (props: IProps) => {
           onClick={selectList}
           width="100%"
         >
-          <List color='white' />
+          <List color="white" />
         </Button>
       </Box>
       <Box width="50%">
         <Button
           p={1}
-          variant={
-            selectedView === VIEW.CALENDAR ? 'primary' : 'greyed'
-          }
+          variant={selectedView === VIEW.CALENDAR ? 'primary' : 'greyed'}
           onClick={selectCal}
           width="100%"
         >
-          <Cal color='white' />
+          <Cal color="white" />
         </Button>
       </Box>
     </Flex>
