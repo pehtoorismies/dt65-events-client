@@ -10,6 +10,8 @@ import imgSwimming from './images/events-swimming.jpg';
 import imgTrackRunning from './images/events-track-running.jpg';
 import imgTriathlon from './images/events-triathlon.jpg';
 import imgUltras from './images/events-ultras.jpg';
+import imgTrailRunning from './images/events-trail-running.jpg';
+import imgNordicWalking from './images/events-nordic-walking.jpg';
 import { EventType, IEventTypeDescriptor } from './types';
 
 const FI_LOCAL = {
@@ -116,6 +118,18 @@ const EVENT_TYPES: IEventTypeDescriptor[] = [
     title: 'Kokous',
     id: EventType.Meeting,
     apiType: 'Meeting',
+  },
+  {
+    defaultImage: imgNordicWalking,
+    title: 'Sauvakävely',
+    id: EventType.NordicWalking,
+    apiType: 'NordicWalking',
+  },
+  {
+    defaultImage: imgTrailRunning,
+    title: 'Polkujuoksu',
+    id: EventType.TrailRunning,
+    apiType: 'TrailRunning',
   },
 ];
 

@@ -4,6 +4,7 @@ export enum EventType {
   Cycling = 1,
   Karonkka,
   Meeting,
+  NordicWalking,
   Orienteering,
   Other,
   Running,
@@ -11,6 +12,7 @@ export enum EventType {
   Spinning,
   Swimming,
   TrackRunning,
+  TrailRunning,
   Triathlon,
   Ultras,
 }

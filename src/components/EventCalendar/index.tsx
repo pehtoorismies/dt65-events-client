@@ -32,6 +32,8 @@ import logo_other from '../../images/calendar-logos/other.png';
 import logo_skiing from '../../images/calendar-logos/skiing.png';
 import logo_triathlon from '../../images/calendar-logos/triathlon.png';
 import logo_kickoff from '../../images/calendar-logos/kickoff.png';
+// import logo_trailrunning from '../../images/calendar-logos/running.png';
+// import logo_nordicwalking from '../../images/calendar-logos/running.png';
 import { format } from 'date-fns';
 
 type DaySelect = (date: string) => void; 
@@ -85,6 +87,7 @@ const icons = {
   [EventType.Cycling]: logo_cycling,
   [EventType.Karonkka]: logo_party,
   [EventType.Meeting]: logo_kickoff,
+  [EventType.NordicWalking]: logo_running,
   [EventType.Orienteering]: logo_orienteering,
   [EventType.Other]: logo_other,
   [EventType.Running]: logo_running,
@@ -92,6 +95,7 @@ const icons = {
   [EventType.Spinning]: logo_cycling,
   [EventType.Swimming]: logo_swimming,
   [EventType.TrackRunning]: logo_running,
+  [EventType.TrailRunning]: logo_running,
   [EventType.Triathlon]: logo_triathlon,
   [EventType.Ultras]: logo_kickoff,
 };
