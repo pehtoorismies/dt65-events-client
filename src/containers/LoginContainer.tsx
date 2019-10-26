@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 import React, { FunctionComponent, useState } from 'react';
 import { Redirect } from 'react-router';
 import useReactRouter from 'use-react-router';
+import { FormikActions } from 'formik';
 
 import { TextLink } from '../components/Common';
 import { Login as LoginComponent } from '../components/Forms/Auth';
@@ -12,12 +13,12 @@ import { getLocalUser, login as authLogin } from '../util/auth';
 import { setGraphQLErrors } from '../util/graphqlErrors';
 import { toast } from 'react-toastify';
 
-interface IUserLogin {
+interface ILogin {
   email: string;
   password: string;
 }
 
-interface IUserResp {
+interface ILoginResp {
   idToken: string;
   accessToken: string;
   expiresIn: number;
@@ -40,28 +41,25 @@ const LoginContainer: FunctionComponent = () => {
   const [generalError, setGeneralError] = useState('');
   const [loginSuccess, setLoginSuccess] = useState(false);
 
-  const [login] = useMutation<{ login: IUserResp }, IUserLogin>(
-    LOGIN_MUTATION,
-    {
-      update(cache, { data }) {
-        if (!data || !data.login) {
-          toast.error('System error');
-          return;
-        }
-        const { idToken, accessToken, expiresIn } = data.login;
+  const [login] = useMutation<{ login: ILoginResp }, ILogin>(LOGIN_MUTATION, {
+    update(cache, { data }) {
+      if (!data || !data.login) {
+        toast.error('System error');
+        return;
+      }
+      const { idToken, accessToken, expiresIn } = data.login;
 
-        authLogin(idToken, accessToken, expiresIn);
+      authLogin(idToken, accessToken, expiresIn);
 
-        cache.writeQuery({
-          query: GET_LOCALUSER,
-          data: { localUser: getLocalUser(idToken) },
-        });
-      },
-    }
-  );
+      cache.writeQuery({
+        query: GET_LOCALUSER,
+        data: { localUser: getLocalUser(idToken) },
+      });
+    },
+  });
 
   // TODO: check correct formik type
-  const onSubmit = async (values: IUserLogin, actions: any) => {
+  const onSubmit = async (values: ILogin, actions: FormikActions<ILogin>) => {
     try {
       await login({
         variables: values,
