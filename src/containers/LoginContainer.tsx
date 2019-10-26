@@ -5,11 +5,23 @@ import { Redirect } from 'react-router';
 import useReactRouter from 'use-react-router';
 
 import { TextLink } from '../components/Common';
-import { Login } from '../components/Forms/Auth';
+import { Login as LoginComponent } from '../components/Forms/Auth';
 import { ROUTES } from '../constants';
 import { GET_LOCALUSER } from '../gql';
 import { getLocalUser, login as authLogin } from '../util/auth';
 import { setGraphQLErrors } from '../util/graphqlErrors';
+import { toast } from 'react-toastify';
+
+interface IUserLogin {
+  email: string;
+  password: string;
+}
+
+interface IUserResp {
+  idToken: string;
+  accessToken: string;
+  expiresIn: number;
+}
 
 const LOGIN_MUTATION = gql`
   mutation Login($email: String!, $password: String!) {
@@ -28,28 +40,32 @@ const LoginContainer: FunctionComponent = () => {
   const [generalError, setGeneralError] = useState('');
   const [loginSuccess, setLoginSuccess] = useState(false);
 
-  const [loginAction] = useMutation(LOGIN_MUTATION, {
-    update(
-      cache,
-      {
-        data: {
-          login: { idToken, accessToken, expiresIn },
-        },
-      }
-    ) {
-      authLogin(idToken, accessToken, expiresIn);
+  const [login] = useMutation<{ login: IUserResp }, IUserLogin>(
+    LOGIN_MUTATION,
+    {
+      update(cache, { data }) {
+        if (!data || !data.login) {
+          toast.error('System error');
+          return;
+        }
+        const { idToken, accessToken, expiresIn } = data.login;
 
-      cache.writeQuery({
-        query: GET_LOCALUSER,
-        data: { localUser: getLocalUser(idToken) },
-      });
-    },
-  });
+        authLogin(idToken, accessToken, expiresIn);
+
+        cache.writeQuery({
+          query: GET_LOCALUSER,
+          data: { localUser: getLocalUser(idToken) },
+        });
+      },
+    }
+  );
 
   // TODO: check correct formik type
-  const onSubmit = async (values: any, actions: any) => {
+  const onSubmit = async (values: IUserLogin, actions: any) => {
     try {
-      await loginAction({ variables: values });
+      await login({
+        variables: values,
+      });
       setLoginSuccess(true);
     } catch (e) {
       const { graphQLErrors, networkError } = e;
@@ -78,14 +94,14 @@ const LoginContainer: FunctionComponent = () => {
   }
 
   return (
-    <Login onSubmit={onSubmit} errorMessage={generalError}>
+    <LoginComponent onSubmit={onSubmit} errorMessage={generalError}>
       <TextLink onClick={toForgotPassword} m={3} textAlign="center">
         Salasana unohtunut?
       </TextLink>
       <TextLink onClick={toRegister} m={3} textAlign="center">
         Rekisteröitymiseen
       </TextLink>
-    </Login>
+    </LoginComponent>
   );
 };
 
