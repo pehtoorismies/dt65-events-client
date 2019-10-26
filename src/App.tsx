@@ -4,8 +4,9 @@ import { ThemeProvider } from 'emotion-theming';
 import React, { Fragment } from 'react';
 import ErrorBoundary from 'react-error-boundary';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import { Flex } from 'rebass';
+import { css } from '@emotion/core';
 
 import ApolloProvider from './ApolloProviderWithHistory';
 import { MEASURES, ROUTES } from './constants';
@@ -25,6 +26,7 @@ import ShowErrorContainer from './containers/ShowErrorContainer';
 import UserInfoContainer from './containers/UserInfoContainer';
 import ViewEventContainer from './containers/ViewEventContainer';
 import UserListContainer from './containers/UserListContainer';
+import WrappedToastContainer from './containers/WrappedToastContainer';
 import Dt65Route from './Dt65Route';
 import GlobalStyle from './GlobalStyle';
 import { theme } from './theme';
@@ -37,7 +39,12 @@ const App = () => (
   <Fragment>
     <GlobalStyle />
     <ThemeProvider theme={theme}>
-      <ToastContainer />
+      <WrappedToastContainer
+        autoClose={2000}
+        progressClassName={css`
+          height: 12px;
+        `}
+      />
       <Router>
         <ApolloProvider>
           <Flex
@@ -101,7 +108,7 @@ const App = () => (
                   component={UserInfoContainer}
                   privateRoute={true}
                 />
-                 <Dt65Route
+                <Dt65Route
                   exact={true}
                   path={ROUTES.userList}
                   component={UserListContainer}

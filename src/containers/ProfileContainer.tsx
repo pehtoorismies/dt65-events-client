@@ -1,4 +1,3 @@
-import compose from '@shopify/react-compose';
 import React, { FunctionComponent } from 'react';
 import { withApollo, WithApolloClient } from 'react-apollo';
 import { LogOut } from 'styled-icons/boxicons-regular/LogOut';
@@ -69,6 +68,4 @@ const ProfileContainer: FunctionComponent<WithApolloClient<{}>> = (
   );
 };
 
-export default compose(
-  withApollo,
-)(ProfileContainer);
+export default withApollo(ProfileContainer);

@@ -1,5 +1,4 @@
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import compose from '@shopify/react-compose';
 import path from 'ramda/es/path';
 import replace from 'ramda/es/replace';
 import React, { FunctionComponent } from 'react';
@@ -9,15 +8,14 @@ import useReactRouter from 'use-react-router';
 import EventCard from '../components/EventCard';
 import { QUERY_PARAMS, ROUTES } from '../constants';
 import { DELETE_EVENT_MUTATION, EVENT_QUERY, TOGGLE_JOIN_EVENT } from '../gql';
-import { useUser } from '../hooks'
-
+import { useUser } from '../hooks';
 import { ID } from '../types';
 import { parseEvent, queryParamsFrom } from '../util';
 
 const ViewEventContainer: FunctionComponent = () => {
   const { history, match } = useReactRouter();
   const user = useUser();
-  
+
   const id = path(['params', 'id'], match);
   const [toggleJoinEventMutation, { loading: loadingJoin }] = useMutation(
     TOGGLE_JOIN_EVENT

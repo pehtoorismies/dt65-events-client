@@ -18,7 +18,7 @@ const PreferencesContainer: FunctionComponent = () => {
     { loading: mutationLoading, error: mutationError },
   ] = useMutation(UPDATE_PREFERENCES_MUTATION, {
     onCompleted: () => {
-      toast.success('Päitys onnistui');
+      toast.success('Asetukset päivitetty');
     },
   });
 

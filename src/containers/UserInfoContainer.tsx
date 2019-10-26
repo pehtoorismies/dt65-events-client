@@ -1,5 +1,4 @@
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import compose from '@shopify/react-compose';
 import React, { FunctionComponent } from 'react';
 import { withApollo, WithApolloClient } from 'react-apollo';
 import { toast } from 'react-toastify';
@@ -63,6 +62,4 @@ const UserInfoContainer: FunctionComponent<WithApolloClient<any>> = (
   return <UserInfo userInfo={me} onSubmit={updateValues} />;
 };
 
-export default compose(
-  withApollo,
-)(UserInfoContainer);
+export default withApollo(UserInfoContainer);

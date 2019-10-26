@@ -52,12 +52,11 @@ const RegisterContainer: FunctionComponent = () => {
           signup: { email },
         },
       } = await signupAction({ variables: lowerCaseValues });
-      console.log('Success')
+      
       client.writeData({ data: { registerEmail: email } });
       setRegisterSuccess(true);
     } catch (error) {
-      console.log('Errorroo');
-      console.log(error);
+      console.error(error);
       const { graphQLErrors, networkError } = error;
 
       if (graphQLErrors) {
