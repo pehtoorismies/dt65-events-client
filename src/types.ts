@@ -4,6 +4,7 @@ export enum EventType {
   Cycling = 1,
   Karonkka,
   Meeting,
+  NordicWalking,
   Orienteering,
   Other,
   Running,
@@ -11,6 +12,7 @@ export enum EventType {
   Spinning,
   Swimming,
   TrackRunning,
+  TrailRunning,
   Triathlon,
   Ultras,
 }
@@ -39,7 +41,7 @@ export interface IAuthResponse {
   errorMessage?: string;
 }
 
-export interface IEventType {
+export interface IEventTypeDescriptor {
   defaultImage: string;
   title: string;
   id: EventType;
@@ -57,12 +59,15 @@ export interface IAuthFormProps {
   children?: ReactNode;
 }
 
-export interface ISimpleUser {
+export interface ISubject {
+  sub: string;
+}
+
+export interface IUser extends ISubject {
   id: string;
   nickname: string;
-  username?: string;
-  sub: string;
   __typename?: string;
+  username?: string;
 }
 
 export interface ITime {
@@ -79,7 +84,7 @@ export interface IEventState {
   timeEnabled: boolean;
   title?: string;
   type?: EventType;
-  participants?: ISimpleUser[];
+  participants?: IUser[];
 }
 
 export interface IEventStep {
@@ -92,7 +97,6 @@ export interface IEventBase {
   description?: string;
   race: boolean;
   subtitle?: string;
-
   title: string;
 }
 
@@ -108,8 +112,8 @@ export interface IEventResp extends IEventBase {
   date: string;
   exactTime: boolean;
   type: string;
-  participants: ISimpleUser[];
-  creator: ISimpleUser;
+  participants: IUser[];
+  creator: IUser;
   updatedAt?: string;
   createdAt?: string;
   __typename?: string;
@@ -119,8 +123,8 @@ export interface IEvent extends IEventBase {
   id: ID;
   date: string;
   time: string;
-  participants: ISimpleUser[];
-  type: IEventType;
+  participants: IUser[];
+  type: IEventTypeDescriptor;
   creator: string;
 }
 
@@ -161,8 +165,7 @@ export interface IBaseUserInfo {
   avatar?: string;
 }
 
-export interface ILocalUser {
-  sub: string;
+export interface ILocalUser extends ISubject {
   nickname: string;
   picture: string;
   name: string;

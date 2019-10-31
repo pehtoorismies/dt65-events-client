@@ -3,7 +3,7 @@ import { Redirect, Route, RouteProps } from 'react-router-dom';
 
 import { ROUTES } from './constants';
 import FooterMenuContainer from './containers/FooterMenuContainer';
-import { hasAccessToken, logout } from './util/auth';
+import { hasAccessToken } from './util/auth';
 
 interface IPrivateRouteProps extends RouteProps {
   // tslint:disable-next-line:no-any

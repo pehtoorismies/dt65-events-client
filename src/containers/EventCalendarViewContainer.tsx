@@ -5,7 +5,6 @@ import useReactRouter from 'use-react-router';
 import Loader from '../components/Loader';
 import ViewChooser from '../components/ViewChooser';
 import { MEASURES, ROUTES } from '../constants';
-import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
 import { VIEW } from '../types';
 
 const EventCalendarContainer = React.lazy(() =>
@@ -37,4 +36,4 @@ const EventCalendarViewContainer: FunctionComponent = () => {
   );
 };
 
-export default withSetHeaderTitle('kalenteri')(EventCalendarViewContainer);
+export default EventCalendarViewContainer;

@@ -1,25 +1,24 @@
-import compose from '@shopify/react-compose';
 import React, { FunctionComponent } from 'react';
 import { withApollo, WithApolloClient } from 'react-apollo';
-import { User } from 'styled-icons/boxicons-regular/User';
 import { LogOut } from 'styled-icons/boxicons-regular/LogOut';
-import { Subscriptions } from 'styled-icons/material/Subscriptions';
 import { Profile as ProfileIcon } from 'styled-icons/icomoon/Profile';
+import { Subscriptions } from 'styled-icons/material/Subscriptions';
 import useReactRouter from 'use-react-router';
 
 import Profile from '../components/Profile';
 import { ROUTES } from '../constants';
-import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
-import withUser, { IUserProps } from '../hoc/withUser';
+import { useUser } from '../hooks';
 import { logout } from '../util/auth';
 
-const ProfileContainer: FunctionComponent<WithApolloClient<IUserProps>> = (
-  props: WithApolloClient<IUserProps>
+const ProfileContainer: FunctionComponent<WithApolloClient<{}>> = (
+  props: WithApolloClient<{}>
 ) => {
   const {
     client,
-    user: { nickname, picture },
+    
   } = props;
+
+  const { nickname, picture } = useUser();
 
   const { history } = useReactRouter();
 
@@ -69,8 +68,4 @@ const ProfileContainer: FunctionComponent<WithApolloClient<IUserProps>> = (
   );
 };
 
-export default compose(
-  withApollo,
-  withUser,
-  withSetHeaderTitle('asetukset')
-)(ProfileContainer);
+export default withApollo(ProfileContainer);

@@ -1,4 +1,3 @@
-import { IEventType, EventType } from './types';
 import imgCycling from './images/events-cycling.jpg';
 import imgKaronkka from './images/events-karonkka.jpg';
 import imgMeeting from './images/events-meeting.jpg';
@@ -11,6 +10,9 @@ import imgSwimming from './images/events-swimming.jpg';
 import imgTrackRunning from './images/events-track-running.jpg';
 import imgTriathlon from './images/events-triathlon.jpg';
 import imgUltras from './images/events-ultras.jpg';
+import imgTrailRunning from './images/events-trail-running.jpg';
+import imgNordicWalking from './images/events-nordic-walking.jpg';
+import { EventType, IEventTypeDescriptor } from './types';
 
 const FI_LOCAL = {
   months: [
@@ -44,7 +46,7 @@ const FI_LOCAL = {
   },
 };
 
-const EVENT_TYPES: IEventType[] = [
+const EVENT_TYPES: IEventTypeDescriptor[] = [
   {
     defaultImage: imgCycling,
     title: 'Pyöräily',
@@ -117,6 +119,18 @@ const EVENT_TYPES: IEventType[] = [
     id: EventType.Meeting,
     apiType: 'Meeting',
   },
+  {
+    defaultImage: imgNordicWalking,
+    title: 'Sauvakävely',
+    id: EventType.NordicWalking,
+    apiType: 'NordicWalking',
+  },
+  {
+    defaultImage: imgTrailRunning,
+    title: 'Polkujuoksu',
+    id: EventType.TrailRunning,
+    apiType: 'TrailRunning',
+  },
 ];
 
 const WEEK_DAYS = ['Ma', 'Ti', 'Ke', 'To', 'Pe', 'La', 'Su'];
@@ -173,4 +187,5 @@ export {
   GRAPHQL_TYPES,
   QUERY_PARAMS,
   MEASURES,
+  EVENTS_PATH,
 };

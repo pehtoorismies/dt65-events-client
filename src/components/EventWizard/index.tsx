@@ -8,7 +8,7 @@ import { PortalWithState } from 'react-portal';
 import { EVENT_TYPES } from '../../constants';
 import { IEventReq, IEventState } from '../../types';
 import { Button, PortalOverlay } from '../Common';
-import { toISODate, toApiType } from '../../util/general';
+import { dateToISOString, toApiType } from '../../util';
 import StepCounter from '../StepCounter';
 import getStep from './stepGetter';
 import styled from '@emotion/styled';
@@ -57,7 +57,9 @@ const EventWizard: FunctionComponent<IProps> = (props: IProps) => {
     }
 
     const exactTime = eventState.timeEnabled;
-    const date = exactTime ? toISODate(eventState.date, eventState.time) : toISODate(eventState.date);
+    const date = exactTime
+      ? dateToISOString(eventState.date, eventState.time)
+      : dateToISOString(eventState.date);
     const creatorJoining = eventState.creatorJoining;
     const description = eventState.description;
     const race = eventState.race || false;

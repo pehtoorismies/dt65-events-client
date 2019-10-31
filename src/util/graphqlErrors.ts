@@ -54,18 +54,18 @@ const handleError = (error: any) => {
   const { graphQLErrors, networkError } = error;
   if (graphQLErrors) {
     graphQLErrors.forEach((err: any) => {
-      const { message, locations, path, name, data } = err;
+      const { message, locations, path: errPath, name } = err;
       if (name === 'JWTError') {
         toast.warn('Kirjaudu uudelleen sisään');
       }
-      console.log(
-        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+      console.error(
+        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${errPath}`
       );
     });
   }
 
   if (networkError) {
-    console.log(`[Network error]: ${networkError}`);
+    console.error(`[Network error]: ${networkError}`);
     // toast.warn('Yhteys ongelmia');
   }
 };

@@ -1,5 +1,4 @@
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import compose from '@shopify/react-compose';
 import path from 'ramda/es/path';
 import React, { FunctionComponent } from 'react';
 import { toast } from 'react-toastify';
@@ -7,17 +6,12 @@ import useReactRouter from 'use-react-router';
 
 import EventWizard from '../components/EventWizard';
 import { EVENT_QUERY, UPDATE_EVENT } from '../gql';
-import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
-import withUser, { IUserProps } from '../hoc/withUser';
+import { useUser } from '../hooks';
 import { IEventReq } from '../types';
-import { fromUrlFromQueryString, toEventState } from '../util/general';
+import { routeFromQueryString, toEventState } from '../util';
 
-const EditEventContainer: FunctionComponent<IUserProps> = (
-  props: IUserProps
-) => {
-  const {
-    user,
-  } = props;
+const EditEventContainer: FunctionComponent = () => {
+  const user = useUser();
 
   const {
     history,
@@ -26,7 +20,7 @@ const EditEventContainer: FunctionComponent<IUserProps> = (
   } = useReactRouter();
 
   const id = path(['params', 'id'], match);
-  const redirectTo = fromUrlFromQueryString(search, String(id));
+  const redirectTo = routeFromQueryString(search, String(id));
   const onCancel = () => {
     history.push(redirectTo);
   };
@@ -79,7 +73,4 @@ const EditEventContainer: FunctionComponent<IUserProps> = (
   );
 };
 
-export default compose(
-  withUser,
-  withSetHeaderTitle('edit')
-)(EditEventContainer);
+export default EditEventContainer;

@@ -1,16 +1,29 @@
 import { useApolloClient, useMutation } from '@apollo/react-hooks';
+import { FormikActions } from 'formik';
 import gql from 'graphql-tag';
+import toLower from 'ramda/es/toLower';
 import React, { FunctionComponent, useState } from 'react';
 import { BallBeat } from 'react-pure-loaders';
 import { Redirect } from 'react-router';
+import { toast } from 'react-toastify';
 import useReactRouter from 'use-react-router';
 
 import { TextLink } from '../components/Common';
 import { Register } from '../components/Forms/Auth';
 import { ROUTES } from '../constants';
-import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
 import { setGraphQLErrors } from '../util/graphqlErrors';
-import toLower from 'ramda/es/toLower';
+
+interface IRegister {
+  email: string;
+  nickname: string;
+  password: string;
+  registerSecret: string;
+  name: string;
+}
+
+interface IRegisterResp {
+  email: string;
+}
 
 const SIGNUP_MUTATION = gql`
   mutation Signup(
@@ -37,28 +50,34 @@ const RegisterContainer: FunctionComponent = () => {
   const toLogin = () => history.push(ROUTES.login);
   const client = useApolloClient();
 
-  const [signupAction, { loading }] = useMutation(SIGNUP_MUTATION);
+  const [signup, { loading }] = useMutation<
+    { signup: IRegisterResp },
+    IRegister
+  >(SIGNUP_MUTATION);
   const [generalError, setGeneralError] = useState('');
   const [registerSuccess, setRegisterSuccess] = useState(false);
 
-  const onSubmit = async (values: any, actions: any) => {
+  const onSubmit = async (
+    values: IRegister,
+    actions: FormikActions<IRegister>
+  ) => {
     try {
-      const lowerCaseValues = {
+      const lowerCaseValues: IRegister = {
         ...values,
-        email: toLower(values.email)
+        email: toLower(values.email),
       };
 
-      const {
-        data: {
-          signup: { email },
-        },
-      } = await signupAction({ variables: lowerCaseValues });
-      console.log('Success')
+      const { data } = await signup({ variables: lowerCaseValues });
+
+      if (!data || !data.signup) {
+        toast.error('System error');
+        return;
+      }
+      const { email } = data.signup;
       client.writeData({ data: { registerEmail: email } });
       setRegisterSuccess(true);
     } catch (error) {
-      console.log('Errorroo');
-      console.log(error);
+      console.error(error);
       const { graphQLErrors, networkError } = error;
 
       if (graphQLErrors) {
@@ -93,4 +112,4 @@ const RegisterContainer: FunctionComponent = () => {
   );
 };
 
-export default withSetHeaderTitle('rekisteröidy')(RegisterContainer);
+export default RegisterContainer;

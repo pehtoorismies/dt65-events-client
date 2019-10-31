@@ -7,7 +7,6 @@ import useReactRouter from 'use-react-router';
 import { TextLink } from '../components/Common';
 import { ForgotPassword } from '../components/Forms/Auth';
 import { ROUTES } from '../constants';
-import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
 
 const FORGOT_PASSWORD_MUTATION = gql`
   mutation ForgotPassword($email: String!) {
@@ -35,4 +34,4 @@ const ForgotPasswordContainer: FunctionComponent = () => {
   );
 };
 
-export default withSetHeaderTitle('salasana')(ForgotPasswordContainer);
+export default ForgotPasswordContainer;
