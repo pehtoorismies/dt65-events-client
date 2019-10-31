@@ -1,8 +1,10 @@
-import React, { FunctionComponent, Fragment } from 'react';
-import { Flex, Text, Box } from 'rebass';
-import { IBaseUserInfo } from '../../types';
-import map from 'ramda/es/map';
 import addIndex from 'ramda/es/addIndex';
+import map from 'ramda/es/map';
+import React, { FunctionComponent } from 'react';
+import { Box, Flex, Text } from 'rebass';
+
+import { IBaseUserInfo } from '../../types';
+
 interface IProps {
   users: IBaseUserInfo[];
 }

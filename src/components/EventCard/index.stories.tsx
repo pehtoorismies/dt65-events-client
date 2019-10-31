@@ -5,12 +5,12 @@ import React from 'react';
 import faker from 'faker';
 import { times } from 'ramda';
 import EventCard from './';
-import { ISimpleUser, ID } from '../../types';
+import { IUser, ID } from '../../types';
 import { EVENT_TYPES } from '../../constants';
 
 const rand = faker.random.number(EVENT_TYPES.length - 1);
 
-const createParticipant = (id: number): ISimpleUser => {
+const createParticipant = (id: number): IUser => {
   return {
     id: String(id),
     username: faker.internet.userName(),

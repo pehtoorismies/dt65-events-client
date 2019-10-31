@@ -5,10 +5,10 @@ import { Flex, Text } from 'rebass';
 import { EVENT_TYPES } from '../../../constants';
 import { IEventState, IEventStep, ILocalUser } from '../../../types';
 import {
-  dateToString,
+  dateToFinnish,
   fromEventType,
   timeToString,
-} from '../../../util/general';
+} from '../../../util';
 import { LeftArrowButton, RightArrowButton } from '../../Common';
 import EventCard from '../../EventCard';
 import BaseStep from './BaseStep';
@@ -53,7 +53,7 @@ const StepCreate: FunctionComponent<IProps> = (props: IProps) => {
     type,
     race: eventState.race || false,
     title: eventState.title || 'empty',
-    date: dateToString(eventState.date || new Date()),
+    date: dateToFinnish(eventState.date || new Date()),
   };
 
   const iamJoining = isEdit ? null : (

@@ -7,7 +7,7 @@ import assoc from 'ramda/es/assoc';
 import add from 'ramda/es/add';
 import subtract from 'ramda/es/subtract';
 import { ITime } from '../../types';
-import { timeToString } from '../../util/general';
+import { timeToString } from '../../util';
 
 interface IProps {
   time?: ITime;

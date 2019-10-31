@@ -1,12 +1,9 @@
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import compose from '@shopify/react-compose';
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 import { toast } from 'react-toastify';
 
 import Preferences from '../components/Profile/Preferences';
 import { PREFERENCES_QUERY, UPDATE_PREFERENCES_MUTATION } from '../gql';
-import withSetHeaderTitle from '../hoc/withSetHeaderTitle';
-import withUser from '../hoc/withUser';
 import { IPreferences } from '../types';
 
 const PreferencesContainer: FunctionComponent = () => {
@@ -21,7 +18,7 @@ const PreferencesContainer: FunctionComponent = () => {
     { loading: mutationLoading, error: mutationError },
   ] = useMutation(UPDATE_PREFERENCES_MUTATION, {
     onCompleted: () => {
-      toast.success('Päitys onnistui');
+      toast.success('Asetukset päivitetty');
     },
   });
 
@@ -34,7 +31,7 @@ const PreferencesContainer: FunctionComponent = () => {
   if (mutationError) {
     throw mutationError;
   }
-  
+
   const {
     me: { preferences },
   } = dataPreferences;
@@ -60,7 +57,4 @@ const PreferencesContainer: FunctionComponent = () => {
   );
 };
 
-export default compose(
-  withUser,
-  withSetHeaderTitle('tilaukset')
-)(PreferencesContainer);
+export default PreferencesContainer;
