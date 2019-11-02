@@ -6,6 +6,7 @@ const useUser = (): ILocalUser => {
   const { loading, error, data } = useQuery(GET_LOCALUSER);
 
   const empty = {
+    __typename: '',
     nickname: '',
     picture: '',
     sub: '',
@@ -23,7 +24,6 @@ const useUser = (): ILocalUser => {
   const { localUser } = data;
 
   return localUser;
-
 };
 
 export { useUser };

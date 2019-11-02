@@ -26,7 +26,7 @@ const withGlobalStyles = storyFn => (
 addParameters({
   viewport: {
     viewports: INITIAL_VIEWPORTS,
-    defaultViewport: 'iphone5'
+    defaultViewport: 'iphone5',
   },
 });
 addDecorator(withGlobalStyles);

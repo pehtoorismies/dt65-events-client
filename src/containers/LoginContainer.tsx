@@ -1,17 +1,19 @@
 import { useMutation } from '@apollo/react-hooks';
+import { FormikActions } from 'formik';
 import gql from 'graphql-tag';
 import React, { FunctionComponent, useState } from 'react';
 import { Redirect } from 'react-router';
+import { toast } from 'react-toastify';
 import useReactRouter from 'use-react-router';
-import { FormikActions } from 'formik';
 
 import { TextLink } from '../components/Common';
 import { Login as LoginComponent } from '../components/Forms/Auth';
+import { useSentry } from '../config';
 import { ROUTES } from '../constants';
 import { GET_LOCALUSER } from '../gql';
 import { getLocalUser, login as authLogin } from '../util/auth';
 import { setGraphQLErrors } from '../util/graphqlErrors';
-import { toast } from 'react-toastify';
+import { logUser } from '../util/logging';
 
 interface ILogin {
   email: string;
@@ -50,11 +52,14 @@ const LoginContainer: FunctionComponent = () => {
       const { idToken, accessToken, expiresIn } = data.login;
 
       authLogin(idToken, accessToken, expiresIn);
-
+      const lUser = getLocalUser(idToken);
       cache.writeQuery({
         query: GET_LOCALUSER,
-        data: { localUser: getLocalUser(idToken) },
+        data: { localUser: lUser },
       });
+      if (lUser) {
+        logUser(useSentry, lUser);
+      }
     },
   });
 

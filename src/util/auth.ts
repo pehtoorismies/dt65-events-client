@@ -1,5 +1,6 @@
 import jwtDecode from 'jwt-decode';
 import { GRAPHQL_TYPES } from '../constants';
+import { ILocalUser } from '../types';
 
 const ID_TOKEN = 'dt65IdToken';
 const ACCESS_TOKEN = 'dt65AccessToken';
@@ -10,7 +11,7 @@ const logout = () => {
   localStorage.removeItem(ACCESS_TOKEN);
   localStorage.removeItem(EXPIRES_IN);
 };
-const getLocalUser = (idToken: string) => {
+const getLocalUser = (idToken: string): ILocalUser | null => {
   if (!idToken) {
     return null;
   }
@@ -27,6 +28,7 @@ const getLocalUser = (idToken: string) => {
   } catch (error) {
     console.error(error);
     logout();
+    return null;
   }
 };
 
