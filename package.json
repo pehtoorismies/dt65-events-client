@@ -6,6 +6,7 @@
     "@emotion/core": "^10.0.17",
     "@emotion/styled": "^10.0.17",
     "@rebass/forms": "^4.0.5",
+    "@sentry/browser": "^5.7.1",
     "@shopify/react-compose": "^1.0.4",
     "apollo-boost": "^0.4.4",
     "apollo-cache-inmemory": "^1.6.3",

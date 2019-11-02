@@ -1,14 +1,14 @@
 import 'react-toastify/dist/ReactToastify.css';
 
+import { css } from '@emotion/core';
 import { ThemeProvider } from 'emotion-theming';
 import React, { Fragment } from 'react';
 import ErrorBoundary from 'react-error-boundary';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
 import { Flex } from 'rebass';
-import { css } from '@emotion/core';
 
 import ApolloProvider from './ApolloProviderWithHistory';
+import { useSentry } from './config';
 import { MEASURES, ROUTES } from './constants';
 import CreateEventContainer from './containers/CreateEventContainer';
 import EditEventContainer from './containers/EditEventContainer';
@@ -24,16 +24,15 @@ import RegisterContainer from './containers/RegisterContainer';
 import RegisterSuccessContainer from './containers/RegisterSuccessContainer';
 import ShowErrorContainer from './containers/ShowErrorContainer';
 import UserInfoContainer from './containers/UserInfoContainer';
-import ViewEventContainer from './containers/ViewEventContainer';
 import UserListContainer from './containers/UserListContainer';
+import ViewEventContainer from './containers/ViewEventContainer';
 import WrappedToastContainer from './containers/WrappedToastContainer';
 import Dt65Route from './Dt65Route';
 import GlobalStyle from './GlobalStyle';
 import { theme } from './theme';
+import { initLogging } from './util/logging';
 
-const myErrorHandler = (error: any, componentStack: string) => {
-  // TODO: log errors
-};
+const errorHandler = initLogging(useSentry);
 
 const App = () => (
   <Fragment>
@@ -56,7 +55,7 @@ const App = () => (
           >
             <ErrorBoundary
               FallbackComponent={ShowErrorContainer}
-              onError={myErrorHandler}
+              onError={errorHandler}
             >
               <HeaderMenuContainer />
               <Switch>

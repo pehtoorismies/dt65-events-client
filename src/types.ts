@@ -166,6 +166,7 @@ export interface IBaseUserInfo {
 }
 
 export interface ILocalUser extends ISubject {
+  __typename?: string;
   nickname: string;
   picture: string;
   name: string;
