@@ -4,6 +4,7 @@ import replace from 'ramda/es/replace';
 import React, { FunctionComponent } from 'react';
 import { toast } from 'react-toastify';
 import useReactRouter from 'use-react-router';
+import { Helmet } from 'react-helmet';
 
 import EventCard from '../components/EventCard';
 import { QUERY_PARAMS, ROUTES } from '../constants';
@@ -70,17 +71,31 @@ const ViewEventContainer: FunctionComponent = () => {
   const evt = parseEvent(dataEvent.findEvent);
 
   return (
-    <EventCard
-      key={evt.id}
-      {...evt}
-      user={user}
-      stayOpened={true}
-      joinEvent={joinEvent}
-      isJoining={loadingJoin}
-      onDeleteClick={deleteEvent}
-      onEditClick={editEvent}
-      onGotoLogin={onGotoLogin}
-    />
+    <React.Fragment>
+      <Helmet>
+        <title>DT65 tapahtuma: {evt.type.title}</title>
+        <meta name="og:site_name" content="downtown65.events" />
+        <meta name="og:title" content={evt.type.title} />
+        <meta property="og:description" content={evt.title} />
+        <meta
+          property="og:image"
+          content={`https://storage.googleapis.com/downtown65/events/${evt.type.apiType.toLowerCase()}.jpg`}
+        />
+        <meta property="og:type" content="website" />
+      </Helmet>
+
+      <EventCard
+        key={evt.id}
+        {...evt}
+        user={user}
+        stayOpened={true}
+        joinEvent={joinEvent}
+        isJoining={loadingJoin}
+        onDeleteClick={deleteEvent}
+        onEditClick={editEvent}
+        onGotoLogin={onGotoLogin}
+      />
+    </React.Fragment>
   );
 };
 
