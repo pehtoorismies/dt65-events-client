@@ -32,6 +32,7 @@ const dummyUser = {
 const common = {
   id: evtId,
   joinEvent: action('join event'),
+  onGotoLogin: action('goto login'),
   date: '13.12.2021',
   title: faker.commerce.productName(),
   subtitle: faker.commerce.productName(),

@@ -11,12 +11,17 @@ import prop from 'ramda/es/prop';
 import path from 'ramda/es/path';
 
 const authLink = new ApolloLink((operation, forward) => {
+  const { useAuthHeaders } = operation.getContext();
   const accessToken = getAccessToken();
-  operation.setContext({
-    headers: {
-      authorization: accessToken ? `Bearer ${accessToken}` : '',
-    },
-  });
+
+  if (useAuthHeaders !== false) {
+    operation.setContext({
+      headers: {
+        authorization: accessToken ? `Bearer ${accessToken}` : '',
+      },
+    });
+  }
+
   // Call the next link in the middleware chain.
   return forward(operation);
 });

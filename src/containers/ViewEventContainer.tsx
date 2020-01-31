@@ -22,6 +22,10 @@ const ViewEventContainer: FunctionComponent = () => {
   );
   const [deleteEventMutation] = useMutation(DELETE_EVENT_MUTATION);
 
+  const onGotoLogin = () => {
+    history.push('/');
+  };
+
   const joinEvent = async (eventId: ID) => {
     try {
       await toggleJoinEventMutation({ variables: { id: eventId } });
@@ -50,6 +54,9 @@ const ViewEventContainer: FunctionComponent = () => {
     data: dataEvent,
   } = useQuery(EVENT_QUERY, {
     variables: { id },
+    context: {
+      useAuthHeaders: false,
+    },
   });
 
   if (loadingEvent) {
@@ -72,6 +79,7 @@ const ViewEventContainer: FunctionComponent = () => {
       isJoining={loadingJoin}
       onDeleteClick={deleteEvent}
       onEditClick={editEvent}
+      onGotoLogin={onGotoLogin}
     />
   );
 };

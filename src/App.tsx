@@ -87,7 +87,7 @@ const App = () => (
                   exact={true}
                   path={ROUTES.viewEvent}
                   component={ViewEventContainer}
-                  privateRoute={true}
+                  privateRoute={false}
                 />
                 <Dt65Route
                   exact={true}

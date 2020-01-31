@@ -16,16 +16,18 @@ import { ID, IEvent, ILocalUser, IUser } from '../../types';
 import { isParticipant } from '../../util/general';
 import { Button, PortalOverlay } from '../Common';
 import HeadCountButton from '../HeadCountButton';
+import { toast } from 'react-toastify';
 
 interface IProps extends IEvent {
   isJoining?: boolean;
-  user: ILocalUser;
+  user?: ILocalUser;
   eventImage?: string;
   joinEvent?: (eventId: ID) => void;
   stayOpened?: boolean;
   onViewClick?: (eventId: ID) => void;
   onEditClick?: (eventId: ID) => void;
   onDeleteClick?: (eventId: ID) => void;
+  onGotoLogin?: () => void;
 }
 
 const ANIM_TIME = 500;
@@ -96,9 +98,10 @@ const Pill = (props: any) => (
   />
 );
 
-const renderPill = (currentUser: ILocalUser) => (participant: IUser) => {
+const renderPill = (currentUser?: ILocalUser) => (participant: IUser) => {
   const { sub } = participant;
-  const color = sub === currentUser.sub ? 'pink' : 'blue';
+  const userSub = currentUser ? currentUser.sub : null;
+  const color = sub === userSub ? 'pink' : 'blue';
 
   return (
     <Pill
@@ -112,6 +115,20 @@ const renderPill = (currentUser: ILocalUser) => (participant: IUser) => {
         {participant.nickname}
       </Text>
     </Pill>
+  );
+};
+
+const renderLogin = (onClick?: () => void, user?: ILocalUser) => {
+  if (user) {
+    return null;
+  }
+  if (!onClick) {
+    return null;
+  }
+  return (
+    <Button m={2} onClick={onClick}>
+      Kirjaudu
+    </Button>
   );
 };
 
@@ -136,11 +153,16 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
     user,
     race,
     stayOpened,
+    onGotoLogin,
   } = props;
 
-  const userGoesToEvent = isParticipant(user, participants);
+  const userGoesToEvent = user ? isParticipant(user, participants) : false;
 
   const onJoinClick = (e: any) => {
+    if (!user) {
+      toast.info('Et ole kirjautunut sisään');
+      return;
+    }
     e.stopPropagation();
     if (joinEvent) {
       joinEvent(id);
@@ -185,6 +207,8 @@ const EventCard: FunctionComponent<IProps> = (props: IProps) => {
 
         return (
           <React.Fragment>
+            {renderLogin(onGotoLogin, user)}
+
             <Flex
               m={1}
               bg="white"
